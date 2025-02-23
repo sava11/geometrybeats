@@ -1,0 +1,180 @@
+[gd_scene load_steps=19 format=3 uid="uid://r763h7siom3e"]
+
+[ext_resource type="Script" path="res://mats/ui/level_choicer/level.gd" id="1_15xlb"]
+[ext_resource type="Texture2D" uid="uid://dnxovk8lovv7h" path="res://mats/imgs/stared.svg" id="1_64q0y"]
+[ext_resource type="Texture2D" uid="uid://c6w51g1apal0k" path="res://mats/imgs/unstared.svg" id="2_xrbgw"]
+[ext_resource type="Script" path="res://mats/autoload/saver/saver.gd" id="5_aaqkn"]
+[ext_resource type="Script" path="res://mats/autoload/saver/node_data.gd" id="6_neljm"]
+[ext_resource type="Script" path="res://mats/autoload/saver/save_res.gd" id="7_uusu3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nurcm"]
+bg_color = Color(1.54018e-06, 0.359847, 0.456965, 0.768627)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tiejq"]
+bg_color = Color(0, 0, 0, 0.501961)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nid5v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_70k5b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1efp2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vpf3v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tomu5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gns36"]
+bg_color = Color(0.176471, 0.431373, 0.423529, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_fh7fl"]
+Button/styles/normal = SubResource("StyleBoxFlat_nurcm")
+Button/styles/pressed = SubResource("StyleBoxFlat_tiejq")
+CheckBox/constants/icon_max_width = 24
+CheckBox/icons/checked = ExtResource("1_64q0y")
+CheckBox/icons/checked_disabled = ExtResource("1_64q0y")
+CheckBox/icons/unchecked = ExtResource("2_xrbgw")
+CheckBox/icons/unchecked_disabled = ExtResource("2_xrbgw")
+CheckBox/styles/disabled = SubResource("StyleBoxEmpty_nid5v")
+CheckBox/styles/hover = SubResource("StyleBoxEmpty_70k5b")
+CheckBox/styles/hover_pressed = SubResource("StyleBoxEmpty_1efp2")
+CheckBox/styles/normal = SubResource("StyleBoxEmpty_vpf3v")
+CheckBox/styles/pressed = SubResource("StyleBoxEmpty_tomu5")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_gns36")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0vps"]
+bg_color = Color(0, 0, 0, 0.501961)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="Resource" id="Resource_subav"]
+script = ExtResource("6_neljm")
+node = NodePath("..")
+data = Array[String](["stats"])
+
+[sub_resource type="Resource" id="Resource_cc0u7"]
+script = ExtResource("7_uusu3")
+data = Array[ExtResource("6_neljm")]([SubResource("Resource_subav")])
+
+[node name="level" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 188.0
+offset_bottom = 58.0
+theme = SubResource("Theme_fh7fl")
+script = ExtResource("1_15xlb")
+scenario = "res://mats/game_objs/scenarios/scenario_test.gd"
+
+[node name="pc" type="PanelContainer" parent="."]
+z_index = 1
+layout_mode = 0
+offset_right = 188.0
+offset_bottom = 58.0
+
+[node name="mc" type="MarginContainer" parent="pc"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="c" type="VBoxContainer" parent="pc/mc"]
+layout_mode = 2
+
+[node name="p" type="PanelContainer" parent="pc/mc/c"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w0vps")
+
+[node name="mc" type="MarginContainer" parent="pc/mc/c/p"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="track" type="VBoxContainer" parent="pc/mc/c/p/mc"]
+layout_mode = 2
+
+[node name="track_name" type="Label" parent="pc/mc/c/p/mc/track"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "test"
+horizontal_alignment = 1
+
+[node name="authors" type="Label" parent="pc/mc/c/p/mc/track"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "voidus"
+horizontal_alignment = 1
+
+[node name="p2" type="PanelContainer" parent="pc/mc/c"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w0vps")
+
+[node name="mc" type="MarginContainer" parent="pc/mc/c/p2"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="cont" type="VBoxContainer" parent="pc/mc/c/p2/mc"]
+layout_mode = 2
+
+[node name="points" type="HBoxContainer" parent="pc/mc/c/p2/mc/cont"]
+layout_mode = 2
+
+[node name="nm" type="Label" parent="pc/mc/c/p2/mc/cont/points"]
+layout_mode = 2
+text = "points:"
+
+[node name="vle" type="Label" parent="pc/mc/c/p2/mc/cont/points"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "000/000"
+
+[node name="colletion" type="HBoxContainer" parent="pc/mc/c/p2/mc/cont"]
+layout_mode = 2
+
+[node name="nm" type="Label" parent="pc/mc/c/p2/mc/cont/colletion"]
+layout_mode = 2
+text = "collected:"
+
+[node name="vle" type="Label" parent="pc/mc/c/p2/mc/cont/colletion"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "000/000"
+
+[node name="Label3" type="Label" parent="pc/mc/c/p2/mc/cont"]
+layout_mode = 2
+text = "NO_HIT"
+horizontal_alignment = 1
+
+[node name="play" type="Button" parent="pc/mc"]
+layout_mode = 2
+size_flags_vertical = 3
+flat = true
+
+[node name="save_loader" type="Node" parent="."]
+script = ExtResource("5_aaqkn")
+sn = SubResource("Resource_cc0u7")
+
+[connection signal="button_down" from="pc/mc/play" to="." method="play"]

@@ -1,0 +1,115 @@
+[gd_scene load_steps=16 format=3 uid="uid://chjrft3y35xch"]
+
+[ext_resource type="Script" path="res://mats/game_objs/scenarios/scnr1/scenario_1.gd" id="1_dlayp"]
+[ext_resource type="AudioStream" uid="uid://diwqv1yepxs31" path="res://mats/sounds/hats.wav" id="2_r7cic"]
+[ext_resource type="Script" path="res://mats/game_objs/masp/masp.gd" id="2_w3nln"]
+[ext_resource type="Script" path="res://mats/game_objs/scenarios/object.gd" id="3_q27ch"]
+[ext_resource type="Script" path="res://mats/game_objs/prespawner/pre_spawner.gd" id="7_eap46"]
+[ext_resource type="Script" path="res://mats/game_objs/prespawner/everywhere_shout.gd" id="8_hahe1"]
+
+[sub_resource type="Resource" id="Resource_nifjq"]
+script = ExtResource("3_q27ch")
+pre_time = 2.0
+times = Array[float]([0.0, 0.92])
+
+[sub_resource type="Animation" id="Animation_em28l"]
+resource_name = "base"
+length = 1.84
+loop_mode = 1
+step = 0.01
+
+[sub_resource type="Animation" id="Animation_t86bo"]
+resource_name = "track"
+length = 1.84
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("act/PreSpawner:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23, 0.46, 0.69, 0.92, 1.15, 1.38, 1.61),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(640, 360), Vector2(320, 540), Vector2(160, 360), Vector2(320, 180), Vector2(640, 360), Vector2(960, 540), Vector2(1120, 360), Vector2(960, 180)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kaqxk"]
+_data = {
+"base": SubResource("Animation_em28l"),
+"track": SubResource("Animation_t86bo")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1c3at"]
+
+[sub_resource type="Curve" id="Curve_ott3b"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 1.3774, 1, 0]
+point_count = 2
+metadata/_snap_enabled = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uuy2x"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_38dqu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ltos7"]
+font_size = 32
+
+[node name="scenario" type="Node"]
+script = ExtResource("1_dlayp")
+infinite = true
+auto_play_animation = true
+audio = ExtResource("2_r7cic")
+max_time = 1.84
+starts_from = 2.0
+action_times = Array[ExtResource("3_q27ch")]([SubResource("Resource_nifjq")])
+
+[node name="ap" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kaqxk")
+}
+
+[node name="AudioPlayer" type="Node2D" parent="."]
+script = ExtResource("2_w3nln")
+
+[node name="act" type="Node2D" parent="."]
+
+[node name="PreSpawner" type="Node2D" parent="act" node_paths=PackedStringArray("add_to")]
+position = Vector2(640, 360)
+script = ExtResource("7_eap46")
+add_to = NodePath("../..")
+collision_shape = SubResource("RectangleShape2D_1c3at")
+summon_time = 2.0
+curve = SubResource("Curve_ott3b")
+obj_event_time = 1.9
+on_deleetion_object = 2
+on_deleetion_object_data = {
+"collision_shape": SubResource("CircleShape2D_uuy2x"),
+"spawn": true,
+"speed_from": 750.0,
+"speed_to": 1500.0,
+"summon_count_from": 4,
+"summon_count_to": 6,
+"summon_range": 360.0
+}
+
+[node name="Node2D" type="Node2D" parent="act" node_paths=PackedStringArray("add_to")]
+position = Vector2(592, 320)
+script = ExtResource("8_hahe1")
+add_to = NodePath("../..")
+collision_shape = SubResource("CircleShape2D_38dqu")
+summon_range = 60
+summon_count_to = 16
+speed_from = 750
+speed_to = 1500
+
+[node name="tooltips" type="Label" parent="."]
+offset_left = 368.0
+offset_top = 456.0
+offset_right = 886.0
+offset_bottom = 597.0
+text = "цфыв - двигаться
+"
+label_settings = SubResource("LabelSettings_ltos7")
+vertical_alignment = 1

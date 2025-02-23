@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dintaxpd8173e"]
+
+[ext_resource type="Script" path="res://mats/game_objs/custom_damage_areas/moveing_box.gd" id="1_snorq"]
+
+[node name="MoveingBox" type="Area2D"]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_snorq")
+command_id = 1

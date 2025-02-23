@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://dp62ykqur8ouw"]
+
+[ext_resource type="Script" path="res://main/menu/menu.gd" id="1_rnvd5"]
+
+[node name="menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rnvd5")
+
+[node name="pc" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.5
+offset_top = -50.5
+offset_right = 33.5
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="mc" type="MarginContainer" parent="pc"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="vbc" type="VBoxContainer" parent="pc/mc"]
+custom_minimum_size = Vector2(196, 0)
+layout_mode = 2
+
+[node name="uname" type="LineEdit" parent="pc/mc/vbc"]
+layout_mode = 2
+placeholder_text = "имя пользователя"
+expand_to_text_length = true
+
+[node name="upass" type="LineEdit" parent="pc/mc/vbc"]
+layout_mode = 2
+placeholder_text = "пароль пользователя"
+expand_to_text_length = true
+secret = true
+
+[node name="Button" type="Button" parent="pc/mc/vbc"]
+layout_mode = 2
+text = "вход"
+
+[connection signal="button_down" from="pc/mc/vbc/Button" to="." method="_on_button_button_down"]

@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=3 uid="uid://8a5ryr75vgby"]
+
+[ext_resource type="Script" path="res://mats/game_objs/scenarios/scnr3/scenario.gd" id="1_74fy2"]
+[ext_resource type="Script" path="res://mats/game_objs/masp/masp.gd" id="2_ml0r0"]
+[ext_resource type="AudioStream" uid="uid://cxsadgwcqqh0c" path="res://mats/sounds/preson.wav" id="2_vqk6t"]
+[ext_resource type="Script" path="res://mats/game_objs/scenarios/object.gd" id="3_ryy55"]
+[ext_resource type="Script" path="res://mats/game_objs/summoner/summoner.gd" id="4_hhccw"]
+
+[sub_resource type="Resource" id="Resource_biu8s"]
+script = ExtResource("3_ryy55")
+pre_time = 0.0
+times = Array[float]([0.0, 1.72, 3.44, 5.16, 6.88])
+
+[sub_resource type="Animation" id="Animation_cbsp2"]
+resource_name = "base"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("act/Summoner:spawn")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_7ufdp"]
+resource_name = "track"
+length = 32.5
+step = 0.02
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_woum6"]
+_data = {
+"base": SubResource("Animation_cbsp2"),
+"track": SubResource("Animation_7ufdp")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwvub"]
+
+[node name="scenario" type="Node"]
+script = ExtResource("1_74fy2")
+audio = ExtResource("2_vqk6t")
+max_time = 32.5
+starts_from = 2.0
+action_times = Array[ExtResource("3_ryy55")]([SubResource("Resource_biu8s")])
+
+[node name="ap" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_woum6")
+}
+
+[node name="AudioPlayer" type="Node2D" parent="."]
+script = ExtResource("2_ml0r0")
+
+[node name="act" type="Node2D" parent="."]
+
+[node name="Summoner" type="Node2D" parent="act" node_paths=PackedStringArray("add_to")]
+position = Vector2(0, 592)
+script = ExtResource("4_hhccw")
+add_to = NodePath("../..")
+spawn = true
+shout_time = 0.02
+collision_shape = SubResource("RectangleShape2D_gwvub")
+centered = true
+angle = 90.0
+line_size = 256.0
+speed_from = 550
+speed_to = 550

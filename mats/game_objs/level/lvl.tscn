@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddj3i5arwd2rc"]
+
+[ext_resource type="PackedScene" uid="uid://djuxdooutd0il" path="res://mats/game_objs/player/player.tscn" id="2_4su8l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_70xid"]
+size = Vector2(16, 752)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xlh82"]
+size = Vector2(16, 752)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nifaj"]
+size = Vector2(1280, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oa6ek"]
+size = Vector2(1280, 16)
+
+[node name="lvl" type="StaticBody2D"]
+
+[node name="player" parent="." instance=ExtResource("2_4su8l")]
+position = Vector2(296, 528)
+
+[node name="left" type="CollisionShape2D" parent="."]
+position = Vector2(-8, 360)
+shape = SubResource("RectangleShape2D_70xid")
+
+[node name="right" type="CollisionShape2D" parent="."]
+position = Vector2(1288, 360)
+shape = SubResource("RectangleShape2D_xlh82")
+
+[node name="top" type="CollisionShape2D" parent="."]
+position = Vector2(640, -8)
+shape = SubResource("RectangleShape2D_nifaj")
+
+[node name="bottom" type="CollisionShape2D" parent="."]
+position = Vector2(640, 728)
+shape = SubResource("RectangleShape2D_oa6ek")
