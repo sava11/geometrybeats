@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bxcvu43yv4xly"]
 
-[ext_resource type="Script" path="res://addons/sound_manager/dock/SoundManagerDock.gd" id="1"]
+[ext_resource type="Script" uid="uid://0sjqijiaob58" path="res://addons/sound_manager/dock/SoundManagerDock.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dl0vqixpxa80t" path="res://addons/sound_manager/dock/assets/slider_grabber_highlighted.svg" id="2"]
 [ext_resource type="Texture2D" uid="uid://25dn21f8amun" path="res://addons/sound_manager/dock/assets/slider_grabber.svg" id="3"]
 [ext_resource type="Texture2D" uid="uid://b7c8ya4xhor0q" path="res://addons/sound_manager/dock/assets/restore.svg" id="4"]

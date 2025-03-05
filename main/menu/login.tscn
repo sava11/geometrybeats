@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d0n2u1aheivgt"]
 
-[ext_resource type="Script" path="res://main/menu/login.gd" id="1_awes1"]
+[ext_resource type="Script" uid="uid://cikty0jqvh5go" path="res://main/menu/login.gd" id="1_awes1"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -66,4 +66,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "войти"
 
+[connection signal="button_down" from="pc/mc/vbc/hbc/exit" to="." method="_on_exit_button_down"]
 [connection signal="button_down" from="pc/mc/vbc/hbc/log" to="." method="_on_log_button_down"]

@@ -1,11 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://bpbffjfh4ldhn"]
+[gd_scene load_steps=16 format=3 uid="uid://bpbffjfh4ldhn"]
 
-[ext_resource type="Script" path="res://mats/game_objs/scenarios/scnr2/scenario.gd" id="1_6ueg6"]
+[ext_resource type="Script" uid="uid://ctp27il73uy01" path="res://mats/game_objs/scenarios/scnr2/scenario.gd" id="1_6ueg6"]
 [ext_resource type="AudioStream" uid="uid://dpspooslv15oe" path="res://mats/sounds/str.ogg" id="2_scidx"]
-[ext_resource type="Script" path="res://mats/game_objs/scenarios/checkpoint.gd" id="3_t6xs8"]
-[ext_resource type="Script" path="res://mats/game_objs/scenarios/object.gd" id="3_ugu08"]
-[ext_resource type="Script" path="res://mats/game_objs/masp/masp.gd" id="4_pnd5b"]
-[ext_resource type="Script" path="res://mats/game_objs/prespawner/pre_spawner.gd" id="5_b3yua"]
+[ext_resource type="Script" uid="uid://ddxpv4vko2kpf" path="res://mats/game_objs/scenarios/checkpoint.gd" id="3_t6xs8"]
+[ext_resource type="Script" uid="uid://cx41rh6rwuiwl" path="res://mats/game_objs/scenarios/object.gd" id="3_ugu08"]
+[ext_resource type="Script" uid="uid://dth4q2dvb4juw" path="res://mats/game_objs/masp/masp.gd" id="4_pnd5b"]
+[ext_resource type="Script" uid="uid://hwblj5rogb6w" path="res://mats/game_objs/prespawner/pre_spawner.gd" id="5_b3yua"]
 
 [sub_resource type="Resource" id="Resource_afrfj"]
 script = ExtResource("3_t6xs8")
@@ -15,6 +15,11 @@ times = Array[float]([21.5])
 script = ExtResource("3_ugu08")
 pre_time = 0.8
 times = Array[float]([0.0, 0.43, 0.85, 1.28, 1.75, 2.57, 2.8, 3.05, 3.42, 3.85, 4.28, 4.71, 5.14, 5.57, 6.0, 6.28, 6.45, 6.85, 7.28, 7.71, 8.57, 9.0, 9.42, 10.28, 10.71, 11.14, 11.57, 12.0, 12.42, 12.85, 13.71, 14.14, 14.57, 15.0, 15.42, 15.85, 16.28, 16.55, 16.75, 17.14, 17.57, 18.0, 18.85, 19.28, 19.71, 20.14, 20.57, 21.0, 21.42, 21.85, 22.28, 22.71, 23.14, 23.57, 24.0, 24.42, 24.85, 25.28, 25.71, 26.14, 23.57, 27.0, 27.42, 27.85, 28.28, 28.71, 29.14, 29.57, 30.0, 30.42, 30.85, 31.28, 31.71, 32.14, 32.57, 33.0, 33.42, 33.85, 34.28, 34.71, 35.14, 35.57, 36.0, 36.42, 36.85, 37.28, 37.71, 38.14, 38.57, 39.0, 39.42, 39.85, 40.28, 40.71, 41.14, 41.57, 42.0, 42.42])
+
+[sub_resource type="Resource" id="Resource_6dai7"]
+script = ExtResource("3_ugu08")
+pre_time = 0.0
+times = Array[float]([5.0, 10.0, 25.0])
 
 [sub_resource type="Animation" id="Animation_em28l"]
 resource_name = "base"
@@ -30,8 +35,8 @@ step = 0.01
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kaqxk"]
 _data = {
-"base": SubResource("Animation_em28l"),
-"track": SubResource("Animation_t86bo")
+&"base": SubResource("Animation_em28l"),
+&"track": SubResource("Animation_t86bo")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kwxaq"]
@@ -52,6 +57,7 @@ max_time = 43.5
 starts_from = 2.0
 checkpoints = SubResource("Resource_afrfj")
 action_times = Array[ExtResource("3_ugu08")]([SubResource("Resource_pnxn5")])
+collection = SubResource("Resource_6dai7")
 
 [node name="ap" type="AnimationPlayer" parent="."]
 libraries = {
@@ -80,3 +86,5 @@ on_deleetion_object_data = {
 "summon_count_to": 6,
 "summon_range": 360.0
 }
+
+[connection signal="collection_event_activated" from="." to="." method="_on_collection_event_activated"]

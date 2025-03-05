@@ -9,6 +9,9 @@ func _ready() -> void:
 	if current_level!=null:
 		current_level.get_node("pc/mc/play").grab_focus()
 	sld.load_from_file(sld.file_path,true)
+	for e in $cl/vbc/mc2/sc/cont.get_children():
+		e.upd_data()
+		
 	var last_runned:=0
 	for e in $cl/vbc/mc2/sc/cont.get_children():
 		if e.runned:
@@ -19,8 +22,8 @@ func upd_data()->void:
 	points=0
 	stars=0
 	for e in $cl/vbc/mc2/sc/cont.get_children():
-		points	+= e.recived_points
-		#stars	+= gmd.data[e].get("stars", 0)
+		points += e.recived_points
+		#stars += gmd.data[e].get("stars", 0)
 func _physics_process(delta: float) -> void:
 	upd_data()
 	if Input.is_action_just_pressed("esc"):

@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://bds8dr70borml"]
 
 [ext_resource type="StyleBox" uid="uid://bw36op1aqjel6" path="res://mats/ui/line_level_choicer/runned.tres" id="1_2o5yq"]
-[ext_resource type="Script" path="res://mats/ui/line_level_choicer/line_choicer.gd" id="2_pvyjb"]
-[ext_resource type="Script" path="res://mats/autoload/saver/saver.gd" id="3_752e8"]
-[ext_resource type="Script" path="res://mats/autoload/saver/node_data.gd" id="4_ijh7j"]
-[ext_resource type="Script" path="res://mats/autoload/saver/save_res.gd" id="5_7x1sj"]
+[ext_resource type="Script" uid="uid://cgrfnq3ghg2y" path="res://mats/ui/line_level_choicer/line_choicer.gd" id="2_pvyjb"]
+[ext_resource type="Script" uid="uid://k6vug6n7nsi1" path="res://mats/autoload/saver/saver.gd" id="3_752e8"]
+[ext_resource type="Script" uid="uid://cb5ofl74axrq2" path="res://mats/autoload/saver/node_data.gd" id="4_ijh7j"]
+[ext_resource type="Script" uid="uid://doto7tuv4f022" path="res://mats/autoload/saver/save_res.gd" id="5_7x1sj"]
 
 [sub_resource type="Theme" id="Theme_6jnkj"]
 default_font_size = 32
@@ -36,6 +36,7 @@ size_flags_horizontal = 3
 theme = SubResource("Theme_6jnkj")
 theme_override_styles/panel = ExtResource("1_2o5yq")
 script = ExtResource("2_pvyjb")
+track_name = "test2"
 
 [node name="mc" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -61,7 +62,7 @@ size_flags_horizontal = 6
 [node name="nm" type="Label" parent="mc/cont/points"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "POINTS"
+text = "Очки:"
 
 [node name="v" type="Label" parent="mc/cont/points"]
 layout_mode = 2
@@ -76,7 +77,7 @@ size_flags_horizontal = 6
 [node name="nm" type="Label" parent="mc/cont/collect"]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "COLLECTED"
+text = "Собрано:"
 
 [node name="v" type="Label" parent="mc/cont/collect"]
 layout_mode = 2
@@ -87,7 +88,7 @@ label_settings = SubResource("LabelSettings_2dkg1")
 [node name="no_hit" type="Label" parent="mc/cont"]
 layout_mode = 2
 size_flags_horizontal = 10
-text = "NO_HIT"
+text = "без повреждений"
 label_settings = SubResource("LabelSettings_1m20y")
 
 [node name="play" type="Button" parent="."]

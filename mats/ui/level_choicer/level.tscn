@@ -1,11 +1,11 @@
 [gd_scene load_steps=19 format=3 uid="uid://r763h7siom3e"]
 
-[ext_resource type="Script" path="res://mats/ui/level_choicer/level.gd" id="1_15xlb"]
+[ext_resource type="Script" uid="uid://dbl6abcw0wxi0" path="res://mats/ui/level_choicer/level.gd" id="1_15xlb"]
 [ext_resource type="Texture2D" uid="uid://dnxovk8lovv7h" path="res://mats/imgs/stared.svg" id="1_64q0y"]
 [ext_resource type="Texture2D" uid="uid://c6w51g1apal0k" path="res://mats/imgs/unstared.svg" id="2_xrbgw"]
-[ext_resource type="Script" path="res://mats/autoload/saver/saver.gd" id="5_aaqkn"]
-[ext_resource type="Script" path="res://mats/autoload/saver/node_data.gd" id="6_neljm"]
-[ext_resource type="Script" path="res://mats/autoload/saver/save_res.gd" id="7_uusu3"]
+[ext_resource type="Script" uid="uid://k6vug6n7nsi1" path="res://mats/autoload/saver/saver.gd" id="5_aaqkn"]
+[ext_resource type="Script" uid="uid://cb5ofl74axrq2" path="res://mats/autoload/saver/node_data.gd" id="6_neljm"]
+[ext_resource type="Script" uid="uid://doto7tuv4f022" path="res://mats/autoload/saver/save_res.gd" id="7_uusu3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nurcm"]
 bg_color = Color(1.54018e-06, 0.359847, 0.456965, 0.768627)

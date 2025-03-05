@@ -1,6 +1,7 @@
 class_name Scenario
 extends Node
 signal action_activated(track:int,time:float)
+signal collection_event_activated(id:int,time:float)
 signal level_ended(node:Scenario)
 signal level_started(node:Scenario)
 signal checkpoint_activated()
@@ -13,18 +14,21 @@ signal checkpoint_activated()
 @export var deaths_count:=3
 @export var checkpoints:CheckpointObject
 @export var action_times:Array[InfoObject]
-@export var collect:Array
+@export var collection:InfoObject
 var saved_player_pos:Vector2
+var saved_collects:int
 var saved_time:float=0
 var lvl_state:int=0
 var asp:AudioPlayer
 var cur_time:=0.0
-func get_size():
+var collected:=0
+@onready var player=get_node_or_null("../player")
+func get_size()->Vector2:
 	return Vector2(
 		ProjectSettings.get("display/window/size/viewport_width"),
 		ProjectSettings.get("display/window/size/viewport_height")
 	)
-func get_rand_pos():
+func get_rand_pos()->Vector2:
 	return Vector2(
 		fnc.rnd.randf_range(0,ProjectSettings.get("display/window/size/viewport_width")),
 		fnc.rnd.randf_range(0,ProjectSettings.get("display/window/size/viewport_height"))
@@ -32,6 +36,9 @@ func get_rand_pos():
 func get_loop(value:float,max_value:float):
 	return int(value/max_value)
 func _ready() -> void:
+	var fl:=HFlowContainer.new()
+	fl.name="fl"
+	fl.alignment=FlowContainer.ALIGNMENT_CENTER
 	var bc:=HBoxContainer.new()
 	var last_value:=0.0
 	if checkpoints!=null:
@@ -47,16 +54,25 @@ func _ready() -> void:
 			pb.custom_minimum_size.x=128
 			bc.add_child(pb)
 	bc.name="progress"
-	add_child(bc)
+	fl.add_child(bc)
+	var stars_bc:=HBoxContainer.new()
+	for e in collection.times:
+		var ch=CheckBox.new()
+		ch.disabled=true
+		stars_bc.add_child(ch)
+	stars_bc.name="sbc"
+	fl.add_child(stars_bc)
+	add_child(fl)
 	bc.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	fl.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
 	fnc.rnd.seed=fnc.rnd.randi()
 	lvl_state=fnc.rnd.state
 	action_activated.connect(_action_activated)
 	level_ended.connect(_level_ended)
 	level_started.connect(_level_started)
-	if get_node("../player")!=null:
-		saved_player_pos=get_node("../player").global_position
-		get_node("../player").dead.connect(_player_dead)
+	if player!=null:
+		saved_player_pos=player.global_position
+		player.dead.connect(_player_dead)
 	checkpoint_activated.connect(_checkpoint_activated)
 	asp=$AudioPlayer
 	if audio !=null:
@@ -72,7 +88,9 @@ func _physics_process(delta: float) -> void:
 		can=checkpoints.can(cur_time,max_time)
 		if (can==0 and !infinite) or (can>=0 and infinite):
 			saved_time=cur_time
-			saved_player_pos=get_node("../player").global_position
+			if player!=null:
+				saved_player_pos=player.global_position
+				saved_collects=collected
 			#print("checkpoint activated: %d"%[at])
 			emit_signal("checkpoint_activated")
 	for at:int in range(action_times.size()):
@@ -80,9 +98,15 @@ func _physics_process(delta: float) -> void:
 		if (can==0 and !infinite) or (can>=0 and infinite):
 			#print("activated: %d at %f"%[at,cur_time])
 			emit_signal("action_activated",at,cur_time)
+	if collection!=null:
+		for collect:int in range(collection.times.size()):
+			can=collection.can(cur_time-starts_from,max_time)
+			if (can==0 and !infinite) or (can>=0 and infinite):
+				print("activated: %d at %f"%[collected,cur_time])
+				emit_signal("collection_event_activated", collect, cur_time)
 	cur_time+=delta
 	if checkpoints!=null:
-		get_node("progress").get_child(checkpoints.played).value=cur_time
+		get_node("fl/progress").get_child(checkpoints.played).value=cur_time
 	if cur_time>=starts_from and cur_time<starts_from+0.1 and !asp.playing:
 		emit_signal("level_started",self)
 		print("started")
@@ -113,14 +137,54 @@ func _player_dead(v:bool):
 			for e in get_children():
 				if e is MoveHitBox or e is HitBox:
 					e.queue_free()
-			get_node("../player").global_position=saved_player_pos
+			player.global_position=saved_player_pos
+			collected=saved_collects
+			for e in range(get_node("fl/sbc").get_child_count()):
+				get_node("fl/sbc").get_child(e).button_pressed=e<collected
 			$ap.seek(saved_time,true)
 			fnc.rnd.state=lvl_state
 			cur_time=saved_time
 			for e:InfoObject in action_times:
 				e.reset_to(saved_time,max_time)
+			if collection!=null:
+				collection.reset_to(saved_time,max_time)
+				for e in $act.get_children():
+					if e is Collectable:
+						e.queue_free()
 			await get_tree().process_frame
 			get_node("../player/HurtBox").health=get_node("../player/HurtBox").max_health
 	else:
 		emit_signal("level_ended",self)
 func _checkpoint_activated():pass
+
+func spawn_obj():
+	var sz := get_size()
+	var obj:=preload("res://mats/game_objs/collectable/collectable.tscn").instantiate()
+	var ps:PackedVector2Array
+	obj.global_position=generate_random_border_point(sz)
+	for i in range(fnc.rnd.randi_range(1,3)):
+		ps.append(get_rand_pos())
+	ps.append(generate_random_border_point(sz))
+	obj.points=ps
+	obj.body_entered.connect((
+		func(n):
+			get_node("fl/sbc").get_child(collected).button_pressed=true
+			collected+=1
+			obj.queue_free()
+			))
+	$act.add_child(obj)
+
+
+# Функция для генерации случайной точки за границей экрана
+func generate_random_border_point(screen_size: Vector2, offset: float = 50) -> Vector2:
+	var side := fnc.rnd.randi() % 4  # Случайно выбираем сторону
+
+	match side:
+		0:  # Верхняя сторона (за верхней границей)
+			return Vector2(fnc.rnd.randf() * screen_size.x, -offset)
+		1:  # Правая сторона (за правой границей)
+			return Vector2(screen_size.x + offset, fnc.rnd.randf() * screen_size.y)
+		2:  # Нижняя сторона (за нижней границей)
+			return Vector2(fnc.rnd.randf() * screen_size.x, screen_size.y + offset)
+		_:  # Левая сторона (за левой границей)
+			return Vector2(-offset, fnc.rnd.randf() * screen_size.y)

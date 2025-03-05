@@ -43,6 +43,9 @@ func _with_chance_ulti(chances=[0.5,0.5])->int:
 			prefix+=chances[e]
 	return -1
 
+#func _ready() -> void:
+	#rnd.seed=0
+
 signal darked(result:bool)
 func set_dark(r:bool=true,time:float=1):
 	var cl:CanvasLayer=get_tree().root.get_node_or_null("darkness_bg")

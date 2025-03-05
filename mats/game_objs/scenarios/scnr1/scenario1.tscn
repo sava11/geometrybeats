@@ -1,11 +1,11 @@
 [gd_scene load_steps=16 format=3 uid="uid://chjrft3y35xch"]
 
-[ext_resource type="Script" path="res://mats/game_objs/scenarios/scnr1/scenario_1.gd" id="1_dlayp"]
+[ext_resource type="Script" uid="uid://bb8watwxf3nur" path="res://mats/game_objs/scenarios/scnr1/scenario_1.gd" id="1_dlayp"]
 [ext_resource type="AudioStream" uid="uid://diwqv1yepxs31" path="res://mats/sounds/hats.wav" id="2_r7cic"]
-[ext_resource type="Script" path="res://mats/game_objs/masp/masp.gd" id="2_w3nln"]
-[ext_resource type="Script" path="res://mats/game_objs/scenarios/object.gd" id="3_q27ch"]
-[ext_resource type="Script" path="res://mats/game_objs/prespawner/pre_spawner.gd" id="7_eap46"]
-[ext_resource type="Script" path="res://mats/game_objs/prespawner/everywhere_shout.gd" id="8_hahe1"]
+[ext_resource type="Script" uid="uid://dth4q2dvb4juw" path="res://mats/game_objs/masp/masp.gd" id="2_w3nln"]
+[ext_resource type="Script" uid="uid://cx41rh6rwuiwl" path="res://mats/game_objs/scenarios/object.gd" id="3_q27ch"]
+[ext_resource type="Script" uid="uid://hwblj5rogb6w" path="res://mats/game_objs/prespawner/pre_spawner.gd" id="7_eap46"]
+[ext_resource type="Script" uid="uid://dv8kmud74icnv" path="res://mats/game_objs/prespawner/everywhere_shout.gd" id="8_hahe1"]
 
 [sub_resource type="Resource" id="Resource_nifjq"]
 script = ExtResource("3_q27ch")
@@ -38,8 +38,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kaqxk"]
 _data = {
-"base": SubResource("Animation_em28l"),
-"track": SubResource("Animation_t86bo")
+&"base": SubResource("Animation_em28l"),
+&"track": SubResource("Animation_t86bo")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1c3at"]

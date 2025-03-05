@@ -32,7 +32,7 @@ func _on_level_end(node:Scenario):
 	node.get_parent().queue_free()
 	get_tree().current_scene.get_node("cl").show()
 	#sld.save_to_file(sld.file_path)
-	sqlc.querry("
+	sqlc.query("
 insert into user_level_records(user_id,record_date,level_id,points,stars) values
 ({0},curdate(),{1},{2},{3})
 ;".format([gmd.user_id,get_index(),int(node.cur_time/node.max_time*points),0]))

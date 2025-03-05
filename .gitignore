@@ -6,3 +6,6 @@
 *.tmp
 *.import
 psql/*
+*.uid
+*.tmp
+*.old
