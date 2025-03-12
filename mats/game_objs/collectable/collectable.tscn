@@ -1,6 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bj00yt2jtrvsw"]
-
-[ext_resource type="Script" uid="uid://db2o1uw51fwnx" path="res://mats/game_objs/collectable/collectable.gd" id="1_hbdti"]
+[gd_scene load_steps=2 format=3 uid="uid://bj00yt2jtrvsw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gujai"]
 radius = 16.0
@@ -8,7 +6,6 @@ radius = 16.0
 [node name="collectable" type="Area2D"]
 collision_layer = 2
 collision_mask = 2
-script = ExtResource("1_hbdti")
 
 [node name="c" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_gujai")

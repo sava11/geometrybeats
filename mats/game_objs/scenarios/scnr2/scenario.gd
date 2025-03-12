@@ -14,5 +14,5 @@ func _level_ended(node: Scenario):
 	pass
 
 func _on_collection_event_activated(id: int, time: float) -> void:
-	spawn_obj()
+	pass
 	

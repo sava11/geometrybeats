@@ -18,10 +18,12 @@ signal checkpoint_activated()
 var saved_player_pos:Vector2
 var saved_collects:int
 var saved_time:float=0
+var saved_collected:=[]
 var lvl_state:int=0
 var asp:AudioPlayer
 var cur_time:=0.0
 var collected:=0
+
 @onready var player=get_node_or_null("../player")
 func get_size()->Vector2:
 	return Vector2(
@@ -80,6 +82,30 @@ func _ready() -> void:
 		asp.time=max_time
 	if auto_play_animation:
 		$ap.play("track")
+	if is_instance_valid(collection) and collection!=null:
+		for e in range(collection.times.size()):
+			var sz := get_size()
+			var p:=Path2D.new()
+			var fp:=PathFollow2D.new()
+			fp.loop=false
+			fp.rotates=false
+			var c:=Curve2D.new()
+			c.add_point(generate_random_border_point(sz))
+			for i in range(fnc.rnd.randi_range(1,3)):
+				c.add_point(get_rand_pos())
+			c.add_point(generate_random_border_point(sz))
+			p.curve=c
+			var obj:=preload("res://mats/game_objs/collectable/collectable.tscn").instantiate()
+			$paths.add_child(p)
+			p.add_child(fp)
+			fp.add_child(obj)
+			saved_collected.append(0.0)
+			obj.body_entered.connect((
+			func(n):
+				get_node("fl/sbc").get_child(collected).button_pressed=true
+				collected+=1
+				fp.progress_ratio=1
+				))
 	_post_ready()
 	set_physics_process(!debug)
 func _physics_process(delta: float) -> void:
@@ -91,6 +117,10 @@ func _physics_process(delta: float) -> void:
 			if player!=null:
 				saved_player_pos=player.global_position
 				saved_collects=collected
+				for i in range($paths.get_child_count()):
+					var e:PathFollow2D=$paths.get_child(i).get_child(0)
+					saved_collected[i]=e.progress
+				print(saved_collected)
 			#print("checkpoint activated: %d"%[at])
 			emit_signal("checkpoint_activated")
 	for at:int in range(action_times.size()):
@@ -102,23 +132,28 @@ func _physics_process(delta: float) -> void:
 		for collect:int in range(collection.times.size()):
 			can=collection.can(cur_time-starts_from,max_time)
 			if (can==0 and !infinite) or (can>=0 and infinite):
-				print("activated: %d at %f"%[collected,cur_time])
+				#print("activated: %d at %f"%[collected,cur_time])
 				emit_signal("collection_event_activated", collect, cur_time)
+		for i in range($paths.get_child_count()):
+			var e:Path2D=$paths.get_child(i)
+			var pf:PathFollow2D=e.get_child(0)
+			if cur_time>collection.times[i] and pf.progress_ratio<1.0:
+				pf.progress+=200*delta
+				
 	cur_time+=delta
 	if checkpoints!=null:
 		get_node("fl/progress").get_child(checkpoints.played).value=cur_time
 	if cur_time>=starts_from and cur_time<starts_from+0.1 and !asp.playing:
 		emit_signal("level_started",self)
-		print("started")
 		asp.playing=true
 		if !auto_play_animation:
 			$ap.play("track")
 	if cur_time>=starts_from+max_time:
 		if !infinite:
 			asp.playing=false
-			print("ended ",cur_time)
 			set_physics_process(false)
 			emit_signal("level_ended",self)
+		
 	_post_physics_process(delta)
 
 func _post_ready():pass
@@ -148,32 +183,15 @@ func _player_dead(v:bool):
 				e.reset_to(saved_time,max_time)
 			if collection!=null:
 				collection.reset_to(saved_time,max_time)
-				for e in $act.get_children():
-					if e is Collectable:
-						e.queue_free()
+				for i in range($paths.get_child_count()):
+					var e:Path2D=$paths.get_child(i)
+					var pf:PathFollow2D=e.get_child(0)
+					pf.progress=saved_collected[i]
 			await get_tree().process_frame
 			get_node("../player/HurtBox").health=get_node("../player/HurtBox").max_health
 	else:
 		emit_signal("level_ended",self)
 func _checkpoint_activated():pass
-
-func spawn_obj():
-	var sz := get_size()
-	var obj:=preload("res://mats/game_objs/collectable/collectable.tscn").instantiate()
-	var ps:PackedVector2Array
-	obj.global_position=generate_random_border_point(sz)
-	for i in range(fnc.rnd.randi_range(1,3)):
-		ps.append(get_rand_pos())
-	ps.append(generate_random_border_point(sz))
-	obj.points=ps
-	obj.body_entered.connect((
-		func(n):
-			get_node("fl/sbc").get_child(collected).button_pressed=true
-			collected+=1
-			obj.queue_free()
-			))
-	$act.add_child(obj)
-
 
 # Функция для генерации случайной точки за границей экрана
 func generate_random_border_point(screen_size: Vector2, offset: float = 50) -> Vector2:

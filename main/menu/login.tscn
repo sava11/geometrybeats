@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d0n2u1aheivgt"]
+[gd_scene load_steps=3 format=3 uid="uid://d0n2u1aheivgt"]
 
 [ext_resource type="Script" uid="uid://cikty0jqvh5go" path="res://main/menu/login.gd" id="1_awes1"]
+[ext_resource type="Script" uid="uid://3rg363up0jh4" path="res://psql/Helloworld.gd" id="2_1asjt"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -65,6 +66,10 @@ text = "выйти"
 layout_mode = 2
 size_flags_horizontal = 3
 text = "войти"
+
+[node name="Test" type="Node" parent="."]
+script = ExtResource("2_1asjt")
+metadata/_custom_type_script = "uid://3rg363up0jh4"
 
 [connection signal="button_down" from="pc/mc/vbc/hbc/exit" to="." method="_on_exit_button_down"]
 [connection signal="button_down" from="pc/mc/vbc/hbc/log" to="." method="_on_log_button_down"]
