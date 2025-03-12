@@ -37,7 +37,8 @@ func _on_level_end(node:Scenario):
 		$mc/cont/no_hit.visible=no_hit
 	get_tree().current_scene.get_node("cl").show()
 	#sld.save_to_file(sld.file_path,true)
-	sqlc.query("
+	if sqlc.CheckConnection():
+		sqlc.query("
 insert into user_level_records(user_id,record_date,level_id,points,collected,no_hit) values
 ({0}, NOW(), {1}, {2}, {3}, {4})
 ;".format([gmd.user_id,get_index(),recived_points,collected,no_hit]))

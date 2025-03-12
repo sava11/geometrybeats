@@ -1,11 +1,12 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+.vs/
+psql/
 *.DS*
 *._*.*
 *.tmp
 *.import
-psql/*
 *.uid
 *.tmp
 *.old
