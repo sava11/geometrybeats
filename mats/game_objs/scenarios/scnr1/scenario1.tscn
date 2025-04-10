@@ -67,11 +67,12 @@ action_times = Array[ExtResource("3_q27ch")]([SubResource("Resource_nifjq")])
 
 [node name="ap" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_kaqxk")
+&"": SubResource("AnimationLibrary_kaqxk")
 }
 
 [node name="AudioPlayer" type="Node2D" parent="."]
 script = ExtResource("2_w3nln")
+busName = "Music"
 
 [node name="act" type="Node2D" parent="."]
 

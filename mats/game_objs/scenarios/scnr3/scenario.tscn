@@ -1,22 +1,23 @@
-[gd_scene load_steps=11 format=3 uid="uid://8a5ryr75vgby"]
+[gd_scene load_steps=14 format=3 uid="uid://8a5ryr75vgby"]
 
 [ext_resource type="Script" uid="uid://c8kb0r74uidpl" path="res://mats/game_objs/scenarios/scnr3/scenario.gd" id="1_74fy2"]
 [ext_resource type="Script" uid="uid://dth4q2dvb4juw" path="res://mats/game_objs/masp/masp.gd" id="2_ml0r0"]
 [ext_resource type="AudioStream" uid="uid://cxsadgwcqqh0c" path="res://mats/sounds/preson.wav" id="2_vqk6t"]
 [ext_resource type="Script" uid="uid://cx41rh6rwuiwl" path="res://mats/game_objs/scenarios/object.gd" id="3_ryy55"]
 [ext_resource type="Script" uid="uid://ca2yewp12631f" path="res://mats/game_objs/summoner/summoner.gd" id="4_hhccw"]
+[ext_resource type="Script" uid="uid://8h6k2dwcred8" path="res://mats/game_objs/boxes/hitbox.gd" id="6_no12h"]
 
 [sub_resource type="Resource" id="Resource_biu8s"]
 script = ExtResource("3_ryy55")
 pre_time = 0.0
 times = Array[float]([0.0, 0.8, 1.3, 1.72, 3.44, 5.16, 6.88, 7.2, 7.8, 8.0, 8.4, 8.9, 9.5, 0.0])
 
-[sub_resource type="Animation" id="Animation_cbsp2"]
-resource_name = "base"
+[sub_resource type="Animation" id="Animation_no12h"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("act/Summoner:spawn")
+tracks/0/path = NodePath("act/snr_container/Summoner:spawn")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -25,19 +26,63 @@ tracks/0/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("act/snr_container/Summoner2:spawn")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_cbsp2"]
+resource_name = "base"
 
 [sub_resource type="Animation" id="Animation_7ufdp"]
 resource_name = "track"
 length = 32.5
 step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("act/snr_container/Summoner2:spawn")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("act/snr_container/Summoner:spawn")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_woum6"]
 _data = {
+&"RESET": SubResource("Animation_no12h"),
 &"base": SubResource("Animation_cbsp2"),
 &"track": SubResource("Animation_7ufdp")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwvub"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nm02v"]
+radius = 20.0
 
 [node name="scenario" type="Node"]
 script = ExtResource("1_74fy2")
@@ -47,23 +92,54 @@ starts_from = 2.0
 action_times = Array[ExtResource("3_ryy55")]([SubResource("Resource_biu8s")])
 
 [node name="ap" type="AnimationPlayer" parent="."]
+reset_on_save = false
 libraries = {
-"": SubResource("AnimationLibrary_woum6")
+&"": SubResource("AnimationLibrary_woum6")
 }
 
 [node name="AudioPlayer" type="Node2D" parent="."]
 script = ExtResource("2_ml0r0")
+busName = "Music"
 
 [node name="act" type="Node2D" parent="."]
 
-[node name="Summoner" type="Node2D" parent="act" node_paths=PackedStringArray("add_to")]
-position = Vector2(0, 592)
+[node name="snr_container" type="Node2D" parent="act"]
+position = Vector2(1280, 360)
+
+[node name="Summoner" type="Node2D" parent="act/snr_container" node_paths=PackedStringArray("add_to")]
+rotation = -1.5708
 script = ExtResource("4_hhccw")
-add_to = NodePath("../..")
-shout_time = 0.02
+add_to = NodePath("../../..")
+spawn = true
+shout_time = 0.15
 collision_shape = SubResource("RectangleShape2D_gwvub")
 centered = true
 angle = 90.0
-line_size = 256.0
+line_size = 64.0
 speed_from = 550
 speed_to = 550
+
+[node name="Summoner2" type="Node2D" parent="act/snr_container" node_paths=PackedStringArray("add_to")]
+rotation = 1.5708
+script = ExtResource("4_hhccw")
+add_to = NodePath("../../..")
+spawn = true
+shout_time = 0.15
+collision_shape = SubResource("RectangleShape2D_gwvub")
+centered = true
+angle = 90.0
+line_size = 64.0
+speed_from = 550
+speed_to = 550
+
+[node name="HitBox" type="Area2D" parent="act/snr_container"]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("6_no12h")
+command_id = -1
+metadata/_custom_type_script = "uid://8h6k2dwcred8"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="act/snr_container/HitBox"]
+shape = SubResource("CircleShape2D_nm02v")
+
+[connection signal="save_checkpoint_reached" from="." to="." method="_on_save_checkpoint_reached"]

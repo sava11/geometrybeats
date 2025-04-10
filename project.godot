@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GeometryBeats"
-run/main_scene="res://main/main_ui.tscn"
+run/main_scene="uid://dvypavlab4dp0"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -21,6 +21,7 @@ sld="*res://mats/autoload/saver/save_load_data.gd"
 gmd="*res://mats/autoload/game_data.gd"
 fnc="*res://mats/autoload/functions.gd"
 sqlc="*res://mats/autoload/sqlc.cs"
+sli="*res://mats/autoload/save_load_info.gd"
 
 [display]
 

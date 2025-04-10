@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0nyfu7d43u4r"]
+[gd_scene load_steps=8 format=3 uid="uid://c0nyfu7d43u4r"]
 
-[ext_resource type="Script" uid="uid://b4a6dnionlnp3" path="res://main/main_ui.gd" id="1_fkue3"]
+[ext_resource type="Script" uid="uid://c2swndn14vq15" path="res://main/main_ui.gd" id="1_fkue3"]
 [ext_resource type="PackedScene" uid="uid://bds8dr70borml" path="res://mats/ui/line_level_choicer/line_choicer.tscn" id="2_pf8qx"]
-[ext_resource type="Texture2D" uid="uid://wpvw82ehaulg" path="res://mats/imgs/stared.svg" id="3_go56l"]
-[ext_resource type="Texture2D" uid="uid://d3sxwgq0tnkaq" path="res://icon.svg" id="4_xe7gy"]
+[ext_resource type="Texture2D" uid="uid://dnxovk8lovv7h" path="res://mats/imgs/stared.svg" id="3_go56l"]
+[ext_resource type="Texture2D" uid="uid://12w4ixebv5n0" path="res://icon.svg" id="4_xe7gy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2ui4"]
 content_margin_left = 4.0
@@ -19,6 +19,9 @@ corner_radius_bottom_left = 4
 [sub_resource type="Theme" id="Theme_nlu1f"]
 TooltipPanel/styles/panel = SubResource("StyleBoxFlat_u2ui4")
 
+[sub_resource type="LabelSettings" id="LabelSettings_4cyn3"]
+font_size = 48
+
 [node name="main_ui" type="Node"]
 process_mode = 3
 script = ExtResource("1_fkue3")
@@ -27,15 +30,16 @@ script = ExtResource("1_fkue3")
 process_mode = 1
 
 [node name="cl" type="CanvasLayer" parent="."]
+process_mode = 3
 
-[node name="vbc" type="VBoxContainer" parent="cl"]
+[node name="ui" type="VBoxContainer" parent="cl"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="mc2" type="MarginContainer" parent="cl/vbc"]
+[node name="mc2" type="MarginContainer" parent="cl/ui"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 8
@@ -43,45 +47,45 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="sc" type="ScrollContainer" parent="cl/vbc/mc2"]
+[node name="sc" type="ScrollContainer" parent="cl/ui/mc2"]
 layout_mode = 2
 
-[node name="cont" type="VBoxContainer" parent="cl/vbc/mc2/sc"]
+[node name="cont" type="VBoxContainer" parent="cl/ui/mc2/sc"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="item" parent="cl/vbc/mc2/sc/cont" instance=ExtResource("2_pf8qx")]
+[node name="item" parent="cl/ui/mc2/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
 training = true
 scenario = "res://mats/game_objs/scenarios/scnr1/scenario1.tscn"
 recive_points = 0
 
-[node name="item2" parent="cl/vbc/mc2/sc/cont" instance=ExtResource("2_pf8qx")]
+[node name="item2" parent="cl/ui/mc2/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
 scenario = "res://mats/game_objs/scenarios/scnr2/scenario.tscn"
 
-[node name="item3" parent="cl/vbc/mc2/sc/cont" instance=ExtResource("2_pf8qx")]
+[node name="item3" parent="cl/ui/mc2/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
-scenario = "res://mats/game_objs/scenarios/scnr3/scenario.tscn"
+scenario = "uid://8a5ryr75vgby"
 
-[node name="pc" type="PanelContainer" parent="cl/vbc"]
+[node name="pc" type="PanelContainer" parent="cl/ui"]
 layout_mode = 2
 theme = SubResource("Theme_nlu1f")
 
-[node name="mc" type="MarginContainer" parent="cl/vbc/pc"]
+[node name="mc" type="MarginContainer" parent="cl/ui/pc"]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="hbc" type="HBoxContainer" parent="cl/vbc/pc/mc"]
+[node name="hbc" type="HBoxContainer" parent="cl/ui/pc/mc"]
 layout_mode = 2
 theme_override_constants/separation = 32
 alignment = 1
 
-[node name="un" type="Label" parent="cl/vbc/pc/mc/hbc"]
+[node name="un" type="Label" parent="cl/ui/pc/mc/hbc"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
@@ -89,49 +93,102 @@ tooltip_text = "ваши данные"
 mouse_filter = 1
 text = "{user_name}"
 
-[node name="pnts" type="Label" parent="cl/vbc/pc/mc/hbc"]
+[node name="pnts" type="Label" parent="cl/ui/pc/mc/hbc"]
 modulate = Color(1, 0.929412, 0, 1)
 layout_mode = 2
 tooltip_text = "очки за уровни"
 mouse_filter = 1
 text = "{points}"
 
-[node name="strs_c" type="HBoxContainer" parent="cl/vbc/pc/mc/hbc"]
+[node name="strs_c" type="HBoxContainer" parent="cl/ui/pc/mc/hbc"]
 layout_mode = 2
 tooltip_text = "награды за выполнение заданий"
 
-[node name="tr" type="TextureRect" parent="cl/vbc/pc/mc/hbc/strs_c"]
+[node name="tr" type="TextureRect" parent="cl/ui/pc/mc/hbc/strs_c"]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 texture = ExtResource("3_go56l")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="strs" type="Label" parent="cl/vbc/pc/mc/hbc/strs_c"]
+[node name="strs" type="Label" parent="cl/ui/pc/mc/hbc/strs_c"]
 layout_mode = 2
 mouse_filter = 1
 text = "{stars}"
 
-[node name="hbc" type="HBoxContainer" parent="cl/vbc/pc/mc/hbc"]
+[node name="hbc" type="HBoxContainer" parent="cl/ui/pc/mc/hbc"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_constants/separation = 0
 
-[node name="exit" type="Button" parent="cl/vbc/pc/mc/hbc/hbc"]
+[node name="exit" type="Button" parent="cl/ui/pc/mc/hbc/hbc"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-text = "выйти"
+text = "выйти в "
 icon = ExtResource("4_xe7gy")
 expand_icon = true
 
-[node name="exit2" type="Button" parent="cl/vbc/pc/mc/hbc/hbc"]
+[node name="exit2" type="Button" parent="cl/ui/pc/mc/hbc/hbc"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "из игры"
+text = "Выйти из игры"
 icon = ExtResource("4_xe7gy")
 icon_alignment = 2
 expand_icon = true
 
-[connection signal="button_down" from="cl/vbc/pc/mc/hbc/hbc/exit" to="." method="_on_exit_button_down"]
-[connection signal="button_down" from="cl/vbc/pc/mc/hbc/hbc/exit2" to="." method="_on_exit_2_button_down"]
+[node name="pause" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Panel" type="Panel" parent="pause"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="pause/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -109.0
+offset_right = 109.0
+offset_bottom = 67.0
+grow_horizontal = 2
+text = "На Паузе"
+label_settings = SubResource("LabelSettings_4cyn3")
+
+[node name="vbc" type="VBoxContainer" parent="pause/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.5
+offset_top = -63.0
+offset_right = 112.5
+offset_bottom = 63.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 128
+
+[node name="cnt" type="Button" parent="pause/Panel/vbc"]
+layout_mode = 2
+text = "Продолжить игру"
+
+[node name="to_lvls" type="Button" parent="pause/Panel/vbc"]
+layout_mode = 2
+text = "выйти к уровням"
+
+[node name="exit" type="Button" parent="pause/Panel/vbc"]
+layout_mode = 2
+text = "выйти из игры"
+
+[connection signal="button_down" from="cl/ui/pc/mc/hbc/hbc/exit" to="." method="_on_exit_button_down"]
+[connection signal="button_down" from="cl/ui/pc/mc/hbc/hbc/exit2" to="." method="_on_exit_2_button_down"]
+[connection signal="button_down" from="pause/Panel/vbc/cnt" to="." method="_on_cnt_button_down"]
+[connection signal="button_down" from="pause/Panel/vbc/to_lvls" to="." method="_on_to_lvls_button_down"]
+[connection signal="button_down" from="pause/Panel/vbc/exit" to="." method="_on_exit_2_button_down"]

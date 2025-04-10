@@ -21,10 +21,11 @@ script = ExtResource("1_u4sxy")
 [node name="ap" type="AnimationPlayer" parent="."]
 reset_on_save = false
 libraries = {
-"": SubResource("AnimationLibrary_woum6")
+&"": SubResource("AnimationLibrary_woum6")
 }
 
 [node name="AudioPlayer" type="Node2D" parent="."]
 script = ExtResource("2_uxoha")
+busName = "Music"
 
 [node name="act" type="Node2D" parent="."]

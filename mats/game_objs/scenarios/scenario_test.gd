@@ -1,5 +1,6 @@
 class_name Scenario
 extends Node
+signal save_checkpoint_reached(id:int)
 signal action_activated(track:int,time:float)
 signal collection_event_activated(id:int,time:float)
 signal level_ended(node:Scenario)
@@ -58,10 +59,11 @@ func _ready() -> void:
 	bc.name="progress"
 	fl.add_child(bc)
 	var stars_bc:=HBoxContainer.new()
-	for e in collection.times:
-		var ch=CheckBox.new()
-		ch.disabled=true
-		stars_bc.add_child(ch)
+	if collection!=null:
+		for e in collection.times:
+			var ch=CheckBox.new()
+			ch.disabled=true
+			stars_bc.add_child(ch)
 	stars_bc.name="sbc"
 	fl.add_child(stars_bc)
 	add_child(fl)
@@ -113,6 +115,7 @@ func _physics_process(delta: float) -> void:
 	if checkpoints!=null:
 		can=checkpoints.can(cur_time,max_time)
 		if (can==0 and !infinite) or (can>=0 and infinite):
+			save_checkpoint_reached.emit(can)
 			saved_time=cur_time
 			if player!=null:
 				saved_player_pos=player.global_position
@@ -120,7 +123,7 @@ func _physics_process(delta: float) -> void:
 				for i in range($paths.get_child_count()):
 					var e:PathFollow2D=$paths.get_child(i).get_child(0)
 					saved_collected[i]=e.progress
-				print(saved_collected)
+				#print(saved_collected)
 			#print("checkpoint activated: %d"%[at])
 			emit_signal("checkpoint_activated")
 	for at:int in range(action_times.size()):
@@ -162,6 +165,9 @@ func _action_activated(track:int,time:float):pass
 func _level_ended(node:Scenario):pass
 func _level_started(node:Scenario):pass
 
+
+func return_saved_data():
+	pass
 func _player_dead(v:bool):
 	if deaths_count>0:
 		if !v:
@@ -172,6 +178,7 @@ func _player_dead(v:bool):
 			for e in get_children():
 				if e is MoveHitBox or e is HitBox:
 					e.queue_free()
+			return_saved_data()
 			player.global_position=saved_player_pos
 			collected=saved_collects
 			for e in range(get_node("fl/sbc").get_child_count()):

@@ -66,6 +66,7 @@ libraries = {
 
 [node name="AudioPlayer" type="Node2D" parent="."]
 script = ExtResource("4_pnd5b")
+busName = "Music"
 
 [node name="act" type="Node2D" parent="."]
 

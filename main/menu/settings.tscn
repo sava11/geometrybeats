@@ -1,0 +1,83 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgn6b7gjy87pi"]
+
+[ext_resource type="Script" uid="uid://djfdl1alnbd0y" path="res://main/menu/settings.gd" id="1_0cait"]
+
+[node name="settings" type="PanelContainer"]
+offset_right = 260.0
+offset_bottom = 130.0
+script = ExtResource("1_0cait")
+
+[node name="mc" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="vbc" type="VBoxContainer" parent="mc"]
+layout_mode = 2
+
+[node name="snd" type="HBoxContainer" parent="mc/vbc"]
+layout_mode = 2
+
+[node name="txt" type="VBoxContainer" parent="mc/vbc/snd"]
+layout_mode = 2
+theme_override_constants/separation = 13
+
+[node name="snd" type="Label" parent="mc/vbc/snd/txt"]
+layout_mode = 2
+text = "музыка"
+
+[node name="snd2" type="Label" parent="mc/vbc/snd/txt"]
+layout_mode = 2
+text = "эффекты"
+
+[node name="c" type="VBoxContainer" parent="mc/vbc/snd"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 24
+
+[node name="music" type="HSlider" parent="mc/vbc/snd/c"]
+layout_mode = 2
+max_value = 200.0
+step = 10.0
+value = 100.0
+
+[node name="sound" type="HSlider" parent="mc/vbc/snd/c"]
+layout_mode = 2
+max_value = 200.0
+step = 10.0
+value = 100.0
+
+[node name="fscr" type="HBoxContainer" parent="mc/vbc"]
+layout_mode = 2
+
+[node name="cb" type="CheckButton" parent="mc/vbc/fscr"]
+layout_mode = 2
+
+[node name="fs" type="Label" parent="mc/vbc/fscr"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Полный экран"
+
+[node name="hbc" type="HBoxContainer" parent="mc/vbc"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="bc" type="Button" parent="mc/vbc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "отменить"
+
+[node name="aply" type="Button" parent="mc/vbc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "применить"
+
+[connection signal="value_changed" from="mc/vbc/snd/c/music" to="." method="music_value_changed"]
+[connection signal="value_changed" from="mc/vbc/snd/c/sound" to="." method="effects_value_changed"]
+[connection signal="toggled" from="mc/vbc/fscr/cb" to="." method="full_screen_toggled"]
+[connection signal="button_down" from="mc/vbc/hbc/bc" to="." method="back"]
+[connection signal="button_down" from="mc/vbc/hbc/aply" to="." method="apply"]

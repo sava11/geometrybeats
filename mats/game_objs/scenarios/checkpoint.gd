@@ -17,4 +17,4 @@ func reset_to(time:float,max_time:float):
 	for e in range(times.size()):
 		if (time>=loops*max_time+times[played%times.size()]):
 			played+=1
-	print("reseted to: %d"%[played])
+	#print("reseted to: %d"%[played])

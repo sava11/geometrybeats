@@ -5,13 +5,14 @@ var sec_time=0
 @export var asm:AudioStream
 enum t{all, d2, d3,}
 @export var exto:t
-@export var busName:String="master"
+@export var busName:String="Master"
 @export var volume_db_2_3_d:float=0
 @export var auto_play:bool=false
 var playing:=false
 var temp_time_to_apply:=0.0
 func _ready() -> void:
-	if auto_play:pass
+	if auto_play:
+		play()
 func _process(delta):
 	for e in get_children():
 		if e.playing==false:
@@ -46,6 +47,8 @@ func play(time:float=sec_time,add_time:=0.0):
 		e.queue_free()
 	sec_time=time-add_time
 	temp_time_to_apply=time-add_time
+func is_playing()->bool:
+	return get_child_count()>0 and playing
 func stop():
 	playing=false
 	for e in get_children():
