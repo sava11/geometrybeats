@@ -16,11 +16,13 @@ var health:float=max_health:
 	set(value):
 		var d:float=value-health
 		health=value
-		if tspeed>0 and d<0:
-			start_invi(tspeed)
-		if health<=0 and d<0:
-			emit_signal("no_health")
-			health=0
+		if d<0:
+			if tspeed>0:
+				start_invi(tspeed)
+			if health<=0:
+				emit_signal("no_health")
+				health=0
+				t.stop()
 		emit_signal("health_changed",value,d)
 var t:Timer
 @export var tspeed:float=1.0
@@ -30,8 +32,6 @@ var invi=false:
 		self.set_deferred("monitorable",!value)
 		self.set_deferred("monitoring",!value)
 		if invi:
-			t.stop()
-			t.wait_time=tspeed
 			emit_signal("invi_started")
 		else:
 			emit_signal("invi_ended")

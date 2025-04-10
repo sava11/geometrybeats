@@ -9,7 +9,13 @@ signal dead(alive: bool)
 @export_range(0.001, 1000, 0.001, "or_greater") var spirit_timer := 0.5
 @export_range(1, 1000, 1, "or_greater") var spirit_speed := 700.0
 @export_range(1, 1000, 1, "or_greater") var spirit_acceleration := 2500.0
-@export var physical_body := true
+@export var physical_body := true:
+	set(v):
+		physical_body=v
+		if v and not $HurtBox.invi:
+			$skin.color.a = 1
+		else:
+			$skin.color.a = 0.5
 var alive := true
 var spirit_timer_temp := 0.0
 var last_mvd:=Vector2.RIGHT
@@ -19,9 +25,11 @@ func _ready() -> void:
 	$HurtBox.add_child(col)
 	$skin.size = col.shape.size
 	$skin.position = -col.shape.size / 2
+	$inv.max_value=$HurtBox.tspeed
 
 func _physics_process(delta: float) -> void:
 	if alive:
+		$inv.value=$HurtBox.t.time_left
 		var mvd = Vector2(
 			Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
 			Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
@@ -34,7 +42,6 @@ func _physics_process(delta: float) -> void:
 			$HurtBox.set_deferred("monitorable", physical_body)
 			$HurtBox.set_deferred("monitoring", physical_body)
 		if !physical_body:
-			$skin.color.a = 0.5
 			spirit_timer_temp += delta
 			if spirit_timer_temp >= spirit_timer:
 				spirit_timer_temp = 0
@@ -45,15 +52,28 @@ func _physics_process(delta: float) -> void:
 			else:
 				velocity = velocity.move_toward(last_mvd * spirit_speed, spirit_acceleration * delta)
 		else:
-			$skin.color.a = 1.0
 			velocity = velocity.move_toward(mvd * speed, acceleration * delta)
 		move_and_slide()
 
 func hited(v:float,d:float) -> void:
-	#$ap.play("hit")
 	if alive != (v>0):
 		emit_signal("dead", v>0)
 	alive = v>0
 	$skin.material.set("shader_parameter/sector", v/$HurtBox.max_health)
+	if d<0 and alive:
+		velocity+=fnc.move(randi_range(-180,180))*1000
+	else:
+		$inv.visible=false
+		$skin.color.a = 1
 	#$asp.stream = load("res://mats/sounds/twrauw.wav")
 	#$asp.play()
+
+
+func _on_hurt_box_invi_started() -> void:
+	$inv.visible=true
+	$skin.color.a = 0.5
+
+
+func _on_hurt_box_invi_ended() -> void:
+	$inv.visible=false
+	$skin.color.a = 1

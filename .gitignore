@@ -9,6 +9,6 @@ psql/
 *.import
 *.uid
 *.tmp
-*.old
+*.old*
 builds/
 export_presets.cfg

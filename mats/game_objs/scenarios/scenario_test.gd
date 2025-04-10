@@ -169,11 +169,11 @@ func _level_started(node:Scenario):pass
 func return_saved_data():
 	pass
 func _player_dead(v:bool):
+	asp.stop()
 	if deaths_count>0:
 		if !v:
 			deaths_count-=1
 			print("dead")
-			asp.stop()
 			asp.play(saved_time,starts_from)
 			for e in get_children():
 				if e is MoveHitBox or e is HitBox:

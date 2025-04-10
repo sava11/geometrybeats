@@ -1,16 +1,28 @@
-[gd_scene load_steps=14 format=3 uid="uid://8a5ryr75vgby"]
+[gd_scene load_steps=16 format=3 uid="uid://8a5ryr75vgby"]
 
-[ext_resource type="Script" uid="uid://c8kb0r74uidpl" path="res://mats/game_objs/scenarios/scnr3/scenario.gd" id="1_74fy2"]
-[ext_resource type="Script" uid="uid://dth4q2dvb4juw" path="res://mats/game_objs/masp/masp.gd" id="2_ml0r0"]
-[ext_resource type="AudioStream" uid="uid://cxsadgwcqqh0c" path="res://mats/sounds/preson.wav" id="2_vqk6t"]
-[ext_resource type="Script" uid="uid://cx41rh6rwuiwl" path="res://mats/game_objs/scenarios/object.gd" id="3_ryy55"]
-[ext_resource type="Script" uid="uid://ca2yewp12631f" path="res://mats/game_objs/summoner/summoner.gd" id="4_hhccw"]
-[ext_resource type="Script" uid="uid://8h6k2dwcred8" path="res://mats/game_objs/boxes/hitbox.gd" id="6_no12h"]
+[ext_resource type="Script" uid="uid://dd8fe5vx667al" path="res://mats/game_objs/scenarios/scnr3/scenario.gd" id="1_74fy2"]
+[ext_resource type="Script" uid="uid://bk8hquxf2ab2y" path="res://mats/game_objs/masp/masp.gd" id="2_ml0r0"]
+[ext_resource type="AudioStream" uid="uid://cwpg5lu1kyk2k" path="res://mats/sounds/run.wav" id="2_no12h"]
+[ext_resource type="Script" uid="uid://blhqygxwlfi2c" path="res://mats/game_objs/scenarios/object.gd" id="3_ryy55"]
+[ext_resource type="Script" uid="uid://b0v3a4amceo7i" path="res://mats/game_objs/summoner/summoner.gd" id="4_hhccw"]
+[ext_resource type="Script" uid="uid://di6xk166dv34i" path="res://mats/game_objs/boxes/hitbox.gd" id="6_no12h"]
 
 [sub_resource type="Resource" id="Resource_biu8s"]
 script = ExtResource("3_ryy55")
 pre_time = 0.0
 times = Array[float]([0.0, 0.8, 1.3, 1.72, 3.44, 5.16, 6.88, 7.2, 7.8, 8.0, 8.4, 8.9, 9.5, 0.0])
+
+[sub_resource type="Resource" id="Resource_nm02v"]
+script = ExtResource("3_ryy55")
+pre_time = 0.0
+times = Array[float]([5.14])
+metadata/_custom_type_script = "uid://blhqygxwlfi2c"
+
+[sub_resource type="Resource" id="Resource_ry1um"]
+script = ExtResource("3_ryy55")
+pre_time = 0.0
+times = Array[float]([12.0])
+metadata/_custom_type_script = "uid://blhqygxwlfi2c"
 
 [sub_resource type="Animation" id="Animation_no12h"]
 length = 0.001
@@ -86,10 +98,10 @@ radius = 20.0
 
 [node name="scenario" type="Node"]
 script = ExtResource("1_74fy2")
-audio = ExtResource("2_vqk6t")
-max_time = 32.5
+audio = ExtResource("2_no12h")
+max_time = 35.71
 starts_from = 2.0
-action_times = Array[ExtResource("3_ryy55")]([SubResource("Resource_biu8s")])
+action_times = Array[ExtResource("3_ryy55")]([SubResource("Resource_biu8s"), SubResource("Resource_nm02v"), SubResource("Resource_ry1um")])
 
 [node name="ap" type="AnimationPlayer" parent="."]
 reset_on_save = false
@@ -137,7 +149,6 @@ collision_layer = 8
 collision_mask = 8
 script = ExtResource("6_no12h")
 command_id = -1
-metadata/_custom_type_script = "uid://8h6k2dwcred8"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="act/snr_container/HitBox"]
 shape = SubResource("CircleShape2D_nm02v")

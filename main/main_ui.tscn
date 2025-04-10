@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://c0nyfu7d43u4r"]
 
-[ext_resource type="Script" uid="uid://c2swndn14vq15" path="res://main/main_ui.gd" id="1_fkue3"]
+[ext_resource type="Script" uid="uid://b4a6dnionlnp3" path="res://main/main_ui.gd" id="1_fkue3"]
 [ext_resource type="PackedScene" uid="uid://bds8dr70borml" path="res://mats/ui/line_level_choicer/line_choicer.tscn" id="2_pf8qx"]
-[ext_resource type="Texture2D" uid="uid://dnxovk8lovv7h" path="res://mats/imgs/stared.svg" id="3_go56l"]
-[ext_resource type="Texture2D" uid="uid://12w4ixebv5n0" path="res://icon.svg" id="4_xe7gy"]
+[ext_resource type="Texture2D" uid="uid://wpvw82ehaulg" path="res://mats/imgs/stared.svg" id="3_go56l"]
+[ext_resource type="Texture2D" uid="uid://d3sxwgq0tnkaq" path="res://icon.svg" id="4_xe7gy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2ui4"]
 content_margin_left = 4.0

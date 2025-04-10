@@ -7,15 +7,21 @@ var saved_smnrc_rot_deg:=0
 func _post_ready():
 	saved_smnrc_pos=smnrc.global_position
 func _post_physics_process(delta: float):
-	if asp.is_playing():
+	if asp.is_playing() and not save_was_emmited:
 		if int(smnrc.global_position.x)==int(get_size().x*int(right)):
 			right=!right
 		smnrc.global_position=smnrc.global_position.move_toward(
 			Vector2(get_size().x*int(right),smnrc.global_position.y),200*delta)
 		smnrc.rotation_degrees+=180*delta
-	pass
+	if save_was_emmited:
+		save_was_emmited=false
+
 func _action_activated(track:int,time:float):
 	pass
+	if track==1:
+		print("sdf")
+	if track==2:
+		print("sdf2222")
 	#if track==0:
 		#var smn:Summoner=$act/Summoner
 		#var pl=get_parent().get_node("player")
@@ -47,8 +53,11 @@ func _on_save_checkpoint_reached(id: int) -> void:
 	saved_smnrc_pos=smnrc.global_position
 	saved_smnrc_rot_deg=smnrc.global_rotation_degrees
 	saved_right=right
-
+	
+var save_was_emmited:=false
 func return_saved_data():
 	right=saved_right
 	smnrc.global_position=saved_smnrc_pos
 	smnrc.global_rotation_degrees=saved_smnrc_rot_deg
+	save_was_emmited=true
+	
