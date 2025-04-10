@@ -10,3 +10,5 @@ psql/
 *.uid
 *.tmp
 *.old
+builds/
+export_presets.cfg
