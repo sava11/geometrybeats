@@ -1,21 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://bds8dr70borml"]
+[gd_scene load_steps=9 format=3 uid="uid://bds8dr70borml"]
 
 [ext_resource type="StyleBox" uid="uid://bw36op1aqjel6" path="res://mats/ui/line_level_choicer/runned.tres" id="1_2o5yq"]
-[ext_resource type="Script" uid="uid://c7aapyjyccps" path="res://mats/ui/line_level_choicer/line_choicer.gd" id="2_pvyjb"]
-[ext_resource type="Script" uid="uid://85hk72o1ldau" path="res://mats/autoload/saver/saver.gd" id="3_752e8"]
-[ext_resource type="Script" uid="uid://cu2leaofmbntx" path="res://mats/autoload/saver/node_data.gd" id="4_ijh7j"]
-[ext_resource type="Script" uid="uid://bp0yvyydm4bgl" path="res://mats/autoload/saver/save_res.gd" id="5_7x1sj"]
+[ext_resource type="Script" uid="uid://cgrfnq3ghg2y" path="res://mats/ui/line_level_choicer/line_choicer.gd" id="2_pvyjb"]
+[ext_resource type="Script" uid="uid://k6vug6n7nsi1" path="res://mats/autoload/saver/saver.gd" id="3_752e8"]
+[ext_resource type="Script" uid="uid://cb5ofl74axrq2" path="res://mats/autoload/saver/node_data.gd" id="4_ijh7j"]
+[ext_resource type="Script" uid="uid://doto7tuv4f022" path="res://mats/autoload/saver/save_res.gd" id="5_7x1sj"]
 
 [sub_resource type="Theme" id="Theme_6jnkj"]
 default_font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_2dkg1"]
-font_size = 32
-font_color = Color(6.73831e-07, 0.952018, 0.606434, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_1m20y"]
-font_size = 32
-font_color = Color(1, 0.129412, 0.333333, 1)
 
 [sub_resource type="Resource" id="Resource_7k0f2"]
 script = ExtResource("4_ijh7j")
@@ -50,54 +42,23 @@ layout_mode = 2
 theme_override_constants/separation = 48
 alignment = 1
 
+[node name="play" type="Button" parent="mc/cont"]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+text = "[>"
+
 [node name="nm" type="Label" parent="mc/cont"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "voidus - saveliyano"
 
-[node name="points" type="HBoxContainer" parent="mc/cont"]
+[node name="to_history" type="Button" parent="mc/cont"]
 layout_mode = 2
-size_flags_horizontal = 6
-
-[node name="nm" type="Label" parent="mc/cont/points"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Очки:"
-
-[node name="v" type="Label" parent="mc/cont/points"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "0"
-label_settings = SubResource("LabelSettings_2dkg1")
-
-[node name="collect" type="HBoxContainer" parent="mc/cont"]
-layout_mode = 2
-size_flags_horizontal = 6
-
-[node name="nm" type="Label" parent="mc/cont/collect"]
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Собрано:"
-
-[node name="v" type="Label" parent="mc/cont/collect"]
-layout_mode = 2
-size_flags_horizontal = 0
-text = "0"
-label_settings = SubResource("LabelSettings_2dkg1")
-
-[node name="no_hit" type="Label" parent="mc/cont"]
-layout_mode = 2
-size_flags_horizontal = 10
-text = "без повреждений"
-label_settings = SubResource("LabelSettings_1m20y")
-
-[node name="play" type="Button" parent="."]
-layout_mode = 2
-flat = true
+text = "история"
 
 [node name="save_loader" type="Node" parent="."]
 script = ExtResource("3_752e8")
 sn = SubResource("Resource_2l2gf")
 
-[connection signal="button_down" from="play" to="." method="play"]
+[connection signal="button_down" from="mc/cont/play" to="." method="play"]
 [connection signal="data_loaded" from="save_loader" to="." method="_on_save_loader_data_loaded"]

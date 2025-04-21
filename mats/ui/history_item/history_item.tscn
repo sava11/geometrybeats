@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbxbmnjbqhpss"]
+
+[ext_resource type="StyleBox" uid="uid://bw36op1aqjel6" path="res://mats/ui/line_level_choicer/runned.tres" id="1_0gjea"]
+
+[sub_resource type="Theme" id="Theme_clu3v"]
+default_font_size = 32
+
+[node name="pc" type="PanelContainer"]
+theme = SubResource("Theme_clu3v")
+theme_override_styles/panel = ExtResource("1_0gjea")
+
+[node name="mc" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="hbc" type="HBoxContainer" parent="mc"]
+layout_mode = 2
+
+[node name="number" type="Label" parent="mc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="date" type="Label" parent="mc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="points" type="Label" parent="mc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="collected" type="Label" parent="mc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="no_hit" type="Label" parent="mc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3

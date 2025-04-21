@@ -27,15 +27,15 @@ func _on_log_button_down() -> void:
 		WHERE user_id = {0}
 		ORDER BY record_date DESC
 		LIMIT 1;".format([gmd.user_id]))
-			if arr.size()>0:
-				for e in arr:
-					gmd.data.merge({
-						int(e[0]):{
-							"points":int(e[1]),
-							"collected":int(e[2]),
-							"no_hit":e[3]
-							}
-						})
+			#if arr.size()>0:
+				#for e in arr:
+					#gmd.data.merge({
+						#int(e[0]):{
+							#"points":int(e[1]),
+							#"collected":int(e[2]),
+							#"no_hit":e[3]
+							#}
+						#})
 				get_tree().change_scene_to_file("res://main/main_ui.tscn")
 			else:
 				print("data isn't exists")

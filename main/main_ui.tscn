@@ -1,9 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0nyfu7d43u4r"]
+[gd_scene load_steps=10 format=3 uid="uid://c0nyfu7d43u4r"]
 
-[ext_resource type="Script" uid="uid://b4a6dnionlnp3" path="res://main/main_ui.gd" id="1_fkue3"]
+[ext_resource type="Script" uid="uid://c2swndn14vq15" path="res://main/main_ui.gd" id="1_fkue3"]
+[ext_resource type="StyleBox" uid="uid://bw36op1aqjel6" path="res://mats/ui/line_level_choicer/runned.tres" id="2_4cyn3"]
 [ext_resource type="PackedScene" uid="uid://bds8dr70borml" path="res://mats/ui/line_level_choicer/line_choicer.tscn" id="2_pf8qx"]
-[ext_resource type="Texture2D" uid="uid://wpvw82ehaulg" path="res://mats/imgs/stared.svg" id="3_go56l"]
-[ext_resource type="Texture2D" uid="uid://d3sxwgq0tnkaq" path="res://icon.svg" id="4_xe7gy"]
+[ext_resource type="Texture2D" uid="uid://dnxovk8lovv7h" path="res://mats/imgs/stared.svg" id="3_go56l"]
+[ext_resource type="Texture2D" uid="uid://12w4ixebv5n0" path="res://icon.svg" id="4_xe7gy"]
+
+[sub_resource type="Theme" id="Theme_o7kpg"]
+default_font_size = 32
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2ui4"]
 content_margin_left = 4.0
@@ -32,6 +36,100 @@ process_mode = 1
 [node name="cl" type="CanvasLayer" parent="."]
 process_mode = 3
 
+[node name="history" type="VBoxContainer" parent="cl"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="pc" type="PanelContainer" parent="cl/history"]
+self_modulate = Color(0.321569, 1, 1, 1)
+layout_mode = 2
+theme = SubResource("Theme_o7kpg")
+theme_override_styles/panel = ExtResource("2_4cyn3")
+
+[node name="mc" type="MarginContainer" parent="cl/history/pc"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="hbc" type="HBoxContainer" parent="cl/history/pc/mc"]
+layout_mode = 2
+
+[node name="back" type="Button" parent="cl/history/pc/mc/hbc"]
+layout_mode = 2
+text = "назад"
+
+[node name="lbl" type="Label" parent="cl/history/pc/mc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "история попыток"
+horizontal_alignment = 1
+
+[node name="pc2" type="PanelContainer" parent="cl/history"]
+self_modulate = Color(0.321569, 1, 1, 1)
+layout_mode = 2
+theme = SubResource("Theme_o7kpg")
+theme_override_styles/panel = ExtResource("2_4cyn3")
+
+[node name="mc" type="MarginContainer" parent="cl/history/pc2"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="fields" type="HBoxContainer" parent="cl/history/pc2/mc"]
+layout_mode = 2
+
+[node name="number" type="Button" parent="cl/history/pc2/mc/fields"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "№"
+flat = true
+alignment = 0
+
+[node name="date" type="Button" parent="cl/history/pc2/mc/fields"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "дата"
+flat = true
+alignment = 0
+
+[node name="points" type="Button" parent="cl/history/pc2/mc/fields"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "очки"
+flat = true
+alignment = 0
+
+[node name="collected" type="Button" parent="cl/history/pc2/mc/fields"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "собрано"
+flat = true
+alignment = 0
+
+[node name="collected2" type="Button" parent="cl/history/pc2/mc/fields"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "невредим"
+flat = true
+alignment = 0
+
+[node name="sc" type="ScrollContainer" parent="cl/history"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="cont" type="VBoxContainer" parent="cl/history/sc"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="ui" type="VBoxContainer" parent="cl"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,7 +137,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="mc2" type="MarginContainer" parent="cl/ui"]
+[node name="mc" type="MarginContainer" parent="cl/ui"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 8
@@ -47,25 +145,26 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="sc" type="ScrollContainer" parent="cl/ui/mc2"]
+[node name="sc" type="ScrollContainer" parent="cl/ui/mc"]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="cont" type="VBoxContainer" parent="cl/ui/mc2/sc"]
+[node name="cont" type="VBoxContainer" parent="cl/ui/mc/sc"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="item" parent="cl/ui/mc2/sc/cont" instance=ExtResource("2_pf8qx")]
+[node name="item" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
 training = true
 scenario = "res://mats/game_objs/scenarios/scnr1/scenario1.tscn"
 recive_points = 0
 
-[node name="item2" parent="cl/ui/mc2/sc/cont" instance=ExtResource("2_pf8qx")]
+[node name="item2" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
 scenario = "res://mats/game_objs/scenarios/scnr2/scenario.tscn"
 
-[node name="item3" parent="cl/ui/mc2/sc/cont" instance=ExtResource("2_pf8qx")]
+[node name="item3" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
 scenario = "uid://8a5ryr75vgby"
 
@@ -115,6 +214,23 @@ stretch_mode = 5
 layout_mode = 2
 mouse_filter = 1
 text = "{stars}"
+
+[node name="no_hits_c" type="HBoxContainer" parent="cl/ui/pc/mc/hbc"]
+modulate = Color(0.894118, 0.164706, 0.443137, 1)
+layout_mode = 2
+tooltip_text = "награды за выполнение заданий"
+
+[node name="tr" type="TextureRect" parent="cl/ui/pc/mc/hbc/no_hits_c"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+texture = ExtResource("3_go56l")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="no_hits" type="Label" parent="cl/ui/pc/mc/hbc/no_hits_c"]
+layout_mode = 2
+mouse_filter = 1
+text = "{no_hits}"
 
 [node name="hbc" type="HBoxContainer" parent="cl/ui/pc/mc/hbc"]
 custom_minimum_size = Vector2(200, 0)
@@ -187,6 +303,7 @@ text = "выйти к уровням"
 layout_mode = 2
 text = "выйти из игры"
 
+[connection signal="button_down" from="cl/history/pc/mc/hbc/back" to="." method="_on_back_from_history_button_down"]
 [connection signal="button_down" from="cl/ui/pc/mc/hbc/hbc/exit" to="." method="_on_exit_button_down"]
 [connection signal="button_down" from="cl/ui/pc/mc/hbc/hbc/exit2" to="." method="_on_exit_2_button_down"]
 [connection signal="button_down" from="pause/Panel/vbc/cnt" to="." method="_on_cnt_button_down"]
