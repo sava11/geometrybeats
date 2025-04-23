@@ -4,7 +4,7 @@
 [ext_resource type="StyleBox" uid="uid://bw36op1aqjel6" path="res://mats/ui/line_level_choicer/runned.tres" id="2_4cyn3"]
 [ext_resource type="PackedScene" uid="uid://bds8dr70borml" path="res://mats/ui/line_level_choicer/line_choicer.tscn" id="2_pf8qx"]
 [ext_resource type="Texture2D" uid="uid://dnxovk8lovv7h" path="res://mats/imgs/stared.svg" id="3_go56l"]
-[ext_resource type="Texture2D" uid="uid://12w4ixebv5n0" path="res://icon.svg" id="4_xe7gy"]
+[ext_resource type="Texture2D" uid="uid://8vlupsycp4tp" path="res://icon.svg" id="4_xe7gy"]
 
 [sub_resource type="Theme" id="Theme_o7kpg"]
 default_font_size = 32
@@ -87,40 +87,30 @@ theme_override_constants/margin_bottom = 4
 [node name="fields" type="HBoxContainer" parent="cl/history/pc2/mc"]
 layout_mode = 2
 
-[node name="number" type="Button" parent="cl/history/pc2/mc/fields"]
+[node name="number" type="Label" parent="cl/history/pc2/mc/fields"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "№"
-flat = true
-alignment = 0
 
-[node name="date" type="Button" parent="cl/history/pc2/mc/fields"]
+[node name="date" type="Label" parent="cl/history/pc2/mc/fields"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "дата"
-flat = true
-alignment = 0
 
-[node name="points" type="Button" parent="cl/history/pc2/mc/fields"]
+[node name="points" type="Label" parent="cl/history/pc2/mc/fields"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "очки"
-flat = true
-alignment = 0
 
-[node name="collected" type="Button" parent="cl/history/pc2/mc/fields"]
+[node name="collected" type="Label" parent="cl/history/pc2/mc/fields"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "собрано"
-flat = true
-alignment = 0
 
-[node name="collected2" type="Button" parent="cl/history/pc2/mc/fields"]
+[node name="no_hits" type="Label" parent="cl/history/pc2/mc/fields"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "невредим"
-flat = true
-alignment = 0
 
 [node name="sc" type="ScrollContainer" parent="cl/history"]
 layout_mode = 2
@@ -157,15 +147,18 @@ size_flags_vertical = 3
 [node name="item" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
 training = true
+track_name = "preview"
 scenario = "res://mats/game_objs/scenarios/scnr1/scenario1.tscn"
 recive_points = 0
 
 [node name="item2" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
+track_name = "start point"
 scenario = "res://mats/game_objs/scenarios/scnr2/scenario.tscn"
 
 [node name="item3" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
+track_name = "selected"
 scenario = "uid://8a5ryr75vgby"
 
 [node name="pc" type="PanelContainer" parent="cl/ui"]

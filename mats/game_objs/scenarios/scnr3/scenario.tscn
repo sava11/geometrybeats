@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://dcopb4q0cusog" path="res://mats/sounds/run.wav" id="2_no12h"]
 [ext_resource type="Script" uid="uid://cx41rh6rwuiwl" path="res://mats/game_objs/scenarios/object.gd" id="3_ryy55"]
 [ext_resource type="Script" uid="uid://ca2yewp12631f" path="res://mats/game_objs/summoner/summoner.gd" id="4_hhccw"]
-[ext_resource type="Script" uid="uid://8h6k2dwcred8" path="res://mats/game_objs/boxes/hitbox.gd" id="6_no12h"]
+[ext_resource type="Script" uid="uid://dqnmj2rr5w5nd" path="res://mats/game_objs/custom_damage_areas/moveing_box.gd" id="6_no12h"]
 
 [sub_resource type="Resource" id="Resource_biu8s"]
 script = ExtResource("3_ryy55")
@@ -50,6 +50,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("act/snr_container/HitBox:enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_cbsp2"]
 resource_name = "base"
@@ -81,6 +93,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("act/snr_container/HitBox:enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_woum6"]
@@ -122,7 +146,6 @@ position = Vector2(1280, 360)
 rotation = -1.5708
 script = ExtResource("4_hhccw")
 add_to = NodePath("../../..")
-spawn = true
 shout_time = 0.15
 collision_shape = SubResource("RectangleShape2D_gwvub")
 centered = true
@@ -135,7 +158,6 @@ speed_to = 550
 rotation = 1.5708
 script = ExtResource("4_hhccw")
 add_to = NodePath("../../..")
-spawn = true
 shout_time = 0.15
 collision_shape = SubResource("RectangleShape2D_gwvub")
 centered = true
@@ -148,7 +170,8 @@ speed_to = 550
 collision_layer = 8
 collision_mask = 8
 script = ExtResource("6_no12h")
-command_id = -1
+enabled = 0.0
+metadata/_custom_type_script = "uid://dqnmj2rr5w5nd"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="act/snr_container/HitBox"]
 shape = SubResource("CircleShape2D_nm02v")

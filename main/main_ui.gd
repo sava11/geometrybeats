@@ -76,15 +76,17 @@ func _to_history(id:int):
 		e.queue_free()
 	if sqlc.CheckConnection():
 		var history:Array=sqlc.query("
-CALL get_user_level_attempts(1, 1, 'record_id DESC')
+CALL get_user_level_attempts({0}, {1}, 'record_id DESC')
 ;".format([gmd.user_id,id]))
-		for e in history:
+		for i in range(history.size()):
+			var e=history[i]
 			var item:=preload("res://mats/ui/history_item/history_item.tscn").instantiate()
-			item.get_node("mc/hbc/number").text=str(e[0])
-			item.get_node("mc/hbc/points").text=str(e[1])
-			item.get_node("mc/hbc/collected").text=str(e[2])
-			item.get_node("mc/hbc/no_hit").text=str(e[3])
-			item.get_node("mc/hbc/date").text=str(e[4][0])
+			print(e)
+			item.get_node("mc/hbc/number").text=str(i)
+			item.get_node("mc/hbc/points").text=str(e[0])
+			item.get_node("mc/hbc/collected").text=str(e[1])
+			item.get_node("mc/hbc/no_hit").text=str(e[2])
+			item.get_node("mc/hbc/date").text=str(e[3][0])
 			history_item_cont.add_child(item)
 	$cl/history.show()
 	$cl/ui.hide()

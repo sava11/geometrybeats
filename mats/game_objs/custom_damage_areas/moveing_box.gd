@@ -26,7 +26,7 @@ func _post_ready():
 			evented=true
 
 func _phy_proc(delta:float) -> void:
-	if oneshout:
+	if oneshout and curve.point_count>0:
 		time+=delta
 		enabled=curve.sample_baked(time/deletion_timer)
 		if time>=local_event_time and !evented:

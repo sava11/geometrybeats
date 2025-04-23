@@ -18,10 +18,10 @@ func _post_physics_process(delta: float):
 
 func _action_activated(track:int,time:float):
 	pass
-	if track==1:
-		print("sdf")
-	if track==2:
-		print("sdf2222")
+	#if track==1:
+		#print("sdf")
+	#if track==2:
+		#print("sdf2222")
 	#if track==0:
 		#var smn:Summoner=$act/Summoner
 		#var pl=get_parent().get_node("player")

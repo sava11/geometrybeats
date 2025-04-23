@@ -10,7 +10,7 @@ var no_hit:=true
 #var runned:=false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
+	$mc/cont/to_history.visible=!training
 	$mc/cont/nm.text=str(track_name)+" - "+str(authors_data)
 	#$mc/cont/collect.visible=!training
 	#$mc/cont/points.visible=!training
