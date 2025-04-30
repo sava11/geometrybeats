@@ -1,11 +1,11 @@
 [gd_scene load_steps=16 format=3 uid="uid://8a5ryr75vgby"]
 
-[ext_resource type="Script" uid="uid://c8kb0r74uidpl" path="res://mats/game_objs/scenarios/scnr3/scenario.gd" id="1_74fy2"]
-[ext_resource type="Script" uid="uid://dth4q2dvb4juw" path="res://mats/game_objs/masp/masp.gd" id="2_ml0r0"]
-[ext_resource type="AudioStream" uid="uid://dcopb4q0cusog" path="res://mats/sounds/run.wav" id="2_no12h"]
-[ext_resource type="Script" uid="uid://cx41rh6rwuiwl" path="res://mats/game_objs/scenarios/object.gd" id="3_ryy55"]
-[ext_resource type="Script" uid="uid://ca2yewp12631f" path="res://mats/game_objs/summoner/summoner.gd" id="4_hhccw"]
-[ext_resource type="Script" uid="uid://dqnmj2rr5w5nd" path="res://mats/game_objs/custom_damage_areas/moveing_box.gd" id="6_no12h"]
+[ext_resource type="Script" uid="uid://dd8fe5vx667al" path="res://mats/game_objs/scenarios/scnr3/scenario.gd" id="1_74fy2"]
+[ext_resource type="Script" uid="uid://bk8hquxf2ab2y" path="res://mats/game_objs/masp/masp.gd" id="2_ml0r0"]
+[ext_resource type="AudioStream" uid="uid://cwpg5lu1kyk2k" path="res://mats/sounds/run.wav" id="2_no12h"]
+[ext_resource type="Script" uid="uid://blhqygxwlfi2c" path="res://mats/game_objs/scenarios/object.gd" id="3_ryy55"]
+[ext_resource type="Script" uid="uid://b0v3a4amceo7i" path="res://mats/game_objs/summoner/summoner.gd" id="4_hhccw"]
+[ext_resource type="Script" uid="uid://bg5m5dfpxw7pc" path="res://mats/game_objs/custom_damage_areas/moveing_box.gd" id="6_no12h"]
 
 [sub_resource type="Resource" id="Resource_biu8s"]
 script = ExtResource("3_ryy55")
@@ -171,7 +171,6 @@ collision_layer = 8
 collision_mask = 8
 script = ExtResource("6_no12h")
 enabled = 0.0
-metadata/_custom_type_script = "uid://dqnmj2rr5w5nd"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="act/snr_container/HitBox"]
 shape = SubResource("CircleShape2D_nm02v")
