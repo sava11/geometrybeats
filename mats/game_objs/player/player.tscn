@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://djuxdooutd0il"]
 
-[ext_resource type="Script" uid="uid://dnbwciim6yofb" path="res://mats/game_objs/player/player.gd" id="1_iw1vq"]
-[ext_resource type="Shader" uid="uid://b5yoydq2bqwtw" path="res://mats/shaders/player_health.gdshader" id="1_jj6h8"]
+[ext_resource type="Script" uid="uid://c1w82h75njlte" path="res://mats/game_objs/player/player.gd" id="1_iw1vq"]
+[ext_resource type="Shader" uid="uid://w6whx6bco1vq" path="res://mats/shaders/player_health.gdshader" id="1_jj6h8"]
 [ext_resource type="PackedScene" uid="uid://heog28crk5py" path="res://mats/game_objs/boxes/hurt_box.tscn" id="2_tm1d6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1txqo"]
@@ -27,8 +27,9 @@ spirit_acceleration = 100000.0
 shape = SubResource("RectangleShape2D_1txqo")
 
 [node name="HurtBox" parent="." instance=ExtResource("2_tm1d6")]
-max_health = 3.0
+collision_layer = 0
 tspeed = 1.5
+max_health = 3.0
 
 [node name="skin" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_emwrk")

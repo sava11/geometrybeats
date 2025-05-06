@@ -1,11 +1,12 @@
 [gd_scene load_steps=2 format=3 uid="uid://heog28crk5py"]
 
-[ext_resource type="Script" uid="uid://dmx16ybe4ld7d" path="res://mats/game_objs/boxes/hurt_box.gd" id="1"]
+[ext_resource type="Script" uid="uid://b6ohf68h2163e" path="res://mats/game_objs/boxes/hurt_box.gd" id="1"]
 
 [node name="HurtBox" type="Area2D"]
 collision_layer = 8
 collision_mask = 8
 script = ExtResource("1")
+flags = 7
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

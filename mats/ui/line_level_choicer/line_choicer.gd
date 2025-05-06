@@ -12,6 +12,8 @@ var no_hit:=true
 func _ready() -> void:
 	$mc/cont/to_history.visible=!training
 	$mc/cont/nm.text=str(track_name)+" - "+str(authors_data)
+	if not gmd.online:
+		$mc/cont/to_history.hide()
 	#$mc/cont/collect.visible=!training
 	#$mc/cont/points.visible=!training
 	#$mc/cont/no_hit.visible=!training and runned and no_hit
@@ -39,11 +41,11 @@ func _on_level_end(node:Scenario):
 	if sqlc.CheckConnection():
 		sqlc.query("
 insert into user_level_records(user_id,record_date,level_id,points,collected,no_hit) values
-({0}, NOW(), {1}, {2}, {3}, {4})
+({0}, CURRENT_TIMESTAMP, {1}, {2}, {3}, {4})
 ;".format([gmd.user_id,get_index(),recived_points,node.collected,no_hit]))
 	get_tree().current_scene.upd_data()
 	get_tree().current_scene.get_node("cl").show()
-	$play.grab_focus()
+	$mc/cont/play.grab_focus()
 
 
 func play() -> void:

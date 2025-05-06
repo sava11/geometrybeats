@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 			var scn:Node2D=MoveHitBox.new()
 			scn.deletion_timer=0
 			scn.global_position=global_position
-			scn.command_id=-1
+			scn.collision_layer=8
 			var col:=CollisionShape2D.new()
 			if col!=null:col.shape=collision_shape
 			var vec:=Vector2(

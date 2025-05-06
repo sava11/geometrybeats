@@ -18,7 +18,7 @@ func _physics_process(delta: float) -> void:
 		scn.oneshout=true
 		scn.deletion_timer=summon_time
 		scn.global_position=global_position
-		scn.command_id=-1
+		scn.collision_layer=8
 		scn.local_event_time=obj_event_time
 		var col:=CollisionShape2D.new()
 		if col!=null:col.shape=collision_shape
@@ -41,12 +41,11 @@ func _physics_process(delta: float) -> void:
 						var ang:=rad_to_deg(-atan2(-p.y,p.x))
 						pol.append(Vector2(cos(deg_to_rad(ang+e)),sin(deg_to_rad(ang+e)))*p.length_squared())
 					scn.new_polygons.append(pol)
-				scn.local_event.connect((func():
-					
+				scn.local_event.connect(func():
 					s.add_to=add_to
 					s.global_position=scn.global_position
 					add_to.add_child(s)
-					))	
+					)
 		scn.add_child(col)
 		col.global_position=global_position+summon_offset
 		add_to.add_child(scn)

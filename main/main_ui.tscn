@@ -143,6 +143,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 8
 
 [node name="item" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
@@ -194,7 +195,7 @@ text = "{points}"
 
 [node name="strs_c" type="HBoxContainer" parent="cl/ui/pc/mc/hbc"]
 layout_mode = 2
-tooltip_text = "награды за выполнение заданий"
+tooltip_text = "награды за собранные предметы"
 
 [node name="tr" type="TextureRect" parent="cl/ui/pc/mc/hbc/strs_c"]
 custom_minimum_size = Vector2(32, 0)
@@ -211,7 +212,7 @@ text = "{stars}"
 [node name="no_hits_c" type="HBoxContainer" parent="cl/ui/pc/mc/hbc"]
 modulate = Color(0.894118, 0.164706, 0.443137, 1)
 layout_mode = 2
-tooltip_text = "награды за выполнение заданий"
+tooltip_text = "количество пройденных уровней без урона"
 
 [node name="tr" type="TextureRect" parent="cl/ui/pc/mc/hbc/no_hits_c"]
 custom_minimum_size = Vector2(32, 0)
@@ -235,7 +236,7 @@ theme_override_constants/separation = 0
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-text = "выйти в "
+text = "авторизация"
 icon = ExtResource("4_xe7gy")
 expand_icon = true
 

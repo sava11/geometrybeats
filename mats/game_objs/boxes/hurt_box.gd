@@ -1,73 +1,78 @@
 class_name HurtBox extends Area2D
-signal pull_applyed(pull_power:Vector2)
 signal invi_started
 signal invi_ended
-signal no_health
+signal dead
+signal revived
 signal health_changed(value:float, delta:float)
 signal max_health_changed(value:float, delta:float)
-@export var command_id:=0
-@export var max_health:float=1:
-	set(value):
-		var d:float=value-max_health
-		self.health=snapped(value*self.health/max_health,0.001)
-		max_health=value
-		emit_signal("max_health_changed",max_health,d)
-var health:float=max_health: 
-	set(value):
-		var d:float=value-health
-		health=value
-		if d<0:
-			if tspeed>0:
-				start_invi(tspeed)
-			if health<=0:
-				emit_signal("no_health")
-				health=0
-				t.stop()
-		emit_signal("health_changed",value,d)
-var t:Timer
 @export var tspeed:float=1.0
-var invi=false: 
-	set(value):
-		invi=value
-		self.set_deferred("monitorable",!value)
-		self.set_deferred("monitoring",!value)
-		if invi:
-			emit_signal("invi_started")
+@export_flags_2d_physics() var flags:=13
+@export var max_health:float=1: set=set_max_health
+func set_max_health(value:float):
+		emit_signal("max_health_changed",value,value-max_health)
+		self.health=value*float(health)/float(max_health)
+		max_health=value
+
+var health:float=max_health: set=set_health
+func set_health(value:float):
+		var delta:=value-health
+		emit_signal("health_changed",value,delta)
+		if health<=0 and delta>0:
+			alive=true
+			emit_signal("revived")
+		if is_node_ready():
+			health=min(value,max_health)
 		else:
-			emit_signal("invi_ended")
-@onready var last_glb_pos:Vector2=global_position
-@onready var glb_pos:Vector2=global_position
-func _init() -> void:
-	collision_layer=8
-	collision_mask=8
+			alive=true
+			health=value
+		if health<=0 and alive:
+			alive=false
+			emit_signal("dead")
+			health=0
+
+@onready var t:=Timer.new()
+var alive:=false
+var invincible=false:set=set_invincible
+func set_invincible(v):
+	invincible=v
+	self.set_deferred("monitorable",!v)
+	self.set_deferred("monitoring",!v)
+	if invincible:
+		emit_signal("invi_started")
+	else:
+		emit_signal("invi_ended")
+
+
 func _ready():
-	if !is_connected("area_exited",Callable(self,"_on_area_exited")):
-		connect("area_exited",Callable(self,"_on_area_exited"))
-	emit_signal("max_health_changed",max_health,0)
-	emit_signal("health_changed",health,0)
-	t=Timer.new()
-	t.timeout.connect(self._on_Timer_timeout)
+	if !area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
+	emit_signal("max_health_changed",max_health,max_health)
+	emit_signal("health_changed",health,health)
 	add_child(t)
+	t.timeout.connect(_on_Timer_timeout)
 	if tspeed>0:
 		t.wait_time=tspeed
 
-func _physics_process(delta: float) -> void:
-	if global_position!=last_glb_pos:
-		glb_pos=global_position-last_glb_pos
-		last_glb_pos=global_position
+func start_invincible(duration:float=1):
+	if duration>0:
+		self.invincible=true
+		t.start(duration)
 
-func start_invi(dir):
-	self.invi=true
-	t.start(dir)
 func _on_Timer_timeout():
-	self.invi=false
+	self.invincible=false
 
-var exceptions:Array[HitBox]
-func _on_area_entered(area:Area2D):
-	if area is HitBox and command_id!=area.command_id and !(area in exceptions):
-		var dmg=area.damage
-		health-=dmg
 
-func _on_area_exited(area: Area2D) -> void:
-	if area is HitBox and area in exceptions:
-		exceptions.remove_at(exceptions.find(area))
+func _on_area_entered(area: HitBox) -> void:
+	if health>0:
+		var r=RayCast2D.new()
+		r.name="ray_to_"+name
+		area.add_child(r)
+		r.global_position=area.global_position
+		r.target_position=global_position-r.global_position
+		r.global_rotation_degrees=0
+		r.collision_mask=flags
+		r.force_raycast_update()
+		if r.get_collider()==get_parent() or r.get_collider()==null:
+			health-=area.damage
+			start_invincible(tspeed)
+		r.queue_free()

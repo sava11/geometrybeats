@@ -7,6 +7,7 @@ signal level_ended(node:Scenario)
 signal level_started(node:Scenario)
 signal checkpoint_activated()
 @export var debug:=false
+@export var save_data:Array[node_data]
 @export var infinite:bool=false
 @export var auto_play_animation:bool=false
 @export var audio:AudioStream
@@ -24,6 +25,7 @@ var lvl_state:int=0
 var asp:AudioPlayer
 var cur_time:=0.0
 var collected:=0
+var saved_data:Dictionary
 
 @onready var player=get_node_or_null("../player")
 func get_size()->Vector2:
@@ -84,6 +86,13 @@ func _ready() -> void:
 		asp.time=max_time
 	if auto_play_animation:
 		$ap.play("track")
+	for dt in save_data:
+		var n=get_node(dt.node)
+		if is_instance_valid(n):
+			var d:Dictionary
+			for e in dt.data:
+				d.merge( {e:n.get(e)}, true )
+			saved_data.merge({str(n.get_path()):d}, true)
 	if is_instance_valid(collection) and collection!=null:
 		for e in range(collection.times.size()):
 			var sz := get_size()
@@ -120,6 +129,13 @@ func _physics_process(delta: float) -> void:
 			if player!=null:
 				saved_player_pos=player.global_position
 				saved_collects=collected
+				for dt in save_data:
+					var n=get_node(dt.node)
+					if is_instance_valid(n):
+						var d:Dictionary
+						for e in dt.data:
+							d.merge( {e:n.get(e)}, true )
+						saved_data.merge({str(n.get_path()):d})
 				for i in range($paths.get_child_count()):
 					var e:PathFollow2D=$paths.get_child(i).get_child(0)
 					saved_collected[i]=e.progress
@@ -179,6 +195,12 @@ func _player_dead(v:bool):
 				if e is MoveHitBox or e is HitBox:
 					e.queue_free()
 			return_saved_data()
+			for dt in save_data:
+				var n=get_node(dt.node)
+				if is_instance_valid(n):
+					for e in dt.data:
+						n.set(e,saved_data[str(n.get_path())][e])
+						n.set_deferred(e,saved_data[str(n.get_path())][e])
 			player.global_position=saved_player_pos
 			collected=saved_collects
 			for e in range(get_node("fl/sbc").get_child_count()):

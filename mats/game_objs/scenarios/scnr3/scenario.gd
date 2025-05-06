@@ -1,24 +1,34 @@
 extends Scenario
-var right:=true
-@onready var smnrc:=$act/snr_container
-var saved_right:=true
-var saved_smnrc_pos:Vector2
-var saved_smnrc_rot_deg:=0
-func _post_ready():
-	saved_smnrc_pos=smnrc.global_position
-func _post_physics_process(delta: float):
-	if asp.is_playing() and not save_was_emmited:
-		if int(smnrc.global_position.x)==int(get_size().x*int(right)):
-			right=!right
-		smnrc.global_position=smnrc.global_position.move_toward(
-			Vector2(get_size().x*int(right),smnrc.global_position.y),200*delta)
-		smnrc.rotation_degrees+=180*delta
-	if save_was_emmited:
-		save_was_emmited=false
+#var right:=true
+#@onready var smnrc:=$act/snr_container
+#var saved_right:=true
+#var saved_smnrc_pos:Vector2
+#var saved_smnrc_rot_deg:=0
+#func _post_ready():
+	#saved_smnrc_pos=smnrc.global_position
+#func _post_physics_process(delta: float):
+	#if asp.is_playing() and not save_was_emmited:
+		#if int(smnrc.global_position.x)==int(get_size().x*int(right)):
+			#right=!right
+		#smnrc.global_position=smnrc.global_position.move_toward(
+			#Vector2(get_size().x*int(right),smnrc.global_position.y),200*delta)
+		#smnrc.rotation_degrees+=180*delta
+	#if save_was_emmited:
+		#save_was_emmited=false
 
 func _action_activated(track:int,time:float):
 	pass
-	#if track==1:
+	if track==0:
+		$act/PreSpawner.global_position = get_rand_pos()
+		$act/PreSpawner.spawn=true
+	if track==1:
+		$act/PreSpawner2.global_position = get_rand_pos()
+		$act/PreSpawner2.spawn=true
+	if track==2:
+		if $act/Summoner.spawn:
+			$act/Summoner.spawn=false
+		else:
+			$act/Summoner.spawn=true
 		#print("sdf")
 	#if track==2:
 		#print("sdf2222")
@@ -49,15 +59,15 @@ func _action_activated(track:int,time:float):
 func _level_ended(node:Scenario):pass
 
 
-func _on_save_checkpoint_reached(id: int) -> void:
-	saved_smnrc_pos=smnrc.global_position
-	saved_smnrc_rot_deg=smnrc.global_rotation_degrees
-	saved_right=right
-	
-var save_was_emmited:=false
-func return_saved_data():
-	right=saved_right
-	smnrc.global_position=saved_smnrc_pos
-	smnrc.global_rotation_degrees=saved_smnrc_rot_deg
-	save_was_emmited=true
-	
+#func _on_save_checkpoint_reached(id: int) -> void:
+	#saved_smnrc_pos=smnrc.global_position
+	#saved_smnrc_rot_deg=smnrc.global_rotation_degrees
+	#saved_right=right
+	#
+#var save_was_emmited:=false
+#func return_saved_data():
+	#right=saved_right
+	#smnrc.global_position=saved_smnrc_pos
+	#smnrc.global_rotation_degrees=saved_smnrc_rot_deg
+	#save_was_emmited=true
+	#

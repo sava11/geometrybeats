@@ -3,6 +3,7 @@ extends Node2D
 @export var add_to:Node
 @export var spawn:=false
 @export var shout_time:=0.2
+@export var shout_step:=32.0
 @export var collision_shape:Shape2D
 @export var centered:=false
 @export var angle:float=0
@@ -15,7 +16,7 @@ func _physics_process(delta: float) -> void:
 	if add_to!=null and spawn and temp_time>=shout_time:
 		var scn:Node2D=MoveHitBox.new()
 		scn.deletion_timer=0
-		scn.command_id=-1
+		scn.collision_layer=8
 		var col:=CollisionShape2D.new()
 		if col!=null:col.shape=collision_shape
 		var v:=Vector2.RIGHT
@@ -23,9 +24,9 @@ func _physics_process(delta: float) -> void:
 		var ang:=rad_to_deg(-atan2(-v.y,v.x))+angle+global_rotation_degrees
 		v=fnc.move(ang)
 		if centered:
-			v*=snapped(randi_range(-line_size/2,line_size/2),0.001)
+			v*=snapped(randi_range(-line_size/2,line_size/2),shout_step)
 		else:
-			v*=snapped(randi_range(0,line_size),0.001)
+			v*=snapped(randi_range(0,line_size),shout_step)
 		scn.global_position=global_position+v
 		scn.speed_dir=fnc.move(global_rotation_degrees)
 		scn.speed=randi_range(speed_from,speed_to)

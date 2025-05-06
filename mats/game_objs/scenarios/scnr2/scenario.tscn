@@ -1,11 +1,11 @@
 [gd_scene load_steps=16 format=3 uid="uid://bpbffjfh4ldhn"]
 
-[ext_resource type="Script" uid="uid://ctp27il73uy01" path="res://mats/game_objs/scenarios/scnr2/scenario.gd" id="1_6ueg6"]
-[ext_resource type="AudioStream" uid="uid://dpspooslv15oe" path="res://mats/sounds/str.ogg" id="2_scidx"]
-[ext_resource type="Script" uid="uid://ddxpv4vko2kpf" path="res://mats/game_objs/scenarios/checkpoint.gd" id="3_t6xs8"]
-[ext_resource type="Script" uid="uid://cx41rh6rwuiwl" path="res://mats/game_objs/scenarios/object.gd" id="3_ugu08"]
-[ext_resource type="Script" uid="uid://dth4q2dvb4juw" path="res://mats/game_objs/masp/masp.gd" id="4_pnd5b"]
-[ext_resource type="Script" uid="uid://hwblj5rogb6w" path="res://mats/game_objs/prespawner/pre_spawner.gd" id="5_b3yua"]
+[ext_resource type="Script" uid="uid://cttks5nbiumks" path="res://mats/game_objs/scenarios/scnr2/scenario.gd" id="1_6ueg6"]
+[ext_resource type="AudioStream" uid="uid://c6aa456480bix" path="res://mats/sounds/str.ogg" id="2_scidx"]
+[ext_resource type="Script" uid="uid://df8b5oi6clwnk" path="res://mats/game_objs/scenarios/checkpoint.gd" id="3_t6xs8"]
+[ext_resource type="Script" uid="uid://blhqygxwlfi2c" path="res://mats/game_objs/scenarios/object.gd" id="3_ugu08"]
+[ext_resource type="Script" uid="uid://bk8hquxf2ab2y" path="res://mats/game_objs/masp/masp.gd" id="4_pnd5b"]
+[ext_resource type="Script" uid="uid://td561nxnc58w" path="res://mats/game_objs/prespawner/pre_spawner.gd" id="5_b3yua"]
 
 [sub_resource type="Resource" id="Resource_afrfj"]
 script = ExtResource("3_t6xs8")
@@ -76,15 +76,15 @@ script = ExtResource("5_b3yua")
 add_to = NodePath("../..")
 collision_shape = SubResource("CircleShape2D_kwxaq")
 curve = SubResource("Curve_0o5yn")
-obj_event_time = 0.75
+obj_event_time = 0.8
 on_deleetion_object = 2
 on_deleetion_object_data = {
 "collision_shape": SubResource("RectangleShape2D_euqw5"),
 "spawn": true,
 "speed_from": 750.0,
 "speed_to": 1500.0,
-"summon_count_from": 4,
-"summon_count_to": 6,
+"summon_count_from": 3,
+"summon_count_to": 7,
 "summon_range": 360.0
 }
 

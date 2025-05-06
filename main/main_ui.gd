@@ -34,6 +34,11 @@ FROM user_level_records
 WHERE user_id = {0}
 GROUP BY level_id
 ORDER BY level_id;".format([gmd.user_id]))
+		if not gmd.online:
+			$cl/ui/pc/mc/hbc/hbc/exit.show()
+			$cl/ui/pc/mc/hbc/pnts.hide()
+			$cl/ui/pc/mc/hbc/strs_c.hide()
+			$cl/ui/pc/mc/hbc/no_hits_c.hide()
 		if temp_array.size()>0:
 			for element in temp_array:
 				points+=int(element[1])

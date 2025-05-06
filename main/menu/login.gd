@@ -36,6 +36,7 @@ func _on_log_button_down() -> void:
 							#"no_hit":e[3]
 							#}
 						#})
+				gmd.online=true
 				get_tree().change_scene_to_file("res://main/main_ui.tscn")
 			else:
 				print("data isn't exists")

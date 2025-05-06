@@ -2,7 +2,6 @@ class_name HitBox
 extends Area2D
 signal deletion(node:HitBox)
 @export var color:Color=Color(1,1,1,1)
-@export var command_id:=0
 @export var damage:float=1.0
 @export var deletion_timer:float=0
 var new_polygons:Array[PackedVector2Array]
