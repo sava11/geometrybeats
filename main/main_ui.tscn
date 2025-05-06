@@ -297,9 +297,100 @@ text = "выйти к уровням"
 layout_mode = 2
 text = "выйти из игры"
 
+[node name="level_end" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Control" type="Control" parent="level_end"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="pc" type="PanelContainer" parent="level_end/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="mc" type="MarginContainer" parent="level_end/Control/pc"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="vbc" type="VBoxContainer" parent="level_end/Control/pc/mc"]
+layout_mode = 2
+
+[node name="points" type="HBoxContainer" parent="level_end/Control/pc/mc/vbc"]
+layout_mode = 2
+
+[node name="nm" type="Label" parent="level_end/Control/pc/mc/vbc/points"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ваши очки:"
+
+[node name="v" type="Label" parent="level_end/Control/pc/mc/vbc/points"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "000"
+horizontal_alignment = 2
+
+[node name="collected" type="HBoxContainer" parent="level_end/Control/pc/mc/vbc"]
+layout_mode = 2
+
+[node name="nm" type="Label" parent="level_end/Control/pc/mc/vbc/collected"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "собрано:"
+
+[node name="v" type="Label" parent="level_end/Control/pc/mc/vbc/collected"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "000"
+horizontal_alignment = 2
+
+[node name="dmg" type="HBoxContainer" parent="level_end/Control/pc/mc/vbc"]
+layout_mode = 2
+
+[node name="nm" type="Label" parent="level_end/Control/pc/mc/vbc/dmg"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "получен урон:"
+
+[node name="v" type="Label" parent="level_end/Control/pc/mc/vbc/dmg"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "000"
+horizontal_alignment = 2
+
+[node name="actions" type="HBoxContainer" parent="level_end/Control/pc/mc/vbc"]
+layout_mode = 2
+
+[node name="retry" type="Button" parent="level_end/Control/pc/mc/vbc/actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "повторить попытку"
+
+[node name="v" type="Button" parent="level_end/Control/pc/mc/vbc/actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "выйти в меню"
+
 [connection signal="button_down" from="cl/history/pc/mc/hbc/back" to="." method="_on_back_from_history_button_down"]
 [connection signal="button_down" from="cl/ui/pc/mc/hbc/hbc/exit" to="." method="_on_exit_button_down"]
 [connection signal="button_down" from="cl/ui/pc/mc/hbc/hbc/exit2" to="." method="_on_exit_2_button_down"]
 [connection signal="button_down" from="pause/Panel/vbc/cnt" to="." method="_on_cnt_button_down"]
 [connection signal="button_down" from="pause/Panel/vbc/to_lvls" to="." method="_on_to_lvls_button_down"]
 [connection signal="button_down" from="pause/Panel/vbc/exit" to="." method="_on_exit_2_button_down"]
+[connection signal="button_down" from="level_end/Control/pc/mc/vbc/actions/v" to="." method="exit_to_level_menu"]

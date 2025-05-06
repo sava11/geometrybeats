@@ -9,27 +9,29 @@ signal max_health_changed(value:float, delta:float)
 @export_flags_2d_physics() var flags:=13
 @export var max_health:float=1: set=set_max_health
 func set_max_health(value:float):
-		emit_signal("max_health_changed",value,value-max_health)
-		self.health=value*float(health)/float(max_health)
-		max_health=value
+	emit_signal("max_health_changed",value,value-max_health)
+	self.health=value*float(health)/float(max_health)
+	max_health=value
 
 var health:float=max_health: set=set_health
 func set_health(value:float):
-		var delta:=value-health
-		emit_signal("health_changed",value,delta)
-		if health<=0 and delta>0:
-			alive=true
-			emit_signal("revived")
-		if is_node_ready():
-			health=min(value,max_health)
-		else:
-			alive=true
-			health=value
-		if health<=0 and alive:
-			alive=false
-			emit_signal("dead")
-			health=0
-
+	var delta:=value-health
+	emit_signal("health_changed",value,delta)
+	if health<=0 and delta>0:
+		alive=true
+		emit_signal("revived")
+	if is_node_ready():
+		health=min(value,max_health)
+	else:
+		alive=true
+		health=value
+	if health<=0 and alive:
+		start_invincible(tspeed)
+		alive=false
+		emit_signal("dead")
+		health=0
+func restore_health():
+	health=max_health
 @onready var t:=Timer.new()
 var alive:=false
 var invincible=false:set=set_invincible
@@ -74,5 +76,4 @@ func _on_area_entered(area: HitBox) -> void:
 		r.force_raycast_update()
 		if r.get_collider()==get_parent() or r.get_collider()==null:
 			health-=area.damage
-			start_invincible(tspeed)
 		r.queue_free()

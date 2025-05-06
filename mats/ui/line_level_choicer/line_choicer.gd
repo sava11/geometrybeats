@@ -44,12 +44,22 @@ insert into user_level_records(user_id,record_date,level_id,points,collected,no_
 ({0}, CURRENT_TIMESTAMP, {1}, {2}, {3}, {4})
 ;".format([gmd.user_id,get_index(),recived_points,node.collected,no_hit]))
 	get_tree().current_scene.upd_data()
-	get_tree().current_scene.get_node("cl").show()
+	get_tree().current_scene.get_node(
+		"level_end/Control/pc/mc/vbc/actions/retry").button_down.connect(play,4)
+	get_tree().current_scene.get_node("level_end/Control/pc/mc/vbc/points/v").text=str(recived_points)
+	get_tree().current_scene.get_node("level_end/Control/pc/mc/vbc/collected/v").text=str(node.collected)
+	get_tree().current_scene.get_node(
+		"level_end/Control/pc/mc/vbc/dmg/v").text=\
+		"нет" if no_hit else "да"
+	get_tree().current_scene.get_node("level_end").show()
 	$mc/cont/play.grab_focus()
 
 
 func play() -> void:
 	if !Engine.is_editor_hint():
+		get_tree().current_scene.get_node("level_end").hide()
+		for e in get_tree().current_scene.get_node("world").get_children():
+			e.queue_free()
 		no_hit=true
 		get_tree().current_scene.get_node("cl").hide()
 		var scnr:Scenario=load(scenario).instantiate()

@@ -217,7 +217,7 @@ func _player_dead(v:bool):
 					var pf:PathFollow2D=e.get_child(0)
 					pf.progress=saved_collected[i]
 			await get_tree().process_frame
-			get_node("../player/HurtBox").health=get_node("../player/HurtBox").max_health
+			get_node("../player/HurtBox").restore_health()
 	else:
 		emit_signal("level_ended",self)
 func _checkpoint_activated():pass

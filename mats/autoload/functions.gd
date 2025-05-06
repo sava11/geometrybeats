@@ -11,6 +11,7 @@ func i_search(array,i):
 var already_paused:int=0
 func set_pause(paused:bool=true):
 	already_paused+=-1+2*int(paused)
+	already_paused=clamp(already_paused,0,999999)
 	get_tree().paused=already_paused>0
 	PhysicsServer2D.set_active(true)
 func angle(V:Vector2)->float:

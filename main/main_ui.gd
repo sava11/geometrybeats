@@ -1,13 +1,10 @@
 extends Node
 @onready var down_panel:=$cl/ui/pc/mc/hbc
 @onready var history_item_cont:=$cl/history/sc/cont
-@export var current_level:UILevel
 
 
 func _ready() -> void:
 	var mx_size:=Vector2.ZERO
-	if current_level!=null:
-		current_level.get_node("pc/mc/play").grab_focus()
 	down_panel.get_node("un").text=gmd.user_name
 	for e in $cl/ui/mc/sc/cont.get_children():
 		e.get_node("mc/cont/to_history").button_down.connect(_to_history.bind(e.get_index()))
@@ -86,7 +83,6 @@ CALL get_user_level_attempts({0}, {1}, 'record_id DESC')
 		for i in range(history.size()):
 			var e=history[i]
 			var item:=preload("res://mats/ui/history_item/history_item.tscn").instantiate()
-			print(e)
 			item.get_node("mc/hbc/number").text=str(i)
 			item.get_node("mc/hbc/points").text=str(e[0])
 			item.get_node("mc/hbc/collected").text=str(e[1])
@@ -99,3 +95,8 @@ CALL get_user_level_attempts({0}, {1}, 'record_id DESC')
 func _on_back_from_history_button_down() -> void:
 	$cl/history.hide()
 	$cl/ui.show()
+
+
+func exit_to_level_menu() -> void:
+	$level_end.hide()
+	$cl.show()

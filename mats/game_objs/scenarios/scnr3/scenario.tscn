@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://8a5ryr75vgby"]
+[gd_scene load_steps=22 format=3 uid="uid://8a5ryr75vgby"]
 
 [ext_resource type="Script" uid="uid://dd8fe5vx667al" path="res://mats/game_objs/scenarios/scnr3/scenario.gd" id="1_74fy2"]
 [ext_resource type="Script" uid="uid://bk8hquxf2ab2y" path="res://mats/game_objs/masp/masp.gd" id="2_ml0r0"]
@@ -10,7 +10,7 @@
 
 [sub_resource type="Resource" id="Resource_ry1um"]
 script = ExtResource("3_nm02v")
-times = Array[float]([22.5])
+times = Array[float]([27.0])
 metadata/_custom_type_script = "uid://df8b5oi6clwnk"
 
 [sub_resource type="Resource" id="Resource_biu8s"]
@@ -44,16 +44,10 @@ resource_name = "track"
 length = 32.5
 step = 0.02
 
-[sub_resource type="Animation" id="Animation_ry1um"]
-resource_name = "track_2"
-length = 32.5
-step = 0.02
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_woum6"]
 _data = {
 &"base": SubResource("Animation_cbsp2"),
-&"track": SubResource("Animation_7ufdp"),
-&"track_2": SubResource("Animation_ry1um")
+&"track": SubResource("Animation_7ufdp")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_no12h"]
@@ -79,7 +73,7 @@ size = Vector2(16, 16)
 [node name="scenario" type="Node"]
 script = ExtResource("1_74fy2")
 audio = ExtResource("3_ry1um")
-max_time = 45.5
+max_time = 45.0
 starts_from = 2.0
 checkpoints = SubResource("Resource_ry1um")
 action_times = Array[ExtResource("3_ryy55")]([SubResource("Resource_biu8s"), SubResource("Resource_nm02v"), SubResource("Resource_no12h")])
@@ -98,7 +92,7 @@ busName = "Music"
 [node name="act" type="Node2D" parent="."]
 
 [node name="Summoner" type="Node2D" parent="act" node_paths=PackedStringArray("add_to")]
-position = Vector2(640, 0)
+position = Vector2(640, -128)
 rotation = 1.5708
 script = ExtResource("4_hhccw")
 add_to = NodePath("../..")

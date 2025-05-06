@@ -14,6 +14,7 @@ func _ready() -> void:
 	if auto_play:
 		play()
 func _process(delta):
+	#print(playing)
 	for e in get_children():
 		if e.playing==false:
 			e.queue_free()

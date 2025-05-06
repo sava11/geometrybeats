@@ -56,10 +56,10 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 
 func hited(v:float,d:float) -> void:
-	if alive != (v>0):
-		emit_signal("dead", v>0)
 	alive = v>0
-	$skin.material.set("shader_parameter/sector", v/$HurtBox.max_health)
+	if !alive:
+		emit_signal("dead", v>0)
+	$skin.material.set_deferred("shader_parameter/sector", v/$HurtBox.max_health)
 	if d<0 and alive:
 		velocity+=fnc.move(randi_range(-180,180))*1000
 	else:
