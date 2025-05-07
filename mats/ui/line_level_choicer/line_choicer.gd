@@ -40,9 +40,9 @@ func _on_level_end(node:Scenario):
 	#sld.save_to_file(sld.file_path,true)
 	if sqlc.CheckConnection():
 		sqlc.query("
-insert into user_level_records(user_id,record_date,level_id,points,collected,no_hit) values
-({0}, CURRENT_TIMESTAMP, {1}, {2}, {3}, {4})
-;".format([gmd.user_id,get_index(),recived_points,node.collected,no_hit]))
+insert into user_level_records(user_login,record_date,level_id,points,collected,no_hit) values
+('{0}', CURRENT_TIMESTAMP, {1}, {2}, {3}, {4})
+;".format([gmd.user_login,get_index(),recived_points,node.collected,no_hit]))
 	get_tree().current_scene.upd_data()
 	get_tree().current_scene.get_node(
 		"level_end/Control/pc/mc/vbc/actions/retry").button_down.connect(play,4)

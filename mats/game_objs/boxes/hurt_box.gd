@@ -26,7 +26,6 @@ func set_health(value:float):
 		alive=true
 		health=value
 	if health<=0 and alive:
-		start_invincible(tspeed)
 		alive=false
 		emit_signal("dead")
 		health=0
@@ -76,4 +75,5 @@ func _on_area_entered(area: HitBox) -> void:
 		r.force_raycast_update()
 		if r.get_collider()==get_parent() or r.get_collider()==null:
 			health-=area.damage
+			start_invincible(tspeed)
 		r.queue_free()

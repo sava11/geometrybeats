@@ -5,7 +5,7 @@ extends Node
 
 func _ready() -> void:
 	var mx_size:=Vector2.ZERO
-	down_panel.get_node("un").text=gmd.user_name
+	#down_panel.get_node("un").text=gmd.user_login
 	for e in $cl/ui/mc/sc/cont.get_children():
 		e.get_node("mc/cont/to_history").button_down.connect(_to_history.bind(e.get_index()))
 	upd_data()
@@ -28,9 +28,9 @@ func upd_data()->void:
 	MAX(collected)	AS max_collected,
 	MAX(no_hit)
 FROM user_level_records
-WHERE user_id = {0}
+WHERE user_login = '{0}'
 GROUP BY level_id
-ORDER BY level_id;".format([gmd.user_id]))
+ORDER BY level_id;".format([gmd.user_login]))
 		if not gmd.online:
 			$cl/ui/pc/mc/hbc/hbc/exit.show()
 			$cl/ui/pc/mc/hbc/pnts.hide()
@@ -52,8 +52,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_exit_button_down() -> void:
-	gmd.user_id=0
-	gmd.user_name=""
+	gmd.user_login=""
+	#gmd.user_name=""
 	get_tree().change_scene_to_file("res://main/menu/login.tscn")
 
 
@@ -78,16 +78,16 @@ func _to_history(id:int):
 		e.queue_free()
 	if sqlc.CheckConnection():
 		var history:Array=sqlc.query("
-CALL get_user_level_attempts({0}, {1}, 'record_id DESC')
-;".format([gmd.user_id,id]))
+CALL get_user_level_attempts('{0}', {1}, 'record_id DESC')
+;".format([gmd.user_login,id]))
 		for i in range(history.size()):
 			var e=history[i]
 			var item:=preload("res://mats/ui/history_item/history_item.tscn").instantiate()
 			item.get_node("mc/hbc/number").text=str(i)
 			item.get_node("mc/hbc/points").text=str(e[0])
 			item.get_node("mc/hbc/collected").text=str(e[1])
-			item.get_node("mc/hbc/no_hit").text=str(e[2])
-			item.get_node("mc/hbc/date").text=str(e[3][0])
+			item.get_node("mc/hbc/no_hit").text="да" if e[2] else "нет"
+			item.get_node("mc/hbc/date").text=str(e[3][0]) + " " + str(e[3][1])
 			history_item_cont.add_child(item)
 	$cl/history.show()
 	$cl/ui.hide()

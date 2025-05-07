@@ -11,12 +11,11 @@ func _on_log_button_down() -> void:
 			ctx.update($pc/mc/vbc/pass.text.to_utf8_buffer())
 			var ps=ctx.finish().hex_encode()
 			var arr:Array=sqlc.query("
-		select id,login from users where login=\"{0}\" and password=\"{1}\"".
+		select login from users where login=\"{0}\" and password=\"{1}\"".
 			format([$pc/mc/vbc/user.text,ps]))
 			if !arr.is_empty():
 				arr=arr[0]
-				gmd.user_id=arr[0]
-				gmd.user_name=arr[1]
+				gmd.user_login=arr[0]
 				arr=sqlc.query("
 		SELECT 
 			level_id, 
@@ -24,9 +23,9 @@ func _on_log_button_down() -> void:
 			collected,
 			no_hit
 		FROM user_level_records 
-		WHERE user_id = {0}
+		WHERE user_login = '{0}'
 		ORDER BY record_date DESC
-		LIMIT 1;".format([gmd.user_id]))
+		LIMIT 1;".format([gmd.user_login]))
 			#if arr.size()>0:
 				#for e in arr:
 					#gmd.data.merge({

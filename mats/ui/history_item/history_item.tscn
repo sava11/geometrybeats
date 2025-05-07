@@ -20,8 +20,8 @@ theme_override_constants/margin_bottom = 4
 layout_mode = 2
 
 [node name="number" type="Label" parent="mc/hbc"]
+custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="date" type="Label" parent="mc/hbc"]
 layout_mode = 2
