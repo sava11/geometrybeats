@@ -50,9 +50,9 @@ func _physics_process(delta: float) -> void:
 				$HurtBox.set_deferred("monitorable", physical_body)
 				$HurtBox.set_deferred("monitoring", physical_body)
 			else:
-				velocity = velocity.move_toward(last_mvd * spirit_speed, spirit_acceleration * delta)
+				velocity = velocity.move_toward(last_mvd.normalized() * spirit_speed, spirit_acceleration * delta)
 		else:
-			velocity = velocity.move_toward(mvd * speed, acceleration * delta)
+			velocity = velocity.move_toward(mvd.normalized() * speed, acceleration * delta)
 		move_and_slide()
 
 func hited(v:float,d:float) -> void:
