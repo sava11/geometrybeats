@@ -9,14 +9,8 @@ func _ready() -> void:
 	for e in $cl/ui/mc/sc/cont.get_children():
 		e.get_node("mc/cont/to_history").button_down.connect(_to_history.bind(e.get_index()))
 	upd_data()
-	#sld.load_from_file(sld.file_path,true)
-	#for e in $cl/ui/mc2/sc/cont.get_children():
-		#e.upd_data()
-		
-	#var last_runned:=0
-	#for e in $cl/ui/mc2/sc/cont.get_children():
-		#if e.runned:
-			#last_runned=e.get_index()
+
+
 func upd_data()->void:
 	var points:=0
 	var stars:=0

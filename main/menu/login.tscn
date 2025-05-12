@@ -1,8 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dvypavlab4dp0"]
+[gd_scene load_steps=3 format=3 uid="uid://dvypavlab4dp0"]
 
-[ext_resource type="Script" uid="uid://dq436ypfq15dg" path="res://main/menu/login.gd" id="1_awes1"]
-[ext_resource type="Script" uid="uid://bk8hquxf2ab2y" path="res://mats/game_objs/masp/masp.gd" id="2_qwve0"]
-[ext_resource type="AudioStream" uid="uid://c6o7il5hig4sm" path="res://mats/sounds/wait.ogg" id="3_f4i2i"]
+[ext_resource type="Script" uid="uid://cikty0jqvh5go" path="res://main/menu/login.gd" id="1_awes1"]
 [ext_resource type="PackedScene" uid="uid://cgn6b7gjy87pi" path="res://main/menu/settings.tscn" id="4_f4i2i"]
 
 [node name="Control" type="Control"]
@@ -13,14 +11,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_awes1")
-
-[node name="err" type="RichTextLabel" parent="."]
-layout_mode = 2
-offset_left = 512.0
-offset_top = 424.0
-offset_right = 768.0
-offset_bottom = 424.0
-fit_content = true
 
 [node name="pc" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(256, 0)
@@ -49,12 +39,22 @@ layout_mode = 2
 
 [node name="user" type="LineEdit" parent="pc/mc/vbc"]
 layout_mode = 2
-placeholder_text = "твой логин"
+placeholder_text = "Твой логин"
 
 [node name="pass" type="LineEdit" parent="pc/mc/vbc"]
 layout_mode = 2
-placeholder_text = "твой пароль"
+placeholder_text = "Твой пароль"
 secret = true
+
+[node name="log" type="Button" parent="pc/mc/vbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Войти"
+
+[node name="retry" type="Button" parent="pc/mc/vbc"]
+layout_mode = 2
+text = "Проверить подключение к БД"
 
 [node name="hbc" type="HBoxContainer" parent="pc/mc/vbc"]
 layout_mode = 2
@@ -62,23 +62,15 @@ layout_mode = 2
 [node name="exit" type="Button" parent="pc/mc/vbc/hbc"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "выйти"
+text = "Выйти"
 
-[node name="log" type="Button" parent="pc/mc/vbc/hbc"]
+[node name="jpb" type="Button" parent="pc/mc/vbc/hbc"]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "войти"
+text = "Играть вне сети"
 
-[node name="jpb" type="Button" parent="pc/mc/vbc"]
+[node name="err" type="RichTextLabel" parent="pc/mc/vbc"]
 layout_mode = 2
-text = "играть вне сети"
-
-[node name="AudioPlayer" type="Node2D" parent="."]
-script = ExtResource("2_qwve0")
-time = 22.2
-asm = ExtResource("3_f4i2i")
-busName = "Music"
-auto_play = true
+fit_content = true
 
 [node name="to_settings" type="Button" parent="."]
 layout_mode = 1
@@ -108,9 +100,15 @@ offset_bottom = 0.0
 grow_horizontal = 0
 grow_vertical = 0
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="button_down" from="pc/mc/vbc/log" to="." method="_on_log_button_down"]
 [connection signal="button_down" from="pc/mc/vbc/hbc/exit" to="." method="_on_exit_button_down"]
-[connection signal="button_down" from="pc/mc/vbc/hbc/log" to="." method="_on_log_button_down"]
-[connection signal="button_down" from="pc/mc/vbc/jpb" to="." method="_on_just_play_button_down"]
+[connection signal="button_down" from="pc/mc/vbc/hbc/jpb" to="." method="_on_just_play_button_down"]
 [connection signal="button_down" from="to_settings" to="." method="_on_to_settings_button_down"]
 [connection signal="apply_pressed" from="settings" to="." method="_on_settings_button_pressed"]
 [connection signal="cancel_pressed" from="settings" to="." method="_on_settings_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_check_connection_timeout"]

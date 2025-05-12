@@ -56,7 +56,7 @@ insert into user_level_records(user_login,record_date,level_id,points,collected,
 			"level_end/Control/pc/mc/vbc/dmg/v").text=\
 			"нет" if no_hit else "да"
 		get_tree().current_scene.get_node("level_end").show()
-	get_tree().current_scene.get_node("level_end").show()
+	get_tree().current_scene.get_node("cl").show()
 	$mc/cont/play.grab_focus()
 
 

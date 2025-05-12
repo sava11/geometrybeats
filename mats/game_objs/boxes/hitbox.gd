@@ -2,7 +2,7 @@ class_name HitBox
 extends Area2D
 signal deletion(node:HitBox)
 signal local_event
-@export var color:Color=Color(0.5,0,1,1)
+@export var color:Color=Color(0.75,0,75,1)
 @export var damage:float=1.0
 @export_range(0, 1, 0.001) var enabled: float = 1.0
 @export_range(0, 1, 0.001) var hited: float = 0.95

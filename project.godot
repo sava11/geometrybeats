@@ -86,4 +86,4 @@ esc={
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0.0768358, 0.0768358, 0.0768358, 1)
+environment/defaults/default_clear_color=Color(0.247817, 0.300888, 0.320004, 1)
