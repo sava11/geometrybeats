@@ -30,7 +30,7 @@ user_login  VARCHAR(128)    NOT NULL,
 level_id    INT             NOT NULL,
 points      INT UNSIGNED    NOT NULL DEFAULT 0,
 collected   INT UNSIGNED    NOT NULL DEFAULT 0,
-no_hit      TINYINT(1)      NOT NULL DEFAULT 0,
+hits		INT UNSIGNED    NOT NULL DEFAULT 0,
 record_date DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
 INDEX (user_login),
 FOREIGN KEY (user_login)
@@ -114,7 +114,7 @@ BEGIN
         SET in_sort_cols = 'record_date DESC';
     END IF;
     SET @sql = CONCAT(
-        'SELECT points, collected, no_hit, record_date',
+        'SELECT points, collected, hits, record_date',
         ' FROM user_level_records',
         ' WHERE user_login = ', QUOTE(in_user_login),
         '   AND level_id = ', in_level_id,
@@ -137,7 +137,7 @@ BEGIN
         SET in_sort_cols = 'record_date DESC';
     END IF;
     SET @sql = CONCAT(
-        'SELECT points, collected, no_hit, record_date',
+        'SELECT points, collected, hits, record_date',
         ' FROM user_level_records',
         ' WHERE user_login = ', QUOTE(in_user_login),
         ' ORDER BY ', in_sort_cols
@@ -176,30 +176,30 @@ INSERT INTO users (login, password, f_name, s_name, t_name, status) VALUES
   ('user-18', SHA1('28qa'), 'Евгений',   'Фомин',        NULL,         1),
   ('user-19', SHA1('29qa'), 'Надежда',   'Горбачева',    'Петровна',   1);
 
-INSERT INTO user_level_records (user_login, level_id, record_date, points, collected, no_hit) VALUES
+INSERT INTO user_level_records (user_login, level_id, record_date, points, collected, hits) VALUES
   -- Существующие записи
-  ('user-1', 1, '2025-01-01 00:00:00',  2, 0, 0),
-  ('user-2', 1, '2025-01-01 00:00:00',  2, 0, 0),
-  ('user-2', 1, '2025-01-01 01:00:00',  3, 0, 0),
-  ('user-2', 1, '2025-01-01 02:00:00',  4, 0, 0),
-  ('user-2', 1, '2025-01-01 03:00:00',  5, 0, 0),
-  ('user-2', 1, '2025-01-01 04:00:00',  6, 0, 0),
+  ('user-1', 1, '2025-01-01 00:00:00',  2, 0, 2),
+  ('user-2', 1, '2025-01-01 00:00:00',  2, 0, 3),
+  ('user-2', 1, '2025-01-01 01:00:00',  3, 0, 4),
+  ('user-2', 1, '2025-01-01 02:00:00',  4, 0, 5),
+  ('user-2', 1, '2025-01-01 03:00:00',  5, 0, 2),
+  ('user-2', 1, '2025-01-01 04:00:00',  6, 0, 1),
   ('user-2', 1, '2025-01-01 05:00:00',  7, 0, 0),
-  ('user-2', 1, '2025-01-01 06:00:00',  8, 0, 0),
-  ('user-1', 1, '2025-02-01 00:00:00',  5, 0, 1),
+  ('user-2', 1, '2025-01-01 06:00:00',  8, 0, 3),
+  ('user-1', 1, '2025-02-01 00:00:00',  5, 0, 4),
   ('user-1', 1, '2025-02-01 01:00:00',  6, 2, 1),
-  ('user-1', 1, '2025-02-01 02:00:00',  4, 1, 0),
-  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 1),
-  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 1),
-  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 1),
-  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 1),
-  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 1),
-  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 1),
-  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 1),
-  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 1),
-  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 1),
-  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 1),
-  ('user-1', 1, NOW(),                  2, 0, 0),
+  ('user-1', 1, '2025-02-01 02:00:00',  4, 1, 5),
+  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 3),
+  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 2),
+  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 3),
+  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 2),
+  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 3),
+  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 4),
+  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 2),
+  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 3),
+  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 4),
+  ('user-1', 1, '2025-02-01 03:00:00', 10, 0, 5),
+  ('user-1', 1, NOW(),                  2, 0, 2),
 
   -- Новые 30 строк для теста
   ('user-1', 2, '2025-03-01 10:00:00',  7, 3, 0),
@@ -244,7 +244,7 @@ INSERT INTO user_level_records (user_login, level_id, record_date, points, colle
 -- SELECT * FROM users;
 
 -- Записи по пользователю 1, по дате
--- SELECT level_id, points, collected, no_hit, record_date
+-- SELECT level_id, points, collected, hits, record_date
 --   FROM user_level_records
 --  WHERE user_login = 'user-1'
 --  ORDER BY record_date DESC;
