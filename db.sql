@@ -155,7 +155,7 @@ INSERT INTO user_statuses (name) VALUES
   ('мед. персонал');
 
 INSERT INTO users (login, password, f_name, s_name, t_name, status) VALUES
-  ('dctr-1', SHA2('d2cs',256), 'имя1', 'фамилия1', 'отчество1', 2),
+  ('dctr-1', SHA2('d2cs',256), 'имя1', 'фамилия1', 'отчество1', 2)/*
   ('user-1', SHA2('12qa',256), 'Иван',     'Иванов',    'Иванович', 1),
   ('user-2', SHA2('13qa',256), 'Мария',    'Петрова',   'Сергеевна',1),
   ('user-3', SHA2('14qa',256), 'Алексей',  'Сидоров',   'Викторович',1),
@@ -174,9 +174,9 @@ INSERT INTO users (login, password, f_name, s_name, t_name, status) VALUES
   ('user-16', SHA2('26qa',256), 'Михаил',    'Белов',        'Никитич',    1),
   ('user-17', SHA2('27qa',256), 'Оксана',    'Щербакова',    'Алексеевна', 1),
   ('user-18', SHA2('28qa',256), 'Евгений',   'Фомин',        NULL,         1),
-  ('user-19', SHA2('29qa',256), 'Надежда',   'Горбачева',    'Петровна',   1);
+  ('user-19', SHA2('29qa',256), 'Надежда',   'Горбачева',    'Петровна',   1)*/;
 
-INSERT INTO user_level_records (user_login, level_id, record_date, points, collected, hits) VALUES
+/*INSERT INTO user_level_records (user_login, level_id, record_date, points, collected, hits) VALUES
   -- Существующие записи
   ('user-1', 1, '2025-01-01 00:00:00',  2, 0, 2),
   ('user-2', 1, '2025-01-01 00:00:00',  2, 0, 3),
@@ -235,7 +235,7 @@ INSERT INTO user_level_records (user_login, level_id, record_date, points, colle
   ('user-5', 3, '2025-02-09 11:00:00', 10, 3, 1),
   ('user-5', 4, '2025-02-11 12:15:00', 13, 5, 1),
   ('user-5', 5, '2025-02-13 13:30:00',  8, 2, 0),
-  ('user-5', 6, '2025-02-15 14:45:00', 17, 7, 1);
+  ('user-5', 6, '2025-02-15 14:45:00', 17, 7, 1);*/
 
 
 -- Примеры выборок
