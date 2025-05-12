@@ -110,7 +110,7 @@ text = "собрано"
 [node name="no_hits" type="Label" parent="cl/history/pc2/mc/fields"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "невредим"
+text = "получено урона"
 
 [node name="sc" type="ScrollContainer" parent="cl/history"]
 layout_mode = 2
@@ -223,9 +223,10 @@ mouse_filter = 1
 text = "{stars}"
 
 [node name="no_hits_c" type="HBoxContainer" parent="cl/ui/pc/mc/hbc"]
+visible = false
 modulate = Color(0.894118, 0.164706, 0.443137, 1)
 layout_mode = 2
-tooltip_text = "количество пройденных уровней без урона"
+tooltip_text = "количество "
 
 [node name="tr" type="TextureRect" parent="cl/ui/pc/mc/hbc/no_hits_c"]
 custom_minimum_size = Vector2(32, 0)

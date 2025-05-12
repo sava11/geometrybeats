@@ -8,8 +8,8 @@ public partial class sqlc : Node
 
     public override void _Ready()
     {
-        var connectionString = "Server=junction.proxy.rlwy.net;Port=35510;User ID=root;Password=SThpFvJhaOYpSYayhhDfGeXAdbhxGxpp;Database=geometrybeatdb;SslMode=Required;";
-        //"Server=127.0.0.1;User ID=root;Password=Saveliyano!1;Database=geometrybeatdb;"
+        var connectionString = "Server=127.0.0.1;User ID=root;Password=Saveliyano!1;Database=geometrybeatdb;";
+        //"Server=junction.proxy.rlwy.net;Port=35510;User ID=root;Password=SThpFvJhaOYpSYayhhDfGeXAdbhxGxpp;Database=geometrybeatdb;SslMode=Required;"
         _connection = new MySqlConnection(connectionString);
     }
 

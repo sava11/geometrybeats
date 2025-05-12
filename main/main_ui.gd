@@ -14,30 +14,31 @@ func _ready() -> void:
 func upd_data()->void:
 	var points:=0
 	var stars:=0
-	var no_hits:=0
+	#var hits:=0
 	if gmd.online and sqlc.CheckConnection():
 		var temp_array=sqlc.query("SELECT
 	level_id,
 	MAX(points)		AS max_points,
-	MAX(collected)	AS max_collected,
-	MAX(no_hit)
+	MAX(collected)	AS max_collected
 FROM user_level_records
 WHERE user_login = '{0}'
 GROUP BY level_id
 ORDER BY level_id;".format([gmd.user_login]))
+#--,
+	#--MIN(hits)		AS min_hits
 		if not gmd.online:
 			$cl/ui/pc/mc/hbc/hbc/exit.show()
 			$cl/ui/pc/mc/hbc/pnts.hide()
 			$cl/ui/pc/mc/hbc/strs_c.hide()
-			$cl/ui/pc/mc/hbc/no_hits_c.hide()
+			#$cl/ui/pc/mc/hbc/no_hits_c.hide()
 		if temp_array.size()>0:
 			for element in temp_array:
 				points+=int(element[1])
 				stars+=int(element[2])
-				no_hits+=int(element[3])
+				#hits+=int(element[3])
 	down_panel.get_node("pnts").text=str(points)
 	down_panel.get_node("strs_c/strs").text=str(stars)
-	down_panel.get_node("no_hits_c/no_hits").text=str(no_hits)
+	#down_panel.get_node("no_hits_c/no_hits").text=str(hits)
 	
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("esc") and $world.get_child_count()>0:
@@ -80,7 +81,7 @@ CALL get_user_level_attempts('{0}', {1}, 'record_id DESC')
 			item.get_node("mc/hbc/number").text=str(i)
 			item.get_node("mc/hbc/points").text=str(e[0])
 			item.get_node("mc/hbc/collected").text=str(e[1])
-			item.get_node("mc/hbc/no_hit").text="да" if e[2] else "нет"
+			item.get_node("mc/hbc/no_hit").text=str(e[2])
 			item.get_node("mc/hbc/date").text=str(e[3][0]) + " " + str(e[3][1])
 			history_item_cont.add_child(item)
 	$cl/history.show()

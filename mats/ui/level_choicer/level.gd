@@ -10,7 +10,6 @@ extends Control
 @export_file("*.tscn;*.scn") var scenario:String="res://mats/game_objs/scenarios/scenario_test.tscn"
 @export var points:int=10
 @export var neighbors:Array[UILevel]
-#@export_flags("runned:1","collected:2","no_hit:4") var stats:=0
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		for n in neighbors:

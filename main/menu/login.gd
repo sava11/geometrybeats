@@ -92,7 +92,7 @@ func _thread_login(login, password):
 			if !arr.is_empty():
 				arr=arr[0]
 				gmd.user_login=arr[0]
-				arr=sqlc.query("SELECT level_id, points, collected, no_hit FROM user_level_records WHERE user_login = '{0}' ORDER BY record_date DESC LIMIT 1;".format([gmd.user_login]))
+				arr=sqlc.query("SELECT level_id, points, collected, hits FROM user_level_records WHERE user_login = '{0}' ORDER BY record_date DESC LIMIT 1;".format([gmd.user_login]))
 				gmd.online=true
 				success = true
 			else:
