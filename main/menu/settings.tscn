@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cgn6b7gjy87pi"]
 
-[ext_resource type="Script" uid="uid://djfdl1alnbd0y" path="res://main/menu/settings.gd" id="1_0cait"]
+[ext_resource type="Script" uid="uid://c126yq826cepy" path="res://main/menu/settings.gd" id="1_0cait"]
 
 [node name="settings" type="PanelContainer"]
 offset_right = 260.0

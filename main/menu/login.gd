@@ -129,3 +129,19 @@ func _exit_tree():
 	is_active = false
 	if connection_thread and connection_thread.is_alive():
 		connection_thread.wait_to_finish()
+
+
+func _on_settings_button_pressed() -> void:
+	$settings.hide()
+	$to_settings.show()
+	$to_settings.grab_focus()
+
+
+func _on_to_settings_button_down() -> void:
+	$settings.show()
+	$to_settings.hide()
+	$settings/mc/vbc/hbc/bc.grab_focus()
+
+
+func _on_exit_button_down() -> void:
+	get_tree().quit()

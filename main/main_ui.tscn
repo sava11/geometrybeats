@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://c0nyfu7d43u4r"]
+[gd_scene load_steps=11 format=3 uid="uid://c0nyfu7d43u4r"]
 
-[ext_resource type="Script" uid="uid://c2swndn14vq15" path="res://main/main_ui.gd" id="1_fkue3"]
+[ext_resource type="Script" uid="uid://b4a6dnionlnp3" path="res://main/main_ui.gd" id="1_fkue3"]
 [ext_resource type="StyleBox" uid="uid://bw36op1aqjel6" path="res://mats/ui/line_level_choicer/runned.tres" id="2_4cyn3"]
 [ext_resource type="PackedScene" uid="uid://bds8dr70borml" path="res://mats/ui/line_level_choicer/line_choicer.tscn" id="2_pf8qx"]
-[ext_resource type="Texture2D" uid="uid://dnxovk8lovv7h" path="res://mats/imgs/stared.svg" id="3_go56l"]
-[ext_resource type="Texture2D" uid="uid://8vlupsycp4tp" path="res://icon.svg" id="4_xe7gy"]
+[ext_resource type="Texture2D" uid="uid://wpvw82ehaulg" path="res://mats/imgs/stared.svg" id="3_go56l"]
+[ext_resource type="Texture2D" uid="uid://d3sxwgq0tnkaq" path="res://icon.svg" id="4_xe7gy"]
+[ext_resource type="PackedScene" uid="uid://cgn6b7gjy87pi" path="res://main/menu/settings.tscn" id="6_o7kpg"]
 
 [sub_resource type="Theme" id="Theme_o7kpg"]
 default_font_size = 32
@@ -303,13 +304,17 @@ theme_override_constants/separation = 128
 layout_mode = 2
 text = "Продолжить игру"
 
+[node name="settings" type="Button" parent="pause/Panel/vbc"]
+layout_mode = 2
+text = "Настройки"
+
 [node name="to_lvls" type="Button" parent="pause/Panel/vbc"]
 layout_mode = 2
-text = "выйти к уровням"
+text = "Выйти к уровням"
 
 [node name="exit" type="Button" parent="pause/Panel/vbc"]
 layout_mode = 2
-text = "выйти из игры"
+text = "Выйти из игры"
 
 [node name="level_end" type="CanvasLayer" parent="."]
 visible = false
@@ -401,10 +406,38 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "выйти в меню"
 
+[node name="settings" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Control" type="Control" parent="settings"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="settings" parent="settings/Control" instance=ExtResource("6_o7kpg")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -65.0
+offset_right = 130.0
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [connection signal="button_down" from="cl/history/pc/mc/hbc/back" to="." method="_on_back_from_history_button_down"]
 [connection signal="button_down" from="cl/ui/pc/mc/hbc/hbc/exit" to="." method="_on_exit_button_down"]
 [connection signal="button_down" from="cl/ui/pc/mc/hbc/hbc/exit2" to="." method="_on_exit_2_button_down"]
 [connection signal="button_down" from="pause/Panel/vbc/cnt" to="." method="_on_cnt_button_down"]
+[connection signal="button_down" from="pause/Panel/vbc/settings" to="." method="_on_to_settings_button_down"]
 [connection signal="button_down" from="pause/Panel/vbc/to_lvls" to="." method="_on_to_lvls_button_down"]
 [connection signal="button_down" from="pause/Panel/vbc/exit" to="." method="_on_exit_2_button_down"]
 [connection signal="button_down" from="level_end/Control/pc/mc/vbc/actions/v" to="." method="exit_to_level_menu"]
+[connection signal="apply_pressed" from="settings/Control/settings" to="." method="_on_settings_apply_pressed"]
+[connection signal="cancel_pressed" from="settings/Control/settings" to="." method="_on_settings_apply_pressed"]

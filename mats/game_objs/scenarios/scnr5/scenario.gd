@@ -70,7 +70,6 @@ func _on_action_activated(track: int, time: float) -> void:
 		]
 		var cur_pattern=patterns[fnc.rnd.randi_range(0,patterns.size()-1)]
 		$act/grid_summon.summon_pattern(cur_pattern)
-		print("adfsdf")
 	if track==2:
 		$act/PreSpawner.global_position = get_rand_pos()
 		$act/PreSpawner.spawn=true

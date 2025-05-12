@@ -95,3 +95,11 @@ func _on_back_from_history_button_down() -> void:
 func exit_to_level_menu() -> void:
 	$level_end.hide()
 	$cl.show()
+
+
+func _on_settings_apply_pressed() -> void:
+	$settings.hide()
+
+
+func _on_to_settings_button_down() -> void:
+	$settings.show()
