@@ -83,11 +83,11 @@ func _thread_login(login, password):
 	if ok:
 		# Пример простой проверки (имитация)
 		if not ( user_filed.text=="" or password_filed.text==""):
-			ctx.start(HashingContext.HASH_SHA1)
+			ctx.start(HashingContext.HASH_SHA256)
 			ctx.update(password_filed.text.to_utf8_buffer())
 			var ps=ctx.finish().hex_encode()
 			var arr:Array=sqlc.query("
-		select login from users where login=\"{0}\" and password=\"{1}\"".
+		select login from users where login=\"{0}\" and password=\"{1}\" and status = 1".
 			format([user_filed.text,ps]))
 			if !arr.is_empty():
 				arr=arr[0]

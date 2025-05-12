@@ -7,46 +7,46 @@ USE geometrybeatdb;
 
 -- Справочник статусов пользователей
 CREATE TABLE user_statuses (
-id   INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(128) NOT NULL
+    id   INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(128) NOT NULL
 );
 
 -- Таблица пользователей: PK = login
 CREATE TABLE users (
-login      VARCHAR(128)   NOT NULL PRIMARY KEY,
-password   CHAR(40)       NOT NULL,
-f_name     CHAR(24)       NOT NULL,
-s_name     CHAR(24)       NOT NULL,
-t_name     CHAR(24)       NULL,
-status     INT UNSIGNED   NOT NULL DEFAULT 1,
-created_at DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-FOREIGN KEY (status) REFERENCES user_statuses(id)
+    login      VARCHAR(128)   NOT NULL PRIMARY KEY,
+    password   CHAR(64)       NOT NULL,
+    f_name     CHAR(24)       NOT NULL,
+    s_name     CHAR(24)       NOT NULL,
+    t_name     CHAR(24)       NULL,
+    status     INT UNSIGNED   NOT NULL DEFAULT 1,
+    created_at DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (status) REFERENCES user_statuses(id)
 );
 
 -- Записи уровней: связываются по login
 CREATE TABLE user_level_records (
-record_id   BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-user_login  VARCHAR(128)    NOT NULL,
-level_id    INT             NOT NULL,
-points      INT UNSIGNED    NOT NULL DEFAULT 0,
-collected   INT UNSIGNED    NOT NULL DEFAULT 0,
-hits		INT UNSIGNED    NOT NULL DEFAULT 0,
-record_date DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
-INDEX (user_login),
-FOREIGN KEY (user_login)
-REFERENCES users(login)
-ON DELETE CASCADE
+    record_id   BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_login  VARCHAR(128)    NOT NULL,
+    level_id    INT             NOT NULL,
+    points      INT UNSIGNED    NOT NULL DEFAULT 0,
+    collected   INT UNSIGNED    NOT NULL DEFAULT 0,
+    hits		INT UNSIGNED    NOT NULL DEFAULT 0,
+    record_date DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX (user_login),
+    FOREIGN KEY (user_login)
+    REFERENCES users(login)
+    ON DELETE CASCADE
 );
 
 -- Таблица заявок на удаление: по login
 CREATE TABLE user_delete_requests (
-request_id   BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-user_login   VARCHAR(128)    NOT NULL UNIQUE,
-request_date DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
-INDEX (user_login),
-FOREIGN KEY (user_login)
-REFERENCES users(login)
-ON DELETE CASCADE
+    request_id   BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_login   VARCHAR(128)    NOT NULL UNIQUE,
+    request_date DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX (user_login),
+    FOREIGN KEY (user_login)
+    REFERENCES users(login)
+    ON DELETE CASCADE
 );
 
 -- Процедура: создать заявку на удаление данных пользователя (по login)
@@ -155,26 +155,26 @@ INSERT INTO user_statuses (name) VALUES
   ('мед. персонал');
 
 INSERT INTO users (login, password, f_name, s_name, t_name, status) VALUES
-  ('dctr-1', SHA1('d2cs'), 'имя1', 'фамилия1', 'отчество1', 2),
-  ('user-1', SHA1('12qa'), 'Иван',     'Иванов',    'Иванович', 1),
-  ('user-2', SHA1('13qa'), 'Мария',    'Петрова',   'Сергеевна',1),
-  ('user-3', SHA1('14qa'), 'Алексей',  'Сидоров',   'Викторович',1),
-  ('user-4', SHA1('15qa'), 'Екатерина','Кузнецова', 'Андреевна',1),
-  ('user-5', SHA1('16qa'), 'Дмитрий',  'Морозов',   NULL,        1),
-  ('user-6', SHA1('17qa'), 'Ольга',    'Попова',    'Николаевна',1),
-  ('user-7', SHA1('18qa'), 'Сергей',   'Волков',    NULL,        1),
-  ('user-8', SHA1('19qa'), 'Анна',     'Лебедева',  'Павловна', 1),
-  ('user-9', SHA1('10qa'), 'Никита',   'Крылов',    'Егорович', 1),
-  ('user-10', SHA1('20qa'), 'Владимир', 'Николаев',    'Дмитриевич', 1),
-  ('user-11', SHA1('21qa'), 'Кристина', 'Орлова',       'Васильевна', 1),
-  ('user-12', SHA1('22qa'), 'Павел',     'Зайцев',       NULL,         1),
-  ('user-13', SHA1('23qa'), 'Людмила',   'Семенова',     'Игоревна',   1),
-  ('user-14', SHA1('24qa'), 'Григорий',  'Ершов',        'Максимович', 1),
-  ('user-15', SHA1('25qa'), 'Татьяна',   'Крылова',      NULL,         1),
-  ('user-16', SHA1('26qa'), 'Михаил',    'Белов',        'Никитич',    1),
-  ('user-17', SHA1('27qa'), 'Оксана',    'Щербакова',    'Алексеевна', 1),
-  ('user-18', SHA1('28qa'), 'Евгений',   'Фомин',        NULL,         1),
-  ('user-19', SHA1('29qa'), 'Надежда',   'Горбачева',    'Петровна',   1);
+  ('dctr-1', SHA2('d2cs',256), 'имя1', 'фамилия1', 'отчество1', 2),
+  ('user-1', SHA2('12qa',256), 'Иван',     'Иванов',    'Иванович', 1),
+  ('user-2', SHA2('13qa',256), 'Мария',    'Петрова',   'Сергеевна',1),
+  ('user-3', SHA2('14qa',256), 'Алексей',  'Сидоров',   'Викторович',1),
+  ('user-4', SHA2('15qa',256), 'Екатерина','Кузнецова', 'Андреевна',1),
+  ('user-5', SHA2('16qa',256), 'Дмитрий',  'Морозов',   NULL,        1),
+  ('user-6', SHA2('17qa',256), 'Ольга',    'Попова',    'Николаевна',1),
+  ('user-7', SHA2('18qa',256), 'Сергей',   'Волков',    NULL,        1),
+  ('user-8', SHA2('19qa',256), 'Анна',     'Лебедева',  'Павловна', 1),
+  ('user-9', SHA2('10qa',256), 'Никита',   'Крылов',    'Егорович', 1),
+  ('user-10', SHA2('20qa',256), 'Владимир', 'Николаев',    'Дмитриевич', 1),
+  ('user-11', SHA2('21qa',256), 'Кристина', 'Орлова',       'Васильевна', 1),
+  ('user-12', SHA2('22qa',256), 'Павел',     'Зайцев',       NULL,         1),
+  ('user-13', SHA2('23qa',256), 'Людмила',   'Семенова',     'Игоревна',   1),
+  ('user-14', SHA2('24qa',256), 'Григорий',  'Ершов',        'Максимович', 1),
+  ('user-15', SHA2('25qa',256), 'Татьяна',   'Крылова',      NULL,         1),
+  ('user-16', SHA2('26qa',256), 'Михаил',    'Белов',        'Никитич',    1),
+  ('user-17', SHA2('27qa',256), 'Оксана',    'Щербакова',    'Алексеевна', 1),
+  ('user-18', SHA2('28qa',256), 'Евгений',   'Фомин',        NULL,         1),
+  ('user-19', SHA2('29qa',256), 'Надежда',   'Горбачева',    'Петровна',   1);
 
 INSERT INTO user_level_records (user_login, level_id, record_date, points, collected, hits) VALUES
   -- Существующие записи

@@ -409,13 +409,13 @@ text = "выйти в меню"
 [node name="settings" type="CanvasLayer" parent="."]
 visible = false
 
-[node name="Control" type="Control" parent="settings"]
-layout_mode = 3
+[node name="Control" type="ColorRect" parent="settings"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(1, 1, 1, 0.486275)
 
 [node name="settings" parent="settings/Control" instance=ExtResource("6_o7kpg")]
 layout_mode = 1
