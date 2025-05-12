@@ -1,0 +1,110 @@
+[gd_scene load_steps=19 format=3 uid="uid://byjvedyar4xp7"]
+
+[ext_resource type="Script" uid="uid://bgbb0gqivnkkn" path="res://mats/game_objs/scenarios/scnr5/scenario.gd" id="1_uk1vj"]
+[ext_resource type="AudioStream" uid="uid://di4rxg0jlr1yl" path="res://mats/sounds/preson.wav" id="2_f8jmm"]
+[ext_resource type="Script" uid="uid://df8b5oi6clwnk" path="res://mats/game_objs/scenarios/checkpoint.gd" id="3_mwb25"]
+[ext_resource type="Script" uid="uid://blhqygxwlfi2c" path="res://mats/game_objs/scenarios/object.gd" id="4_bp4tj"]
+[ext_resource type="Script" uid="uid://bk8hquxf2ab2y" path="res://mats/game_objs/masp/masp.gd" id="5_3ph3u"]
+[ext_resource type="Script" uid="uid://bf072yoyubkau" path="res://mats/game_objs/prespawner/grid_summon.gd" id="5_v7uov"]
+[ext_resource type="Script" uid="uid://td561nxnc58w" path="res://mats/game_objs/prespawner/pre_spawner.gd" id="7_m0v7q"]
+
+[sub_resource type="Resource" id="Resource_t0352"]
+script = ExtResource("3_mwb25")
+times = Array[float]([12.0, 25.0])
+metadata/_custom_type_script = "uid://df8b5oi6clwnk"
+
+[sub_resource type="Resource" id="Resource_m0v7q"]
+script = ExtResource("4_bp4tj")
+pre_time = 2.0
+times = Array[float]([0.0])
+metadata/_custom_type_script = "uid://blhqygxwlfi2c"
+
+[sub_resource type="Resource" id="Resource_mwb25"]
+script = ExtResource("4_bp4tj")
+pre_time = 2.84
+times = Array[float]([2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0, 0.0])
+metadata/_custom_type_script = "uid://blhqygxwlfi2c"
+
+[sub_resource type="Resource" id="Resource_bp4tj"]
+script = ExtResource("4_bp4tj")
+pre_time = 1.0
+times = Array[float]([6.0, 7.0])
+metadata/_custom_type_script = "uid://blhqygxwlfi2c"
+
+[sub_resource type="Animation" id="Animation_cbsp2"]
+resource_name = "base"
+
+[sub_resource type="Animation" id="Animation_7ufdp"]
+resource_name = "track"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_woum6"]
+_data = {
+&"base": SubResource("Animation_cbsp2"),
+&"track": SubResource("Animation_7ufdp")
+}
+
+[sub_resource type="Curve" id="Curve_v7uov"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.85, 0.85), 2.86162, 2.86162, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m0v7q"]
+radius = 24.0
+
+[sub_resource type="Curve" id="Curve_mwb25"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.85, 0.85), 2.75, 2.75, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mwb25"]
+size = Vector2(16, 16)
+
+[node name="scenario" type="Node"]
+script = ExtResource("1_uk1vj")
+audio = ExtResource("2_f8jmm")
+max_time = 32.5
+starts_from = 2.5
+checkpoints = SubResource("Resource_t0352")
+action_times = Array[ExtResource("4_bp4tj")]([SubResource("Resource_m0v7q"), SubResource("Resource_mwb25"), SubResource("Resource_bp4tj")])
+
+[node name="ap" type="AnimationPlayer" parent="."]
+reset_on_save = false
+libraries = {
+&"": SubResource("AnimationLibrary_woum6")
+}
+
+[node name="AudioPlayer" type="Node2D" parent="."]
+script = ExtResource("5_3ph3u")
+busName = "Music"
+
+[node name="act" type="Node2D" parent="."]
+
+[node name="grid_summon" type="Node2D" parent="act"]
+script = ExtResource("5_v7uov")
+add_to = NodePath("../..")
+shout_time = 0.025
+rows = 18
+curve = SubResource("Curve_v7uov")
+deletion_timer = 2.0
+
+[node name="PreSpawner" type="Node2D" parent="act" node_paths=PackedStringArray("add_to")]
+position = Vector2(704, 320)
+script = ExtResource("7_m0v7q")
+add_to = NodePath("../..")
+collision_shape = SubResource("CircleShape2D_m0v7q")
+curve = SubResource("Curve_mwb25")
+obj_event_time = 0.75
+on_deleetion_object = 2
+on_deleetion_object_data = {
+"collision_shape": SubResource("RectangleShape2D_mwb25"),
+"spawn": true,
+"speed_from": 700.0,
+"speed_to": 1500.0,
+"summon_count_from": 3,
+"summon_count_to": 7,
+"summon_range": 360.0
+}
+metadata/_custom_type_script = "uid://td561nxnc58w"
+
+[node name="paths" type="Node" parent="."]
+
+[connection signal="action_activated" from="." to="." method="_on_action_activated"]
+[connection signal="track_started" from="." to="." method="_on_track_started"]

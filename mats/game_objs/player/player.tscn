@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://djuxdooutd0il"]
+[gd_scene load_steps=7 format=3 uid="uid://djuxdooutd0il"]
 
 [ext_resource type="Script" uid="uid://c1w82h75njlte" path="res://mats/game_objs/player/player.gd" id="1_iw1vq"]
 [ext_resource type="Shader" uid="uid://w6whx6bco1vq" path="res://mats/shaders/player_health.gdshader" id="1_jj6h8"]
 [ext_resource type="PackedScene" uid="uid://heog28crk5py" path="res://mats/game_objs/boxes/hurt_box.tscn" id="2_tm1d6"]
+[ext_resource type="AudioStream" uid="uid://cx0wd0aeq8xv5" path="res://mats/sounds/used_sounds/hit.ogg" id="4_8o522"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1txqo"]
 size = Vector2(24, 24)
@@ -51,6 +52,11 @@ offset_bottom = 48.0
 grow_horizontal = 2
 scale = Vector2(0.5, 0.5)
 show_percentage = false
+
+[node name="asp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_8o522")
+volume_db = -2.0
+bus = &"Effects"
 
 [connection signal="health_changed" from="HurtBox" to="." method="hited"]
 [connection signal="invi_ended" from="HurtBox" to="." method="_on_hurt_box_invi_ended"]

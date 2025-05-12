@@ -6,6 +6,7 @@ signal collection_event_activated(id:int,time:float)
 signal level_ended(node:Scenario)
 signal level_started(node:Scenario)
 signal checkpoint_activated()
+signal track_started()
 @export var debug:=false
 @export var save_data:Array[node_data]
 @export var infinite:bool=false
@@ -71,6 +72,7 @@ func _ready() -> void:
 	add_child(fl)
 	bc.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
 	fl.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	fl.z_index=999
 	fnc.rnd.seed=fnc.rnd.randi()
 	lvl_state=fnc.rnd.state
 	action_activated.connect(_action_activated)
@@ -167,6 +169,7 @@ func _physics_process(delta: float) -> void:
 		asp.playing=true
 		if !auto_play_animation:
 			$ap.play("track")
+			track_started.emit()
 	if cur_time>=starts_from+max_time:
 		if !infinite:
 			asp.playing=false

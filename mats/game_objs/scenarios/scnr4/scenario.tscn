@@ -1,0 +1,71 @@
+[gd_scene load_steps=14 format=3 uid="uid://drjstoi85rsx4"]
+
+[ext_resource type="Script" uid="uid://ctg3hn4lwn7mx" path="res://mats/game_objs/scenarios/scnr4/scenario.gd" id="1_fv0a8"]
+[ext_resource type="AudioStream" uid="uid://c3lan0k3qks0i" path="res://mats/sounds/used_sounds/удивление_2.ogg" id="2_d1uuc"]
+[ext_resource type="Script" uid="uid://df8b5oi6clwnk" path="res://mats/game_objs/scenarios/checkpoint.gd" id="2_dm5w3"]
+[ext_resource type="Script" uid="uid://bk8hquxf2ab2y" path="res://mats/game_objs/masp/masp.gd" id="2_u8w0u"]
+[ext_resource type="Script" uid="uid://blhqygxwlfi2c" path="res://mats/game_objs/scenarios/object.gd" id="3_lsieu"]
+[ext_resource type="Script" uid="uid://bi7xsalgfeliw" path="res://mats/game_objs/prespawner/side_spawner.gd" id="6_d1uuc"]
+
+[sub_resource type="Resource" id="Resource_d1uuc"]
+script = ExtResource("2_dm5w3")
+times = Array[float]([15.0, 25.0])
+metadata/_custom_type_script = "uid://df8b5oi6clwnk"
+
+[sub_resource type="Resource" id="Resource_vwak4"]
+script = ExtResource("3_lsieu")
+pre_time = 2.0
+times = Array[float]([0.0, 0.85, 1.71, 3.42, 4.28, 5.14, 6.0, 7.71, 9.42, 10.28, 11.14, 12.0, 12.85, 13.71, 14.57, 15.42, 16.28, 17.14, 18.0, 18.85, 19.71, 20.57, 21.42, 22.28, 23.14, 24.0, 24.85, 25.71, 26.57, 27.42, 28.28, 29.14, 30.0, 30.85, 31.71, 32.57, 34.28, 35.14, 37.71, 38.57, 39.42, 40.28, 41.14, 42.0, 42.85, 43.71, 44.57, 45.42, 46.28, 47.14, 48.0, 48.85, 49.71, 50.57, 51.42, 52.28, 53.14, 54.0, 54.85, 55.71, 56.57, 57.42, 58.28, 59.14, 60.0])
+metadata/_custom_type_script = "uid://blhqygxwlfi2c"
+
+[sub_resource type="Resource" id="Resource_sr8ha"]
+script = ExtResource("3_lsieu")
+pre_time = 0.0
+times = Array[float]([5.0, 15.0, 30.0])
+metadata/_custom_type_script = "uid://blhqygxwlfi2c"
+
+[sub_resource type="Animation" id="Animation_cbsp2"]
+resource_name = "base"
+
+[sub_resource type="Animation" id="Animation_7ufdp"]
+resource_name = "track"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_woum6"]
+_data = {
+&"base": SubResource("Animation_cbsp2"),
+&"track": SubResource("Animation_7ufdp")
+}
+
+[sub_resource type="Curve" id="Curve_d1uuc"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.854722, 0.83079), 2.75, 2.75, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="scenario" type="Node"]
+script = ExtResource("1_fv0a8")
+audio = ExtResource("2_d1uuc")
+max_time = 61.85
+starts_from = 2.0
+checkpoints = SubResource("Resource_d1uuc")
+action_times = Array[ExtResource("3_lsieu")]([SubResource("Resource_vwak4")])
+collection = SubResource("Resource_sr8ha")
+
+[node name="ap" type="AnimationPlayer" parent="."]
+reset_on_save = false
+libraries = {
+&"": SubResource("AnimationLibrary_woum6")
+}
+
+[node name="AudioPlayer" type="Node2D" parent="."]
+script = ExtResource("2_u8w0u")
+busName = "Music"
+
+[node name="act" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="act" node_paths=PackedStringArray("add_to")]
+script = ExtResource("6_d1uuc")
+add_to = NodePath("..")
+curve = SubResource("Curve_d1uuc")
+
+[node name="paths" type="Node" parent="."]
+
+[connection signal="action_activated" from="." to="." method="_on_action_activated"]

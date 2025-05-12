@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bk8hquxf2ab2y" path="res://mats/game_objs/masp/masp.gd" id="2_ml0r0"]
 [ext_resource type="Script" uid="uid://cu2leaofmbntx" path="res://mats/autoload/saver/node_data.gd" id="2_ry1um"]
 [ext_resource type="Script" uid="uid://df8b5oi6clwnk" path="res://mats/game_objs/scenarios/checkpoint.gd" id="3_nm02v"]
-[ext_resource type="AudioStream" uid="uid://dcxcbtbhuxux1" path="res://mats/sounds/escape.ogg" id="3_ry1um"]
+[ext_resource type="AudioStream" uid="uid://dcxcbtbhuxux1" path="res://mats/sounds/used_sounds/escape.ogg" id="3_ry1um"]
 [ext_resource type="Script" uid="uid://blhqygxwlfi2c" path="res://mats/game_objs/scenarios/object.gd" id="3_ryy55"]
 [ext_resource type="Script" uid="uid://b0v3a4amceo7i" path="res://mats/game_objs/summoner/summoner.gd" id="4_hhccw"]
 [ext_resource type="Script" uid="uid://td561nxnc58w" path="res://mats/game_objs/prespawner/pre_spawner.gd" id="8_3nu3p"]
@@ -116,7 +116,6 @@ metadata/_custom_type_script = "uid://b0v3a4amceo7i"
 position = Vector2(704, 320)
 script = ExtResource("8_3nu3p")
 add_to = NodePath("../..")
-one_shoot = true
 collision_shape = SubResource("RectangleShape2D_lpga2")
 summon_time = 0.75
 curve = SubResource("Curve_xii4n")

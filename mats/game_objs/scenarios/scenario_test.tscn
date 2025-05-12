@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cf1crcj0nstue"]
 
-[ext_resource type="Script" uid="uid://cgxu3uib35l23" path="res://mats/game_objs/scenarios/scenario_test.gd" id="1_u4sxy"]
-[ext_resource type="Script" uid="uid://dth4q2dvb4juw" path="res://mats/game_objs/masp/masp.gd" id="2_uxoha"]
+[ext_resource type="Script" uid="uid://b7lk7w144gucm" path="res://mats/game_objs/scenarios/scenario_test.gd" id="1_u4sxy"]
+[ext_resource type="Script" uid="uid://bk8hquxf2ab2y" path="res://mats/game_objs/masp/masp.gd" id="2_uxoha"]
 
 [sub_resource type="Animation" id="Animation_cbsp2"]
 resource_name = "base"
@@ -29,3 +29,5 @@ script = ExtResource("2_uxoha")
 busName = "Music"
 
 [node name="act" type="Node2D" parent="."]
+
+[node name="paths" type="Node" parent="."]

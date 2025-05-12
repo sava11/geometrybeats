@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://bpbffjfh4ldhn"]
 
 [ext_resource type="Script" uid="uid://cttks5nbiumks" path="res://mats/game_objs/scenarios/scnr2/scenario.gd" id="1_6ueg6"]
-[ext_resource type="AudioStream" uid="uid://c6aa456480bix" path="res://mats/sounds/str.ogg" id="2_scidx"]
+[ext_resource type="AudioStream" uid="uid://c6aa456480bix" path="res://mats/sounds/used_sounds/falling_stars.ogg" id="2_scidx"]
 [ext_resource type="Script" uid="uid://df8b5oi6clwnk" path="res://mats/game_objs/scenarios/checkpoint.gd" id="3_t6xs8"]
 [ext_resource type="Script" uid="uid://blhqygxwlfi2c" path="res://mats/game_objs/scenarios/object.gd" id="3_ugu08"]
 [ext_resource type="Script" uid="uid://bk8hquxf2ab2y" path="res://mats/game_objs/masp/masp.gd" id="4_pnd5b"]

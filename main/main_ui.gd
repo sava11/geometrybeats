@@ -21,7 +21,7 @@ func upd_data()->void:
 	var points:=0
 	var stars:=0
 	var no_hits:=0
-	if sqlc.CheckConnection():
+	if gmd.online and sqlc.CheckConnection():
 		var temp_array=sqlc.query("SELECT
 	level_id,
 	MAX(points)		AS max_points,
@@ -76,7 +76,7 @@ func _on_to_lvls_button_down() -> void:
 func _to_history(id:int):
 	for e in history_item_cont.get_children():
 		e.queue_free()
-	if sqlc.CheckConnection():
+	if gmd.online and sqlc.CheckConnection():
 		var history:Array=sqlc.query("
 CALL get_user_level_attempts('{0}', {1}, 'record_id DESC')
 ;".format([gmd.user_login,id]))

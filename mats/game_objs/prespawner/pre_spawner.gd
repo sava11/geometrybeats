@@ -2,7 +2,6 @@ class_name PreSpawner
 extends Node2D
 @export var add_to:Node
 @export var spawn:=false
-@export var one_shoot:=false
 @export var summon_offset:=Vector2.ZERO
 @export var collision_shape:Shape2D
 @export var summon_time:=1.0

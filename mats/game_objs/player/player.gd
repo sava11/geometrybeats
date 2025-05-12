@@ -12,7 +12,7 @@ signal dead(alive: bool)
 @export var physical_body := true:
 	set(v):
 		physical_body=v
-		if v and not $HurtBox.invi:
+		if v and not $HurtBox.invincible:
 			$skin.color.a = 1
 		else:
 			$skin.color.a = 0.5
@@ -57,14 +57,15 @@ func _physics_process(delta: float) -> void:
 
 func hited(v:float,d:float) -> void:
 	alive = v>0
-	if !alive:
-		emit_signal("dead", v>0)
 	$skin.material.set_deferred("shader_parameter/sector", v/$HurtBox.max_health)
 	if d<0 and alive:
+		$asp.play()
 		velocity+=fnc.move(randi_range(-180,180))*1000
 	else:
 		$inv.visible=false
 		$skin.color.a = 1
+	if !alive:
+		emit_signal("dead", v>0)
 	#$asp.stream = load("res://mats/sounds/twrauw.wav")
 	#$asp.play()
 

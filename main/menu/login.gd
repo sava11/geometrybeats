@@ -4,7 +4,7 @@ func _ready() -> void:
 	$pc/mc/vbc/user.grab_focus()
 	# Process results
 func _on_log_button_down() -> void:
-	if sqlc.CheckConnection():
+	if gmd.online and sqlc.CheckConnection():
 		if not ( $pc/mc/vbc/user.text=="" or 
 			$pc/mc/vbc/hbc/log.text==""):
 			ctx.start(HashingContext.HASH_SHA1)

@@ -154,13 +154,26 @@ recive_points = 0
 
 [node name="item2" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
-track_name = "start point"
+track_name = "falling stars"
 scenario = "res://mats/game_objs/scenarios/scnr2/scenario.tscn"
+
+[node name="item4" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
+layout_mode = 2
+track_name = "person"
+scenario = "uid://drjstoi85rsx4"
+recive_points = 30
 
 [node name="item3" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
-track_name = "selected"
+track_name = "escape"
 scenario = "uid://8a5ryr75vgby"
+recive_points = 20
+
+[node name="item5" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
+layout_mode = 2
+track_name = "escape"
+scenario = "res://mats/game_objs/scenarios/scnr5/scenario.tscn"
+recive_points = 20
 
 [node name="pc" type="PanelContainer" parent="cl/ui"]
 layout_mode = 2
