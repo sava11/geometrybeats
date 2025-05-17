@@ -4,13 +4,17 @@ extends Node2D
 @export var add_to: NodePath
 @export var spawn: bool = false
 @export var shout_time: float = 0.2
+@export var noise:FastNoiseLite
 @export var grid_size: Vector2 = Vector2(1280, 720)
 @export_range(1, 99, 1, "or_greater") var rows: int = 10
 @export_range(1, 99, 1, "or_greater") var columns: int = 10
+@export_range(0.001, 99, 0.001, "or_greater") var seed_change_interval:=1.0
 @export var curve: Curve
 @export_range(0.001, 99, 0.001, "or_greater") var deletion_timer: float = 1.5
 
+
 var _time_acc: float = 0.0
+var _change_seed_time_acc: float = 0.0
 
 var offset:= Vector2(8, 8)
 var grid:Vector2
@@ -26,6 +30,8 @@ func _ready() -> void:
 	var cell_size = (grid_size - total_offset) / grid
 
 func _physics_process(delta: float) -> void:
+	if _change_seed_time_acc>=seed_change_interval:
+		noise.seed+=1
 	if add_to!=null and spawn and _time_acc>=shout_time:
 		# Сразу сбросим флаг и таймер
 		_time_acc = 0.0
@@ -34,8 +40,10 @@ func _physics_process(delta: float) -> void:
 		var ix = fnc.rnd.randi_range(0, rows - 1)
 		var iy = fnc.rnd.randi_range(0, columns - 1)
 		var cell_idx = Vector2(ix, iy)
-		_create_cell(cell_idx)
+		if noise.get_noise_2dv(cell_idx)+1>=1:
+			_create_cell(cell_idx)
 	_time_acc += delta
+	_change_seed_time_acc += delta
 
 func summon_pattern(pattern: Array):
 	# 1) Вычисляем границы паттерна

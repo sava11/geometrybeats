@@ -1,7 +1,7 @@
 class_name SideSpawner
 extends Node2D
 @export var add_to:Node
-@export var spawn:=false
+@export_range(0.001, 99, 0.001, "or_greater") var time_to_delete:=2.0
 @export var curve:Curve
 var half_y:RectangleShape2D
 var half_x:RectangleShape2D
@@ -45,7 +45,7 @@ func generate_side()->HitBox:
 			Vector2(wsize.x/2, wsize.y-half_y.size.y/2),
 			Vector2(wsize.x/2, half_y.size.y/2)
 		][v.y]
-	hit.deletion_timer=2
+	hit.deletion_timer=time_to_delete
 	hit.collision_layer=8
 	hit.oneshout=true
 	hit.curve=curve

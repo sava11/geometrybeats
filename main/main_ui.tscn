@@ -160,7 +160,7 @@ scenario = "res://mats/game_objs/scenarios/scnr2/scenario.tscn"
 
 [node name="item4" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
-track_name = "person"
+track_name = "sides"
 scenario = "uid://drjstoi85rsx4"
 recive_points = 30
 
@@ -172,7 +172,7 @@ recive_points = 20
 
 [node name="item5" parent="cl/ui/mc/sc/cont" instance=ExtResource("2_pf8qx")]
 layout_mode = 2
-track_name = "escape"
+track_name = "person"
 scenario = "res://mats/game_objs/scenarios/scnr5/scenario.tscn"
 recive_points = 20
 

@@ -73,6 +73,8 @@ func _on_action_activated(track: int, time: float) -> void:
 	if track==2:
 		$act/PreSpawner.global_position = get_rand_pos()
 		$act/PreSpawner.spawn=true
+	if track==3:
+		$act/SideSpawner.create_hit_box()
 
 
 func _on_track_started() -> void:
