@@ -189,40 +189,43 @@ func return_saved_data():
 	pass
 func _player_dead(v:bool):
 	asp.stop()
-	if deaths_count>0:
-		if !v:
-			deaths_count-=1
-			print("dead")
-			asp.play(saved_time,starts_from)
-			for e in get_children():
-				if e is MoveHitBox or e is HitBox:
-					e.queue_free()
-			return_saved_data()
-			for dt in save_data:
-				var n=get_node(dt.node)
-				if is_instance_valid(n):
-					for e in dt.data:
-						n.set(e,saved_data[str(n.get_path())][e])
-						n.set_deferred(e,saved_data[str(n.get_path())][e])
-			player.global_position=saved_player_pos
-			collected=saved_collects
-			for e in range(get_node("fl/sbc").get_child_count()):
-				get_node("fl/sbc").get_child(e).button_pressed=e<collected
-			$ap.seek(saved_time,true)
-			fnc.rnd.state=lvl_state
-			cur_time=saved_time
-			for e:InfoObject in action_times:
-				e.reset_to(saved_time,max_time)
-			if collection!=null:
-				collection.reset_to(saved_time,max_time)
-				for i in range($paths.get_child_count()):
-					var e:Path2D=$paths.get_child(i)
-					var pf:PathFollow2D=e.get_child(0)
-					pf.progress=saved_collected[i]
-			await get_tree().process_frame
-			get_node("../player/HurtBox").restore_health()
-	else:
-		emit_signal("level_ended",self)
+	get_tree().create_timer(1).timeout.connect(
+	func():
+		if deaths_count>0:
+			if !v:
+				deaths_count-=1
+				print("dead")
+				asp.play(saved_time,starts_from)
+				for e in get_children():
+					if e is MoveHitBox or e is HitBox:
+						e.queue_free()
+				return_saved_data()
+				for dt in save_data:
+					var n=get_node(dt.node)
+					if is_instance_valid(n):
+						for e in dt.data:
+							n.set(e,saved_data[str(n.get_path())][e])
+							n.set_deferred(e,saved_data[str(n.get_path())][e])
+				player.global_position=saved_player_pos
+				collected=saved_collects
+				for e in range(get_node("fl/sbc").get_child_count()):
+					get_node("fl/sbc").get_child(e).button_pressed=e<collected
+				$ap.seek(saved_time,true)
+				fnc.rnd.state=lvl_state
+				cur_time=saved_time
+				for e:InfoObject in action_times:
+					e.reset_to(saved_time,max_time)
+				if collection!=null:
+					collection.reset_to(saved_time,max_time)
+					for i in range($paths.get_child_count()):
+						var e:Path2D=$paths.get_child(i)
+						var pf:PathFollow2D=e.get_child(0)
+						pf.progress=saved_collected[i]
+				await get_tree().process_frame
+				get_node("../player/HurtBox").restore_health()
+		else:
+			level_ended.emit(self)
+	)
 func _checkpoint_activated():pass
 
 # Функция для генерации случайной точки за границей экрана

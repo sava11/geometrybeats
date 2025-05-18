@@ -57,6 +57,8 @@ func _physics_process(delta: float) -> void:
 
 func hited(v:float,d:float) -> void:
 	alive = v>0
+	if !alive:
+		emit_signal("dead", v>0)
 	$skin.material.set_deferred("shader_parameter/sector", v/$HurtBox.max_health)
 	if d<0 and alive:
 		$asp.play()
@@ -64,8 +66,6 @@ func hited(v:float,d:float) -> void:
 	else:
 		$inv.visible=false
 		$skin.color.a = 1
-	if !alive:
-		emit_signal("dead", v>0)
 	#$asp.stream = load("res://mats/sounds/twrauw.wav")
 	#$asp.play()
 

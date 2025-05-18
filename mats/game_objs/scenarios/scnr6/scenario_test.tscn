@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1vva3vgbvh1u"]
+
+[ext_resource type="Script" uid="uid://djkyb4eocyb1f" path="res://mats/game_objs/scenarios/scnr6/scenario.gd" id="1_ajr67"]
+[ext_resource type="Script" uid="uid://bk8hquxf2ab2y" path="res://mats/game_objs/masp/masp.gd" id="2_qhtjg"]
+
+[sub_resource type="Animation" id="Animation_cbsp2"]
+resource_name = "base"
+
+[sub_resource type="Animation" id="Animation_7ufdp"]
+resource_name = "track"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_woum6"]
+_data = {
+&"base": SubResource("Animation_cbsp2"),
+&"track": SubResource("Animation_7ufdp")
+}
+
+[node name="scenario" type="Node"]
+script = ExtResource("1_ajr67")
+
+[node name="ap" type="AnimationPlayer" parent="."]
+reset_on_save = false
+libraries = {
+&"": SubResource("AnimationLibrary_woum6")
+}
+
+[node name="AudioPlayer" type="Node2D" parent="."]
+script = ExtResource("2_qhtjg")
+busName = "Music"
+
+[node name="act" type="Node2D" parent="."]
+
+[node name="paths" type="Node" parent="."]
