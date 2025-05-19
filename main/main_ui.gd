@@ -82,7 +82,12 @@ CALL get_user_level_attempts('{0}', {1}, 'record_id DESC')
 			item.get_node("mc/hbc/points").text=str(e[0])
 			item.get_node("mc/hbc/collected").text=str(e[1])
 			item.get_node("mc/hbc/no_hit").text=str(e[2])
-			item.get_node("mc/hbc/date").text=str(e[3][0]) + " " + str(e[3][1])
+			var times:Array=e[3][1].split(":")
+			times.remove_at(2)
+			var time=times[0]
+			for s in range(1,times.size()):
+				time+=":"+times[s]
+			item.get_node("mc/hbc/date").text=str(e[3][0]) + " " + time
 			history_item_cont.add_child(item)
 	$cl/history.show()
 	$cl/ui.hide()

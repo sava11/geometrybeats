@@ -1,0 +1,9 @@
+{
+  "Server": "junction.proxy.rlwy.net",
+  "Port": 35510,
+  "UserID": "root",
+  "Password": "SThpFvJhaOYpSYayhhDfGeXAdbhxGxpp",
+  "Database": "geometrybeatdb",
+  "SslMode": "Required"
+}
+

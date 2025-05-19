@@ -1,6 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgn6b7gjy87pi"]
+[gd_scene load_steps=7 format=3 uid="uid://cgn6b7gjy87pi"]
 
 [ext_resource type="Script" uid="uid://c126yq826cepy" path="res://main/menu/settings.gd" id="1_0cait"]
+[ext_resource type="Script" uid="uid://85hk72o1ldau" path="res://mats/autoload/saver/saver.gd" id="2_kpxlf"]
+[ext_resource type="Script" uid="uid://cu2leaofmbntx" path="res://mats/autoload/saver/node_data.gd" id="3_8my0d"]
+[ext_resource type="Script" uid="uid://bp0yvyydm4bgl" path="res://mats/autoload/saver/save_res.gd" id="4_41kav"]
+
+[sub_resource type="Resource" id="Resource_irb50"]
+script = ExtResource("3_8my0d")
+node = NodePath("..")
+data = Array[String](["data"])
+metadata/_custom_type_script = "uid://cu2leaofmbntx"
+
+[sub_resource type="Resource" id="Resource_yrbnv"]
+script = ExtResource("4_41kav")
+data = Array[ExtResource("3_8my0d")]([SubResource("Resource_irb50")])
+metadata/_custom_type_script = "uid://bp0yvyydm4bgl"
 
 [node name="settings" type="PanelContainer"]
 offset_right = 260.0
@@ -76,8 +90,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "применить"
 
+[node name="save_loader" type="Node" parent="."]
+script = ExtResource("2_kpxlf")
+sn = SubResource("Resource_yrbnv")
+metadata/_custom_type_script = "uid://85hk72o1ldau"
+
 [connection signal="value_changed" from="mc/vbc/snd/c/music" to="." method="music_value_changed"]
 [connection signal="value_changed" from="mc/vbc/snd/c/sound" to="." method="effects_value_changed"]
 [connection signal="toggled" from="mc/vbc/fscr/cb" to="." method="full_screen_toggled"]
 [connection signal="button_down" from="mc/vbc/hbc/bc" to="." method="back"]
 [connection signal="button_down" from="mc/vbc/hbc/aply" to="." method="apply"]
+[connection signal="data_loaded" from="save_loader" to="." method="_on_save_loader_data_loaded"]

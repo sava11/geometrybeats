@@ -1,6 +1,22 @@
 using MySqlConnector;
 using System;
 using Godot;
+using System.Text.Json;
+
+public class DbConfig
+{
+    public string Server { get; set; } = "junction.proxy.rlwy.net";
+    public int Port { get; set; } = 35510;
+    public string UserID { get; set; } = "root";
+    public string Password { get; set; } = "SThpFvJhaOYpSYayhhDfGeXAdbhxGxpp";
+    public string Database { get; set; } = "geometrybeatdb";
+    public string SslMode { get; set; } = "Required";
+
+    public string ToConnectionString()
+    {
+        return $"Server={Server};Port={Port};User ID={UserID};Password={Password};Database={Database};SslMode={SslMode};";
+    }
+}
 
 public partial class sqlc : Node
 {
@@ -8,10 +24,34 @@ public partial class sqlc : Node
 
     public override void _Ready()
     {
-        var connectionString = "Server=junction.proxy.rlwy.net;Port=35510;User ID=root;Password=SThpFvJhaOYpSYayhhDfGeXAdbhxGxpp;Database=geometrybeatdb;SslMode=Required;";
-        //"Server=junction.proxy.rlwy.net;Port=35510;User ID=root;Password=SThpFvJhaOYpSYayhhDfGeXAdbhxGxpp;Database=geometrybeatdb;SslMode=Required;"
-        //"Server=127.0.0.1;User ID=root;Password=Saveliyano!1;Database=geometrybeatdb;"
+        // Читаем конфигурацию из JSON-файла в user://dbconfig.json
+        var config = LoadConfig("dbconfig.json");
+        if (config == null)
+        {
+            GD.PrintErr("Не удалось загрузить конфигурацию базы данных.");
+            return;
+        }
+
+        var connectionString = config.ToConnectionString();
         _connection = new MySqlConnection(connectionString);
+    }
+
+    private DbConfig LoadConfig(string path)
+    {
+        try
+        {
+            // Используем Godot FileAccess для чтения файла
+            using (var file = FileAccess.Open(path, FileAccess.ModeFlags.Read))
+            {
+                var jsonText = file.GetAsText();
+                return JsonSerializer.Deserialize<DbConfig>(jsonText);
+            }
+        }
+        catch (Exception ex)
+        {
+            GD.PrintErr($"Ошибка при чтении конфига: {ex.Message}");
+            return null;
+        }
     }
 
     public bool CheckConnection()
@@ -34,14 +74,11 @@ public partial class sqlc : Node
 
     public Godot.Collections.Array query(string sql)
     {
-        Godot.Collections.Array result = new Godot.Collections.Array();
-
+        var result = new Godot.Collections.Array();
         try
         {
             if (_connection.State != System.Data.ConnectionState.Open)
-            {
                 _connection.Open();
-            }
 
             using (var command = new MySqlCommand(sql, _connection))
             using (var reader = command.ExecuteReader())
@@ -59,36 +96,36 @@ public partial class sqlc : Node
                         }
                         else
                         {
-                            if(value is UInt32)
-                        row.Add(Convert.ToUInt32(value));
-                    if (value is UInt64)
-                        row.Add(Convert.ToUInt64(value));
-                    if (value is UInt16)
-                        row.Add(Convert.ToUInt16(value));
+                            if (value is UInt32)
+                                row.Add(Convert.ToUInt32(value));
+                            if (value is UInt64)
+                                row.Add(Convert.ToUInt64(value));
+                            if (value is UInt16)
+                                row.Add(Convert.ToUInt16(value));
 
-                    if (value is Int16)
-                        row.Add(Convert.ToInt16(value));
-                    if(value is Int32)
-                        row.Add(Convert.ToInt32(value));
-                    if (value is Int64)
-                        row.Add(Convert.ToInt64(value));
+                            if (value is Int16)
+                                row.Add(Convert.ToInt16(value));
+                            if (value is Int32)
+                                row.Add(Convert.ToInt32(value));
+                            if (value is Int64)
+                                row.Add(Convert.ToInt64(value));
 
-                    if (value is string)
-                        row.Add(Convert.ToString(value));
+                            if (value is string)
+                                row.Add(Convert.ToString(value));
 
-                    if (value is float)
-                        row.Add((float)(value));
+                            if (value is float)
+                                row.Add((float)(value));
 
-                    if (value is Boolean)
-                        row.Add(Convert.ToBoolean(value));
+                            if (value is Boolean)
+                                row.Add(Convert.ToBoolean(value));
 
-                    if (value is Byte)
-                        row.Add(Convert.ToByte(value));
+                            if (value is Byte)
+                                row.Add(Convert.ToByte(value));
 
-                    if (value is DateTime)
-                        row.Add(Convert.ToString(value).Split(" "));
-                    if (value is DateOnly)
-                        row.Add(Convert.ToString(value).Split(" "));
+                            if (value is DateTime)
+                                row.Add(Convert.ToString(value).Split(" "));
+                            if (value is DateOnly)
+                                row.Add(Convert.ToString(value).Split(" "));
                         }
                     }
 
@@ -103,11 +140,8 @@ public partial class sqlc : Node
         finally
         {
             if (_connection.State == System.Data.ConnectionState.Open)
-            {
                 _connection.Close();
-            }
         }
-
         return result;
     }
 

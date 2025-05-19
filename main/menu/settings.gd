@@ -8,12 +8,12 @@ signal cancel_pressed
 
 func _ready() -> void:
 	if not FileAccess.file_exists("settings.json"):
-		sli.save_data("settings.json", data)
+		sld.set_to_file(data,"settings.json",true)
 	else:
-		data = sli.load_data("settings.json")
+		data = sld.get_from_file("settings.json",true)
 	set_data(data)
 
-func set_data(d: Dictionary) -> void:	
+func set_data(d: Dictionary) -> void:
 	if d["fullsize"]:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
@@ -48,16 +48,20 @@ func full_screen_toggled(toggled: bool) -> void:
 
 func apply() -> void:
 	set_data(data)
-	sli.save_data("settings.json", data)
+	sld.set_to_file(data,"settings.json",true)
 	apply_pressed.emit()
 
 func back() -> void:
 	if not FileAccess.file_exists("settings.json"):
-		sli.save_data("settings.json", data)
+		sld.set_to_file(data,"settings.json",true)
 	else:
-		data = sli.load_data("settings.json")
+		data = sld.get_from_file("settings.json",true)
 	set_data(data)
 	cancel_pressed.emit()
 	#hide()
 	#var anim_player = get_parent().get_node("anims") as AnimationPlayer
 	#anim_player.play("settings", 0.3, -1, true)
+
+
+func _on_save_loader_data_loaded() -> void:
+	set_data(data)

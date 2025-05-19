@@ -71,8 +71,9 @@ func hited(v:float,d:float) -> void:
 
 
 func _on_hurt_box_invi_started() -> void:
-	$inv.visible=true
-	$skin.color.a = 0.5
+	if alive:
+		$inv.visible=true
+		$skin.color.a = 0.5
 
 
 func _on_hurt_box_invi_ended() -> void:

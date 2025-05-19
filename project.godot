@@ -21,7 +21,6 @@ sld="*res://mats/autoload/saver/save_load_data.gd"
 gmd="*res://mats/autoload/game_data.gd"
 fnc="*res://mats/autoload/functions.gd"
 sqlc="*res://mats/autoload/sqlc.cs"
-sli="*res://mats/autoload/save_load_info.gd"
 
 [display]
 
@@ -86,4 +85,4 @@ esc={
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0.247817, 0.300888, 0.320004, 1)
+environment/defaults/default_clear_color=Color(0.106055, 0.135354, 0.145896, 1)

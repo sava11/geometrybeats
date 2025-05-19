@@ -2,7 +2,7 @@ class_name HitBox
 extends Area2D
 signal deletion(node:HitBox)
 signal local_event
-@export var color:Color=Color(0.75,0,75,1)
+@export var color:Color=Color("ff6500")
 @export var damage:float=1.0
 @export_range(0, 1, 0.001) var enabled: float = 1.0
 @export_range(0, 1, 0.001) var hited: float = 0.95
@@ -10,6 +10,7 @@ signal local_event
 @export var curve:Curve
 @export var deletion_timer:float=0
 @export var local_event_time:float=0
+
 var evented:=false
 var new_polygons:Array[PackedVector2Array]
 func _init() -> void:
@@ -52,7 +53,9 @@ func _draw() -> void:
 			elif n is CollisionPolygon2D:
 				draw_colored_polygon(n.polygon, color)
 var time:=0.0
+var activate_timer:float=0
 func _physics_process(delta: float) -> void:
+	_phy_proc(delta)
 	if oneshout and curve.point_count>0:
 		enabled=curve.sample_baked(time/deletion_timer)
 		if time>=local_event_time and !evented:
@@ -63,7 +66,6 @@ func _physics_process(delta: float) -> void:
 	set_deferred("monitorable", enabled >= hited)
 	set_deferred("monitoring", enabled >= hited)
 	queue_redraw()
-	_phy_proc(delta)
 
 func _phy_proc(delta:float) -> void:pass
 func delete():pass

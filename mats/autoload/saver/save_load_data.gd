@@ -31,21 +31,33 @@ func load_from_file(path:String,json:bool=false)->void:
 	if DirAccess.dir_exists_absolute(path):
 		global_saved_data=get_from_file(path,json)
 		local_load()
-func set_to_file(d:Dictionary,path:String,json:bool=false)->void:
-	if !DirAccess.dir_exists_absolute(path):
-		DirAccess.make_dir_recursive_absolute(path)
-	var f:=FileAccess.open(path+"/"+file_name+"."+file_ext,FileAccess.WRITE)
+func set_to_file(d: Dictionary, path: String = file_path + "/" + file_name + "." + file_ext, json: bool = false) -> void:
+	
+	# Получаем директорию из пути к файлу
+	var dir_path := path.get_base_dir()
+	
+	# Проверяем и создаём директорию
+	if !DirAccess.dir_exists_absolute(dir_path):
+		DirAccess.make_dir_recursive_absolute(dir_path)
+	
+	# Открываем файл
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	if f == null:
+		push_error("Не удалось открыть файл для записи: " + path)
+		return
+
 	if !json:
-		var bytes:=var_to_bytes(d)
+		var bytes := var_to_bytes(d)
 		f.store_buffer(bytes)
 	else:
-		
 		f.store_line(JSON.stringify(d))
+	
 	f.close()
 	print("saved")
-func get_from_file(path:String,json:bool=false)->Dictionary:
-	if FileAccess.file_exists(path+"/"+file_name+"."+file_ext):
-		var f:=FileAccess.open(path+"/"+file_name+"."+file_ext,FileAccess.READ)
+
+func get_from_file(path:String=file_path+"/"+file_name+"."+file_ext,json:bool=false)->Dictionary:
+	if FileAccess.file_exists(path):
+		var f:=FileAccess.open(path,FileAccess.READ)
 		var d:Dictionary={}
 		if !json:
 			var bytes:=f.get_buffer(f.get_length())
@@ -53,7 +65,7 @@ func get_from_file(path:String,json:bool=false)->Dictionary:
 		else:
 			d=JSON.parse_string(f.get_as_text())
 		f.close()
-		print("load")
+		print("loaded: ",d)
 		return d
 	print("err load")
 	return {}
