@@ -18,6 +18,7 @@ CREATE TABLE users (
     f_name     CHAR(24)       NOT NULL,
     s_name     CHAR(24)       NOT NULL,
     t_name     CHAR(24)       NULL,
+    DOB		   DATE       	  NOT NULL DEFAULT curdate(),
     status     INT UNSIGNED   NOT NULL DEFAULT 1,
     created_at DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (status) REFERENCES user_statuses(id)
