@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://djuxdooutd0il"]
 
-[ext_resource type="Script" uid="uid://c1w82h75njlte" path="res://mats/game_objs/player/player.gd" id="1_iw1vq"]
-[ext_resource type="Shader" uid="uid://w6whx6bco1vq" path="res://mats/shaders/player_health.gdshader" id="1_jj6h8"]
+[ext_resource type="Script" uid="uid://dnbwciim6yofb" path="res://mats/game_objs/player/player.gd" id="1_iw1vq"]
+[ext_resource type="Shader" uid="uid://b5yoydq2bqwtw" path="res://mats/shaders/player_health.gdshader" id="1_jj6h8"]
 [ext_resource type="PackedScene" uid="uid://heog28crk5py" path="res://mats/game_objs/boxes/hurt_box.tscn" id="2_tm1d6"]
-[ext_resource type="AudioStream" uid="uid://cx0wd0aeq8xv5" path="res://mats/sounds/used_sounds/hit.ogg" id="4_8o522"]
+[ext_resource type="AudioStream" uid="uid://od1ywfb73x1m" path="res://mats/sounds/used_sounds/hit.ogg" id="4_8o522"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1txqo"]
 size = Vector2(24, 24)
@@ -20,7 +20,7 @@ motion_mode = 1
 script = ExtResource("1_iw1vq")
 speed = 700.0
 acceleration = 10000.0
-spirit_timer = 0.15
+spirit_timer = 0.1
 spirit_speed = 1500.0
 spirit_acceleration = 100000.0
 
