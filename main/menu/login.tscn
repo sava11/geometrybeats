@@ -67,7 +67,6 @@ size_flags_horizontal = 3
 text = "Выйти"
 
 [node name="jpb" type="Button" parent="pc/mc/vbc/hbc"]
-visible = false
 layout_mode = 2
 text = "Играть вне сети"
 
