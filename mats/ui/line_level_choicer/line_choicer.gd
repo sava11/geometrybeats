@@ -28,17 +28,20 @@ insert into user_level_records(user_login,record_date,level_id,points,collected,
 	get_tree().current_scene.get_node("level_end").hide()
 	for e in get_tree().current_scene.get_node("world").get_children():
 		e.queue_free()
-	for e in get_tree().current_scene.get_node(
-		"level_end/Control/pc/mc/vbc/actions/retry").button_down.get_connections():
-			get_tree().current_scene.get_node(
-		"level_end/Control/pc/mc/vbc/actions/retry").button_down.disconnect(e.callable) 
-	get_tree().current_scene.get_node(
-		"level_end/Control/pc/mc/vbc/actions/retry").button_down.connect(play,4)
-	get_tree().current_scene.get_node("level_end/Control/pc/mc/vbc/points/v").text=str(recived_points)
-	get_tree().current_scene.get_node("level_end/Control/pc/mc/vbc/collected/v").text=str(node.collected)
-	get_tree().current_scene.get_node(
-		"level_end/Control/pc/mc/vbc/dmg/v").text=str(hits)
-	get_tree().current_scene.get_node("level_end").show()
+	if !node.infinite and !node.get_parent().get_node("player").alive:
+		for e in get_tree().current_scene.get_node(
+			"level_end/Control/pc/mc/vbc/actions/retry").button_down.get_connections():
+				get_tree().current_scene.get_node(
+			"level_end/Control/pc/mc/vbc/actions/retry").button_down.disconnect(e.callable) 
+		get_tree().current_scene.get_node(
+			"level_end/Control/pc/mc/vbc/actions/retry").button_down.connect(play,4)
+		get_tree().current_scene.get_node("level_end/Control/pc/mc/vbc/points/v").text=str(recived_points)
+		get_tree().current_scene.get_node("level_end/Control/pc/mc/vbc/collected/v").text=str(node.collected)
+		get_tree().current_scene.get_node(
+			"level_end/Control/pc/mc/vbc/dmg/v").text=str(hits)
+		get_tree().current_scene.get_node("level_end").show()
+	else:
+		get_tree().current_scene.get_node("cl").show()
 	#get_tree().current_scene.get_node("cl").show()
 	$mc/cont/play.grab_focus()
 
