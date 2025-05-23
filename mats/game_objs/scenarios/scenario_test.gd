@@ -95,32 +95,69 @@ func _ready() -> void:
 			for e in dt.data:
 				d.merge( {e:n.get(e)}, true )
 			saved_data.merge({str(n.get_path()):d}, true)
-	if is_instance_valid(collection) and collection!=null:
-		for e in range(collection.times.size()):
-			var sz := get_size()
-			var p:=Path2D.new()
-			var fp:=PathFollow2D.new()
-			fp.loop=false
-			fp.rotates=false
-			var c:=Curve2D.new()
-			c.add_point(generate_random_border_point(sz))
-			for i in range(fnc.rnd.randi_range(1,3)):
-				c.add_point(get_rand_pos())
-			c.add_point(generate_random_border_point(sz))
-			p.curve=c
-			var obj:=preload("res://mats/game_objs/collectable/collectable.tscn").instantiate()
-			$paths.add_child(p)
-			p.add_child(fp)
-			fp.add_child(obj)
-			saved_collected.append(0.0)
-			obj.body_entered.connect((
-			func(n):
-				get_node("fl/sbc").get_child(collected).button_pressed=true
-				collected+=1
-				fp.progress_ratio=1
-				))
+	_spawn_collectables()
 	_post_ready()
 	set_physics_process(!debug)
+
+func _spawn_collectables():
+	if not is_instance_valid(collection):
+		return
+
+	for e in collection.times.size():
+		var sz = get_size()
+		
+		# Создаём Path2D и PathFollow2D
+		var path = Path2D.new()
+		$paths.add_child(path)
+		var follow = PathFollow2D.new()
+		follow.loop = false
+		follow.rotates = false
+		path.add_child(follow)
+		
+		# Генерируем список ключевых точек (начало → 1–3 внутренних → конец)
+		var pts: Array[Vector2] = []
+		pts.append(generate_random_border_point(sz))
+		for i in range(fnc.rnd.randi_range(1, 3)):
+			pts.append(get_rand_pos())
+		pts.append(generate_random_border_point(sz))
+		
+		path.curve = _generate_smooth_curve(pts)
+		
+		# Инстанцируем объект и цепляем к PathFollow2D
+		var obj = preload("res://mats/game_objs/collectable/collectable.tscn").instantiate()
+		follow.add_child(obj)
+		saved_collected.append(0.0)
+		
+		# Подписываемся на сигнал
+		obj.body_entered.connect(func(_body):
+			get_node("fl/sbc").get_child(collected).button_pressed = true
+			collected += 1
+			follow.progress_ratio = 1
+		)
+
+func _generate_smooth_curve(points: Array[Vector2]) -> Curve2D:
+	var curve = Curve2D.new()
+	var n = points.size()
+	
+	for i in range(n):
+		var p_prev = points[max(i - 1, 0)]
+		var p_curr = points[i]
+		var p_next = points[min(i + 1, n - 1)]
+		
+		var dir_in = (p_curr - p_prev).normalized()
+		var dir_out = (p_next - p_curr).normalized()
+		
+		var tangent = (dir_in + dir_out).normalized()
+		var length_in = (p_curr - p_prev).length() * 0.25
+		var length_out = (p_next - p_curr).length() * 0.25
+		
+		var in_tangent = -tangent * length_in
+		var out_tangent = tangent * length_out
+		
+		curve.add_point(p_curr, in_tangent, out_tangent)
+	
+	return curve
+
 func _physics_process(delta: float) -> void:
 	var can:=-1
 	if checkpoints!=null:
@@ -159,7 +196,7 @@ func _physics_process(delta: float) -> void:
 			var e:Path2D=$paths.get_child(i)
 			var pf:PathFollow2D=e.get_child(0)
 			if cur_time>collection.times[i] and pf.progress_ratio<1.0:
-				pf.progress+=200*delta
+				pf.progress+=180*delta
 				
 	cur_time+=delta
 	if checkpoints!=null:
